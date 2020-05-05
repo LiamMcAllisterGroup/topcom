@@ -1,0 +1,51 @@
+Description: Fix typo.
+Author: Doug Torrance <dtorrance@piedmont.edu>
+Last-Update: 2020-05-05
+
+--- a/lib-src/SymmetricBFS.cc
++++ b/lib-src/SymmetricBFS.cc
+@@ -535,7 +535,7 @@
+ 	exit(1);
+       }
+       if (CommandlineOptions::debug()) {
+-	std::cerr << "no of points in input conincides with no of points in dump file: okay" << std::endl;
++	std::cerr << "no of points in input coincides with no of points in dump file: okay" << std::endl;
+       }
+     }
+     if (keyword == "_rank") {
+@@ -553,7 +553,7 @@
+ 	exit(1);
+       }
+       if (CommandlineOptions::debug()) {
+-	std::cerr << "rank of input conincides with rank of dump file: okay" << std::endl;
++	std::cerr << "rank of input coincides with rank of dump file: okay" << std::endl;
+       }
+     }
+     if (_pointsptr) {
+@@ -572,7 +572,7 @@
+ 	  exit(1);
+ 	}
+ 	if (CommandlineOptions::debug()) {
+-	  std::cerr << "points of input conincide with points in dump file: okay" << std::endl;
++	  std::cerr << "points of input coincide with points in dump file: okay" << std::endl;
+ 	}
+       }
+     }
+@@ -592,7 +592,7 @@
+ 	  exit(1);
+ 	}
+ 	if (CommandlineOptions::debug()) {
+-	  std::cerr << "chirotope of input conincides with chirotope of dump file: okay" << std::endl;
++	  std::cerr << "chirotope of input coincides with chirotope of dump file: okay" << std::endl;
+ 	}
+       }
+     }
+@@ -611,7 +611,7 @@
+ 	exit(1);
+       }
+       if (CommandlineOptions::debug()) {
+-	std::cerr << "symmetries of input conincide with _symmetries in dump file: okay" << std::endl;
++	std::cerr << "symmetries of input coincide with _symmetries in dump file: okay" << std::endl;
+       }
+     }
+     // finally, parse the partial computational result from the dump file:
