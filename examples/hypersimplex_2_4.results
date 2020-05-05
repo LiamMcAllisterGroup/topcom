@@ -1,0 +1,27 @@
+
+------------------------------------------------------------
+----------------------     TOPCOM     ----------------------
+Triangulations of Point Configurations and Oriented Matroids
+--------------------- by  Joerg Rambau ---------------------
+------------------------------------------------------------
+
+computing closure of 7 symmetries with 6 symmetry generators ...
+17 symmetries so far.
+23 symmetries so far.
+... done. 
+23 symmetries in total.
+no valid seed triangulation found
+computing seed triangulation via placing and pushing ...
+Computing symmetries of seed ...
+... done.
+7 symmetries in total.
+seed: {{0,1,2,3},{0,2,3,4},{1,2,3,5},{2,3,4,5}}
+using the following 6 vertices: {0,1,2,3,4,5}
+... done.
+count all symmetry classes of triangulations ...
+T[1]:={{0,1,2,3},{0,2,3,4},{1,2,3,5},{2,3,4,5}};
+0 new symmetry classes.
+1 symmetry classes.
+3 triangulations in total.
+1 symmetry classes of triangulations in total.
+... done.

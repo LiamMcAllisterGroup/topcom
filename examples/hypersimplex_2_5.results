@@ -1,0 +1,31 @@
+
+------------------------------------------------------------
+----------------------     TOPCOM     ----------------------
+Triangulations of Point Configurations and Oriented Matroids
+--------------------- by  Joerg Rambau ---------------------
+------------------------------------------------------------
+
+computing closure of 11 symmetries with 10 symmetry generators ...
+45 symmetries so far.
+95 symmetries so far.
+119 symmetries so far.
+... done. 
+119 symmetries in total.
+no valid seed triangulation found
+computing seed triangulation via placing and pushing ...
+Computing symmetries of seed ...
+... done.
+1 symmetries in total.
+seed: {{0,1,2,3,4},{0,2,3,4,5},{0,3,4,5,6},{1,2,3,4,7},{2,3,4,5,7},{3,4,5,6,7},{1,3,4,7,8},{3,4,6,7,8},{2,3,5,7,9},{3,5,6,7,9},{3,6,7,8,9}}
+using the following 10 vertices: {0,1,2,3,4,5,6,7,8,9}
+... done.
+count all symmetry classes of triangulations ...
+T[1]:={{0,1,2,3,4},{0,2,3,4,5},{0,3,4,5,6},{1,2,3,4,7},{2,3,4,5,7},{3,4,5,6,7},{1,3,4,7,8},{3,4,6,7,8},{2,3,5,7,9},{3,5,6,7,9},{3,6,7,8,9}};
+T[2]:={{0,3,4,5,6},{3,4,5,6,7},{1,3,4,7,8},{3,4,6,7,8},{2,3,5,7,9},{3,5,6,7,9},{3,6,7,8,9},{0,3,4,5,7},{0,2,3,5,7},{0,1,3,4,7},{0,1,2,3,7}};
+T[3]:={{0,1,2,3,4},{1,2,3,4,7},{1,3,4,7,8},{3,4,6,7,8},{3,6,7,8,9},{2,5,6,7,9},{0,2,4,5,6},{0,2,3,4,6},{2,3,6,7,9},{2,4,5,6,7},{2,3,4,6,7}};
+2 new symmetry classes.
+0 new symmetry classes.
+3 symmetry classes.
+102 triangulations in total.
+3 symmetry classes of triangulations in total.
+... done.

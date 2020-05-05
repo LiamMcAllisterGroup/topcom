@@ -1,0 +1,194 @@
+version 0.17.8: pure bugfix: the wrong version of gmp was packaged;
+	must be 6.1.1 by now
+version 0.17.7: fixed a bug in SPXinterface.cc where a new[] had a
+	non-matching delete
+	modernized autoconf/automake initialization
+	updated gmp to version 6.1.1
+version 0.17.6: added a command line option that allows only balanced flips
+version 0.17.5: renamed the static "nullptr()" method for SmartPtr<T>
+	to "smartnullptr()" because the standard literal "nullptr" is
+	implemented as a macro in gcc-4.2.1 such that the declaration of
+	"nullptr()" in class SmartPtr<T> gets corrupted
+	forced "$libdir" in "external" to "lib" in order to avoid problems
+	with autoconf installations that use lib64 on 64-bit systems and 
+	multi-binary systems (no harm here because the installation of
+	externals is done only local inside the TOPCOM build tree)
+	removed usage of unordered_set/map altogether because of differing
+	include paths of different compilers
+	for that same reason, the profiling tool "bench" was removed from
+	the distribution 
+version 0.17.4: gmpxx.h is now overloaded by a version that canonicalizes
+	all rational input data right away
+version 0.17.3: updated to gmp-5.0.5
+	since "0/5 != 0" in mpq_class (gmp), 
+	introduced a special "is_zero" test for Rationals
+	that only uses the numerator
+version 0.17.2: correction of a syntax issue with gcc 4.7
+	update of the address of the FSF in COPYING and README
+	(thanks to the Fedora team for the report!)
+version 0.17.1: correction of read from input stream in Facets.hh
+	ID for triangulations allowing for an option to output flip edges
+version 0.17.0: new function to construct Birkhoff subpolytopes
+	new function to transform point configuration to full rank
+	representation (carefull: this may change normalized volumes)
+version 0.16.4: updated alternative STL structures to modern gcc
+	added command line option "--reportfrequency [n]" with the meaning
+	that every [n]th new triangulation triggers a report to stderr
+version 0.16.3: changed shell command for external builds from csh to sh
+	output heights in terms of exact fractions not doubles
+version 0.16.2: external includes/libs are now allways taken from
+	external/include resp. external/lib
+version 0.16.1: improved automatic build of external packages gmp and cdd
+	vanilla-cdd function "dd_free_global_constants" is now used
+	instead of "dd_clear_global_constants"
+version 0.16.0: dumped polymake wrappers and switched to gmpxx wrappers
+version 0.15.4: updated documentation
+version 0.15.3: fixed dump file processing
+version 0.15.2: removed extra qualification "__is_const_iterator::" and similar
+	fixed dump support by adding "clear()" at the beginning of parsing hash tables
+version 0.15.1: patched cdd because of memory leak
+version 0.15.0: new commandline option "--nonregular": it triggers an output filter
+	so that only the nonregular triangulations are output.  As opposed to
+	"--regular" it does not reduce the number of triangulations explored;
+	provided some new clients for points that have been there already for chirotopes
+	updated to gmp-4.2.1 and cddlib-0.94b
+version 0.14.0: first version that compiles on gcc4
+	chiro2* returns an error now if --regular is given as an option 
+	(regularity is not a well-defined concept without coordinates)
+version 0.13.3: corrections in template specializations
+	new generator for hypersimplices
+	new examples
+version 0.13.2: corrections in the usage message
+	automake 1.7 adaptions
+	corrected a bug that made the computation of the closure
+	of the symmetry generators slow (gcc should not have compiled
+	the old code since it contained a const bug)
+version 0.13.1: automated the installation of external packages 
+	gmp and cddlib in external by the configure script
+	automatic detection of soplex and addition to the set
+	of libraries in LIBS
+version 0.13.0: new command line options
+	--soplex : use soplex for regularity check (unstable)
+	--nosym  : ignore symmetries
+	--heights: output height vector for every regular triangulation
+	           (requires --regular as well)
+	corrected a bug causing regularity check being called 
+	unnecessarily often
+	patched gmp wrappers so that there is some chance that
+	the package compiles under gcc 2.95 (only checked on PPC)
+version 0.12.1: new interface to soplex
+	(be aware that regularity checks using soplex
+	maybe incorrect because of numerical problems)
+version 0.12.0b: bug fix release: 0.12.0 mistakenly required soplex
+version 0.12.0: compatibility to gcc3.2
+version 0.11.1: correction of an error in the distribution (tweaks.h was missing)
+	default is again to use uncompressed integer sets
+version 0.11.0: new gmp wrappers from the polymake team
+	added commandline options to reduce the number of points
+	and to check regularity in fixed frequencies
+	added support for the use of a compressed integer set
+	stucture in simplicial complexes
+version 0.10.2: added new commandline options for 
+	checking regularity at a fixed frequency 
+	reducing flips to vertex-removing flips
+	forbidding vertex-inserting flips
+	upgraded to automake 1.5
+version 0.10.1: Replaced the use of HashSet by STL set for relatively small sets
+	hash function uses multiplication instead of xor again
+	(reduces chaining in large sets considerably).
+	Introduced an invariant for bitsets to speed up negative equality check
+	and pseudo-lexicographic comparison.
+	Simplified hash function for IntegerSets and SimplicialComplexes by exploiting
+	the invariant.
+	Accellerated the IntegerSet iterator by using byte tables for 
+	first set bit and nunber of set bits.
+	Introduced compiler flags to replace some container structures by STL standard
+	containers; fastest setting at the time being is `-DSTL_SYMMETRIES' since the
+	only relevant operations for symmetries are
+	constant iteration and iterator dereferencing, which is faster in 
+	ordered sets than in HashSets.
+version 0.10.0: Incorporated cddlib and a commandline option to count only 
+	regular triangulations.
+version 0.9.3: Updated for gcc3: mainly additions of `std::'.
+	Replaced lrand48() by random() for the universal randomized
+	hashing because MacOSX-gcc-stdlib does not contain lrand48().
+	Removed explicit template instantiation because that does not work
+	on all systems (thanks Ulrich Kortenkamp for reports on installing
+	TOPCOM on MacOSX).
+version 0.9.2: Bug fixes: removed and attempt to overload `xor'.
+	Removed some offending friend declarations in definitons
+	of internal classes.  Added a commandline parameter `-no <n>'
+	specifying that only triangulations with exactly n simplices
+	are considered.
+version 0.9.1: Added a program `lattice m n' to compute the point
+	configuration of all lattice points in the rectangle [0,0], [m,0],
+	[0,n], [m,n]. Added `chiro2[n]allfinetriangs'.  Added `triangs'
+	with new command line parameters in order to eventually reduce the
+	number of binaries in the TOPCOM package
+version 0.9.0: Adapted to gmp-3.1 with the help of polymake.
+	Field is now a synonym of Rational, i.e., 
+	the possibility of choosing double arithmetic
+	was removed.
+	Fixed a bug in cyclic.cc that produced too large coordinates
+	(submitted by Julian Pfeifle).
+version 0.5.6: Fixed a bug in wrap-gmp/Makefile.am: 
+	include path pointed to wrong version of gmp.
+version 0.5.5: 
+	Fixed a bug in VirtualChiro.cc that caused
+ 	segfaults in chiro2[n]triangs
+Version 0.5.4:
+	Minor changes in the documentation files and comments.
+	For details concerning the Santos triangulation see
+	Francisco Santos' paper
+	
+		``A Point Set whose Space of Triangulations is Disconnected''
+		Journal of the American Mathematical Society, to appear.
+Version 0.5.3:
+	Minor changes in the documentation files and comments
+Version 0.5.2:
+	Bugfix in santos_triang
+Version 0.5.1:
+	added points2flips, points2nflips: 
+	computes only the flips of the seed triangulation.  
+
+	The commands
+ 	{chiro,points}2{[n][fine]triangs} 
+	accept a seed triangulation given by the user.
+ 	added some command line options
+	-m:  try to comsume less memory
+	-c:  check the seed triangulation given by the user
+	-cc <n>:  set the chirotope cache size to <n> bases.
+	-v:  verbose
+
+	The famous brandnew triangulation without flips constructed
+	recently by Francisco Santos is now included in the examples
+	directory
+ 	(courtesy of Francisco Santos).
+
+	Moreover, there is a program `santos_triang' that computes the
+	input data of the Santos triangulation for TOPCOM.  With this
+	equipment everybody should be able to check that spectacular
+	result by typing the command santos_triang | points2nflips -v -c
+	-m and waiting like ten minutes.
+Version 0.4.0: 
+	added points2triangs, points2ntriangs,
+	points2finetriangs, points2nfinetriangs,
+ 	points2placingtriang, points2finetriang: 
+	commands computing the data from the point set
+ 	by constructing its chirotope on the fly (lazy evaluation).
+Version 0.3.0:
+	added chiro2finetriang, chiro2finetriangs, chiro2nfinetriangs:
+	commands providing only triangulations using all vertices
+	verbosity is controlled via commandline option -v
+Version 0.2.0:
+	changed representation of flips
+Version 0.1.3:
+	replaced libg++ arithmetics by libgmp plus polymake wrappers
+	(courtesy of E. Gawrilov and M. Joswig)
+Version 0.1.2:
+	removed dfschiro2ntriangs from the distribution
+Version 0.1.1: 
+	the point [0, ..., 0] is now rejected 
+	added dfschiro2ntriangs; might save memory over chiro2ntriangs
+Version 0.1:
+	first distributed version
