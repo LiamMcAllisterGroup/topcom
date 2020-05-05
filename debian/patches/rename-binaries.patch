@@ -182,3 +182,14 @@ Last-Update: 2020-05-05
  
  LDADD           = ../lib-src/libTOPCOM.a \
                    ../lib-src-reg/libCHECKREG.a \
+--- a/src-reg/Makefile.am
++++ b/src-reg/Makefile.am
+@@ -1,6 +1,6 @@
+-bin_PROGRAMS = checkregularity
++bin_PROGRAMS = topcom-checkregularity
+ 
+-checkregularity_SOURCES = checkregularity.cc
++topcom_checkregularity_SOURCES = checkregularity.cc
+ 
+ LDADD           = ../lib-src-reg/libCHECKREG.a \
+                   ../lib-src/libTOPCOM.a \
