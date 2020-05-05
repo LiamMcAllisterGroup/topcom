@@ -1,6 +1,5 @@
 topcom (0.17.8-1) UNRELEASED; urgency=medium
 
-  * Initial release (Closes: #XXX).
+  * Initial release (Closes: #959826).
 
  -- Doug Torrance <dtorrance@piedmont.edu>  Tue, 05 May 2020 02:37:18 -0400
-
