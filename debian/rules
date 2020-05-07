@@ -1,6 +1,25 @@
 #!/usr/bin/make -f
 
+include /usr/share/dpkg/pkg-info.mk
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+MANS_SOURCES = $(wildcard $(CURDIR)/debian/man/*.1.in) \
+	$(CURDIR)/debian/man/topcom.7.in
+MANS = $(patsubst $(CURDIR)/debian/man/%.in, \
+	$(CURDIR)/debian/man/%, $(MANS_SOURCES))
 
 %:
 	dh $@
+
+override_dh_clean:
+	rm -f $(MANS)
+	dh_clean
+
+override_dh_installman: $(MANS)
+	dh_installman
+
+$(CURDIR)/debian/man/%.1: $(CURDIR)/debian/man/%.1.in
+	sed -e 's|@VERSION[@]|$(DEB_VERSION_UPSTREAM)|g' $< > $@
+
+$(CURDIR)/debian/man/topcom.7: $(CURDIR)/debian/man/topcom.7.in
+	sed -e 's|@VERSION[@]|$(DEB_VERSION_UPSTREAM)|g' $< > $@

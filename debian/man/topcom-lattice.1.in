@@ -1,0 +1,58 @@
+.TH "TOPCOM-LATTICE" "1" "@VERSION@" "TOPCOM" "User Commands"
+.SH "NAME"
+topcom-lattice \- compute the permutations of a lattice
+.SH "SYNOPSIS"
+.B topcom-lattice
+\fIM N\fP
+.SH "DESCRIPTION"
+.PP
+Compute the permutations of a lattice.  The permutations are written to stdout.
+.SH "EXIT STATUS"
+.TP
+0 if the correct number of command line arguments are given.
+.TP
+1 otherwise.
+.SH "SEE ALSO"
+.PP
+\fItopcom\fP(7),
+\fItopcom-B_A\fP(1),
+\fItopcom-B_A_center\fP(1),
+\fItopcom-B_D\fP(1),
+\fItopcom-checkregularity\fP(1),
+\fItopcom-chiro2allfinetriangs\fP(1),
+\fItopcom-chiro2alltriangs\fP(1),
+\fItopcom-chiro2circuits\fP(1),
+\fItopcom-chiro2cocircuits\fP(1),
+\fItopcom-chiro2dual\fP(1),
+\fItopcom-chiro2finetriang\fP(1),
+\fItopcom-chiro2finetriangs\fP(1),
+\fItopcom-chiro2mintriang\fP(1),
+\fItopcom-chiro2nallfinetriangs\fP(1),
+\fItopcom-chiro2nalltriangs\fP(1),
+\fItopcom-chiro2nfinetriangs\fP(1),
+\fItopcom-chiro2ntriangs\fP(1),
+\fItopcom-chiro2placingtriang\fP(1),
+\fItopcom-chiro2triangs\fP(1),
+\fItopcom-cocircuits2facets\fP(1),
+\fItopcom-cross\fP(1),
+\fItopcom-cube\fP(1),
+\fItopcom-cyclic\fP(1),
+\fItopcom-hypersimplex\fP(1),
+\fItopcom-points2allfinetriangs\fP(1),
+\fItopcom-points2alltriangs\fP(1),
+\fItopcom-points2chiro\fP(1),
+\fItopcom-points2facets\fP(1),
+\fItopcom-points2finetriang\fP(1),
+\fItopcom-points2finetriangs\fP(1),
+\fItopcom-points2flips\fP(1),
+\fItopcom-points2nallfinetriangs\fP(1),
+\fItopcom-points2nalltriangs\fP(1),
+\fItopcom-points2nfinetriangs\fP(1),
+\fItopcom-points2nflips\fP(1),
+\fItopcom-points2ntriangs\fP(1),
+\fItopcom-points2placingtriang\fP(1),
+\fItopcom-points2triangs\fP(1),
+\fItopcom-points2volume\fP(1),
+\fItopcom-santos_22_triang\fP(1),
+\fItopcom-santos_dim4_triang\fP(1),
+\fItopcom-santos_triang\fP(1)
