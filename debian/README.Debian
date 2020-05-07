@@ -1,0 +1,21 @@
+TOPCOM for Debian
+-----------------
+
+We make several changes to the upstream package.
+
+* Because of possible clashes with other packages in Debian due to common
+  names (e.g., cube and cross), the prefix "topcom-" has been added to
+  each of the binaries.  This is consistent with several other mathematical
+  packages in Debian, e.g., 4ti2 and nauty.
+
+* Upstream ships tarballs for the gmp and cdd libraries and always uses them
+  when building TOPCOM.  We use a repacked tarball without these librarise
+  and instead build with the corresponding Debian packages.
+
+* We have added manpages, adapted from those written by Jerry James
+  <loganjerry@gmail.com> using text from the sources for the Fedora package
+  of TOPCOM.  In addition to adding the "topcom-" prefix where appropriate,
+  we also insert the upstream version number during build instead of
+  hardcoding it.
+
+ -- Doug Torrance <dtorrance@piedmont.edu>, Thu,  7 May 2020 09:43:15 -0400
