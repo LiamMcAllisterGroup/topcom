@@ -2,6 +2,9 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: TOPCOM
 Upstream-Contact: Jörg Rambau <joerg.rambau@ni-bayreuth.de>
 Source: http://www.rambau.wm.uni-bayreuth.de/TOPCOM/
+Files-Excluded: external
+Comment: Upstream ships tarballs of the gmp and cdd libraries, but we use
+ Debian packages instead.
 
 Files: *
 Copyright: 1999-2002 Jörg Rambau <rambau@zib.de>

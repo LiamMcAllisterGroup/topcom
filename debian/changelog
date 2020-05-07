@@ -1,4 +1,4 @@
-topcom (0.17.8-1) UNRELEASED; urgency=medium
+topcom (0.17.8+ds-1) UNRELEASED; urgency=medium
 
   * Initial release (Closes: #959826).
 
