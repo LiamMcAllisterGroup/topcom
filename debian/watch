@@ -1,3 +1,3 @@
 version=4
-opts="repacksuffix=+ds" \
+opts="repacksuffix=+ds,dversionmangle=auto" \
 http://www.rambau.wm.uni-bayreuth.de/Software/TOPCOM@ANY_VERSION@@ARCHIVE_EXT@
