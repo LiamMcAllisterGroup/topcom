@@ -1,0 +1,7 @@
+examples/*.chiro
+examples/*.dat
+examples/*.jvx
+examples/*.poly
+examples/*.res
+examples/*.result
+examples/*.results
