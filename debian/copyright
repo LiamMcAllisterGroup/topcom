@@ -1,0 +1,23 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: TOPCOM
+Upstream-Contact: Jörg Rambau <joerg.rambau@ni-bayreuth.de>
+Source: http://www.rambau.wm.uni-bayreuth.de/TOPCOM/
+
+Files: *
+Copyright: 1999-2002 Jörg Rambau <rambau@zib.de>
+License: GPL-2+
+
+Files: debian/*
+Copyright: 2020 Doug Torrance <dtorrance@piedmont.edu>
+License: GPL-2+
+
+License: GPL-2+
+ This software is Copyright (c) 2020 by foo.
+ This is free software, licensed under:
+ The GNU General Public License, Version 2, June 1991
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; version 2 dated June, 1991, or (at
+ your option) any later version.
+ On Debian systems, the complete text of version 2 of the GNU General
+ Public License can be found in '/usr/share/common-licenses/GPL-2'.
