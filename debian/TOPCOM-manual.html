@@ -1,0 +1,485 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  
+  "http://www.w3.org/TR/html4/loose.dtd">  
+<html > 
+<head><title>TOPCOM User Manual</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
+<!-- html --> 
+<meta name="src" content="manual.tex"> 
+<meta name="date" content="2008-05-07 10:12:00"> 
+<link rel="stylesheet" type="text/css" href="TOPCOM-manual.css"> 
+</head><body 
+>
+   <div class="maketitle">
+
+
+
+<h2 class="titleHead">TOPCOM User Manual</h2>
+          <div class="author" ><span 
+class="cmr-12x-x-120">J</span><span 
+class="cmr-12x-x-120">örg Rambau</span>
+<br /><span 
+class="cmr-12x-x-120">Universt</span><span 
+class="cmr-12x-x-120">ät Bayreuth, Germany</span></div>
+<br />
+<div class="date" ><span 
+class="cmr-12x-x-120">May 7, 2008</span></div>
+   </div>
+
+   <table 
+class="verbatim"><tr class="verbatim"><td 
+class="verbatim"><div class="verbatim">
+</div>
+</td></tr></table>
+<!--l. 14--><p class="nopar" >
+   <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
+ id="x1-10001"></a>What is TOPCOM?</h3>
+<!--l. 20--><p class="noindent" >TOPCOM is a collection of clients to compute <span 
+class="cmti-12">Triangulations Of Point Configurations</span>
+<span 
+class="cmti-12">and Oriented Matroids</span>, resp.
+<!--l. 23--><p class="indent" >   The algorithms use only combinatorial data of the point configuration as is given by
+its oriented matroid. Some basic commands for computing and manipulating oriented
+matroids can also be accessed by the user.
+<!--l. 28--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
+ id="x1-20002"></a>How do I use TOPCOM?</h3>
+<!--l. 31--><p class="noindent" >All programs read the input from <span 
+class="cmtt-12">stdin </span>and write the result to <span 
+class="cmtt-12">stdout </span>so that you can
+pipe the results to the next command.
+<!--l. 34--><p class="indent" >   A point configuration is given by a matrix (enclosed in square brackets) whose
+columns (enclosed in square brackets) are the homogeneous coordinates (seperated by
+commas) of the points in the configuration. A square could be specified as
+follows.
+
+   <table 
+class="verbatim"><tr class="verbatim"><td 
+class="verbatim"><div class="verbatim">
+&#x00A0;&#x00A0;&#x00A0;&#x00A0;[[0,0,1],[0,1,1],[1,0,1],[1,1,1]]
+</div>
+</td></tr></table>
+<!--l. 41--><p class="nopar" >
+<!--l. 43--><p class="indent" >   You may specify generators of the combinatorial symmetry of a point configuration
+as permutations of the vertex numbers. The symmetry of the square reads as follows
+(observe that the count starts at 0!):
+
+   <table 
+class="verbatim"><tr class="verbatim"><td 
+class="verbatim"><div class="verbatim">
+&#x00A0;&#x00A0;&#x00A0;&#x00A0;[[3,2,1,0],[2,3,0,1],[0,2,1,3]]
+</div>
+</td></tr></table>
+<!--l. 49--><p class="nopar" >
+<!--l. 51--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
+ id="x1-30003"></a>Commands</h3>
+<!--l. 54--><p class="noindent" >The following commands are provided:
+      <dl class="description"><dt class="description">
+<span 
+class="cmtt-12">points2chiro</span> </dt><dd 
+class="description">Computes the chirotope of a point configuration.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">chiro2dual</span> </dt><dd 
+class="description">Computes the dual of a chirotope.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">chiro2circuits</span> </dt><dd 
+class="description">Computes the circuits of a chirotope.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">chiro2cocircuits</span> </dt><dd 
+class="description">Computes the circuits of a chirotope.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">cocircuits2facets</span> </dt><dd 
+class="description">Computes the facets of a set of cocircuits.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">points2facets</span> </dt><dd 
+class="description">Computes the facets of a point configuration.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">points2nflips</span> </dt><dd 
+class="description">Computes the number of flips of a point configurations and the
+      seed triangulation.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">points2flips</span> </dt><dd 
+class="description">Computes  all  flips  of  a  point  configurations  and  the  seed
+      triangulation.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">chiro2placingtriang</span> </dt><dd 
+class="description">Computes the placing triangulation of a chirotope given
+      by the numbering of the elements.
+
+      </dd><dt class="description">
+<span 
+class="cmtt-12">points2placingtriang</span> </dt><dd 
+class="description">dto.&#x00A0;for point configurations.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">chiro2finetriang</span> </dt><dd 
+class="description">Computes  a  fine  (i.e.,  using  all  vertices)  triangulation  by
+      placing and pushing.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">points2finetriang</span> </dt><dd 
+class="description">dto.&#x00A0;for point configurations.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">chiro2triangs</span> </dt><dd 
+class="description">Computes all triangulations of a chirotope that are connected by
+      bistellar flips to the regular triangulations.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">points2triangs</span> </dt><dd 
+class="description">dto.&#x00A0;for point configurations.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">chiro2ntriangs</span> </dt><dd 
+class="description">Computes the number of all triangulations of a chirotope that
+      are connected by bistellar flips to the regular triangulations.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">points2ntriangs</span> </dt><dd 
+class="description">dto.&#x00A0;for point configurations.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">chiro2finetriangs</span> </dt><dd 
+class="description">Computes  all  fine  triangulations  of  a  chirotope  that  are
+      connected by bistellar flips to a fine seed triangulation.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">points2finetriangs</span> </dt><dd 
+class="description">dto.&#x00A0;for point configurations.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">chiro2nfinetriangs</span> </dt><dd 
+class="description">Computes  the  number  of  all  fine  triangulations  of  a
+      chirotope that are connected by bistellar flips to a fine seed triangulation.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">points2nfinetriangs</span> </dt><dd 
+class="description">dto.&#x00A0;for point configurations.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">chiro2alltriangs</span> </dt><dd 
+class="description">Computes all triangulations of a chirotope.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">points2alltriangs</span> </dt><dd 
+class="description">dto.&#x00A0;for point configurations.
+
+      </dd><dt class="description">
+<span 
+class="cmtt-12">chiro2nalltriangs</span> </dt><dd 
+class="description">Computes the number of all triangulations of a chirotope.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">points2nalltriangs</span> </dt><dd 
+class="description">dto.&#x00A0;for point configurations.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">chiro2allfinetriangs</span> </dt><dd 
+class="description">Computes all fine triangulations of a chirotope.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">points2allfinetriangs</span> </dt><dd 
+class="description">dto.&#x00A0;for point configurations.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">chiro2nallfinetriangs</span> </dt><dd 
+class="description">Computes  the  number  of  all  fine  triangulations  of  a
+      chirotope.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">points2nallfinetriangs</span> </dt><dd 
+class="description">dto.&#x00A0;for point configurations.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">cube d</span> </dt><dd 
+class="description">Computes the vertices and symmetry generators of a <span 
+class="cmmi-12">d</span>-cube.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">cyclic n d</span> </dt><dd 
+class="description">Computes  the  vertices  and  symmetry  generators  of  the  cyclic
+      <span 
+class="cmmi-12">d</span>-polytope with <span 
+class="cmmi-12">n </span>vertices.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">cross d</span> </dt><dd 
+class="description">Computes the vertices of the <span 
+class="cmmi-12">d</span>-dimensional cross-polytope.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">hypersimplex k d</span> </dt><dd 
+class="description">Computes the vertices and symmetry generators of the <span 
+class="cmmi-12">k</span>-th
+      hypersimplex in dimension&#x00A0;<span 
+class="cmmi-12">d</span>.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">santos</span><span 
+class="cmtt-12">_triang</span> </dt><dd 
+class="description">Computes the point configuration, the symmetry, and the Santos
+      triangulation (without flips).</dd></dl>
+<!--l. 124--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
+ id="x1-40004"></a>Command Line Options</h3>
+<!--l. 127--><p class="noindent" >The following command line options are supported:
+
+<!--l. 129--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-50004"></a>Options controlling the overall behaviour of clients</h4>
+<!--l. 130--><p class="noindent" >
+      <dl class="description"><dt class="description">
+<span 
+class="cmtt-12">-d</span> </dt><dd 
+class="description">Debug.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">-h</span> </dt><dd 
+class="description">Print a usage message.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">-v</span> </dt><dd 
+class="description">Verbose.</dd></dl>
+<!--l. 136--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-60004"></a>Options controlling what is computed</h4>
+<!--l. 137--><p class="noindent" >
+      <dl class="description"><dt class="description">
+<span 
+class="cmtt-12">--cardinality </span>[<span 
+class="cmmi-12">k</span>] </dt><dd 
+class="description">Count only triangulations with exactly <span 
+class="cmmi-12">k </span>simplices.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--checktriang</span> </dt><dd 
+class="description">Check seed triangulation.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--flipdeficiency</span> </dt><dd 
+class="description">Check triangulations for flip deficiency.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--frequency </span>[<span 
+class="cmmi-12">k</span>] </dt><dd 
+class="description">Check every <span 
+class="cmmi-12">k</span>-th triangulation for regularity and stop if one is
+      found.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--heights</span> </dt><dd 
+class="description">Output  a  height  vector  for  every  regular  triangulation  (implies
+      <span 
+class="cmtt-12">--regular</span>).
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--noinsertion</span> </dt><dd 
+class="description">Never add a point that is unused in the seed triangulation.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--reducepoints</span> </dt><dd 
+class="description">Try to greedily minimize the number of vertices used; keep a
+      global upper bound on the current minimal number of vertices and do not
+      accept triangulations with more vertices.
+
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--regular</span> </dt><dd 
+class="description">Search for regular triangulations only (checked liftings are w.r.t.&#x00A0;the
+      last homogeneous coordinate, e.g., last coordinates all ones is fine); note that
+      this may reduce the effort of exploration, since regular triangulations are
+      connected by themselves.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--nonregular</span> </dt><dd 
+class="description">Output non-regular triangulations only; note that this does not
+      reduce  the  effort  of  exploration,  since  non-regular  triangulations  are  in
+      general not connected by themselves.</dd></dl>
+<!--l. 158--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-70004"></a>Options controlling the internals of the clients</h4>
+<!--l. 159--><p class="noindent" >
+      <dl class="description"><dt class="description">
+<span 
+class="cmtt-12">--chirocache </span>[<span 
+class="cmmi-12">n</span>] </dt><dd 
+class="description">Set the chirotope cache to <span 
+class="cmmi-12">n </span>elements.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--localcache </span>[<span 
+class="cmmi-12">n</span>] </dt><dd 
+class="description">Set the cache for local operations.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--memopt</span> </dt><dd 
+class="description">Save memory by using caching techniques.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--soplex</span> </dt><dd 
+class="description">Use soplex instead of cdd for regularity checks (unstable).</dd></dl>
+<!--l. 166--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">4.1   </span> <a 
+ id="x1-80004.1"></a>Options for warm starts from previous calculations</h4>
+<!--l. 168--><p class="noindent" >
+      <dl class="description"><dt class="description">
+<span 
+class="cmtt-12">--dump</span> </dt><dd 
+class="description">Write intermediate results into a file.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--dumpfile </span>[<span 
+class="cmtt-12">dumpfilename</span>] </dt><dd 
+class="description">Write intermediate results into file <span 
+class="cmtt-12">dumpfilename</span>
+      (default: <span 
+class="cmtt-12">TOPCOM.dump</span>).
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--dumpfrequency </span>[<span 
+class="cmmi-12">k</span>] </dt><dd 
+class="description">Dump the results of each <span 
+class="cmmi-12">k</span>th BFS round
+
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--dumprotations </span>[<span 
+class="cmmi-12">k</span>] </dt><dd 
+class="description">Dump into <span 
+class="cmmi-12">k </span>different rotating files.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--read</span> </dt><dd 
+class="description">Read intermediate results from a file.
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--readfile </span>[<span 
+class="cmtt-12">readfilename</span>] </dt><dd 
+class="description">Read intermediate results from file <span 
+class="cmtt-12">dumpfilename</span>
+      (default: <span 
+class="cmtt-12">TOPCOM.dump</span>).</dd></dl>
+<!--l. 183--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
+ id="x1-90005"></a>Examples</h3>
+<!--l. 186--><p class="noindent" >In the subdirectory <span 
+class="cmtt-12">examples </span>you find some example inputs for TOPCOM routines. For
+example,
+
+   <table 
+class="verbatim"><tr class="verbatim"><td 
+class="verbatim"><div class="verbatim">
+&#x00A0;&#x00A0;points2chiro&#x00A0;&#x003C;&#x00A0;lattice_3_3.dat
+</div>
+</td></tr></table>
+<!--l. 191--><p class="nopar" >
+<!--l. 193--><p class="indent" >   outputs the sign string of the chirotope of the sub-lattice of integer points (<span 
+class="cmmi-12">i,j</span>) with
+<span 
+class="cmmi-12">i,j </span>= 0<span 
+class="cmmi-12">, </span>1<span 
+class="cmmi-12">, </span>2.
+
+   <table 
+class="verbatim"><tr class="verbatim"><td 
+class="verbatim"><div class="verbatim">
+&#x00A0;&#x00A0;points2chiro&#x00A0;&#x003C;&#x00A0;lattice_3_3.dat&#x00A0;|&#x00A0;chiro2ntriangs
+</div>
+</td></tr></table>
+<!--l. 198--><p class="nopar" >
+<!--l. 200--><p class="indent" >   or
+
+   <table 
+class="verbatim"><tr class="verbatim"><td 
+class="verbatim"><div class="verbatim">
+&#x00A0;&#x00A0;points2ntriangs&#x00A0;&#x003C;&#x00A0;lattice_3_3.dat
+</div>
+</td></tr></table>
+<!--l. 204--><p class="nopar" >
+<!--l. 206--><p class="indent" >   yields the number of triangulations that are connected to the regular ones by
+bistellar flips.
+
+   <table 
+class="verbatim"><tr class="verbatim"><td 
+class="verbatim"><div class="verbatim">
+&#x00A0;&#x00A0;points2ntriangs&#x00A0;-r&#x00A0;--affine&#x00A0;&#x003C;&#x00A0;moae_testfile
+</div>
+</td></tr></table>
+<!--l. 211--><p class="nopar" > counts all regular triangulations of the &#8220;mother of all examples&#8221;, two nested triangles
+in the plane.
+
+   <table 
+class="verbatim"><tr class="verbatim"><td 
+class="verbatim"><div class="verbatim">
+&#x00A0;&#x00A0;points2chiro&#x00A0;&#x003C;&#x00A0;lattice_3_3.dat&#x00A0;|&#x00A0;chiro2nalltriangs
+</div>
+</td></tr></table>
+<!--l. 217--><p class="nopar" >
+<!--l. 219--><p class="indent" >   yields the number of all triangulations via a branch &amp; bound algorithm. For large
+examples this routine may take a lot of time but since it branches in a DFS manner it
+does not take a lot of memory.
+<!--l. 223--><p class="indent" >   The example <span 
+class="cmtt-12">r12.chiro </span>is the chirotope of the oriented matroid <span 
+class="cmmi-12">R</span>12 with
+disconnected realization space, constructed by Jürgen Richter-Gebert. If you want to
+compute, e.g., a placing triangulation of <span 
+class="cmmi-12">R</span>12 then type
+
+   <table 
+class="verbatim"><tr class="verbatim"><td 
+class="verbatim"><div class="verbatim">
+&#x00A0;&#x00A0;chiro2placingtriang&#x00A0;&#x003C;&#x00A0;r12.chiro
+</div>
+</td></tr></table>
+<!--l. 230--><p class="nopar" >
+<!--l. 232--><p class="indent" >   The facets of a 4-cube can be computed by
+
+   <table 
+class="verbatim"><tr class="verbatim"><td 
+class="verbatim"><div class="verbatim">
+&#x00A0;&#x00A0;cube&#x00A0;4&#x00A0;|&#x00A0;points2chiro&#x00A0;|&#x00A0;chiro2dual&#x00A0;|&#x00A0;\
+&#x00A0;<br />&#x00A0;&#x00A0;chiro2circuits&#x00A0;|&#x00A0;cocircuits2facets
+</div>
+</td></tr></table>
+<!--l. 237--><p class="nopar" >
+<!--l. 239--><p class="indent" >   but be aware of the fact that this is not an efficient way of computing facets of a
+point configuration. It is, however, numerically stable because rational arithmetics is
+used.
+<!--l. 243--><p class="indent" >   Finally, you can check the Santos triangulation by
+
+   <table 
+class="verbatim"><tr class="verbatim"><td 
+class="verbatim"><div class="verbatim">
+&#x00A0;&#x00A0;santos_triang&#x00A0;|&#x00A0;points2nflips&#x00A0;-v&#x00A0;--memopt&#x00A0;--checktriang
+</div>
+</td></tr></table>
+<!--l. 247--><p class="nopar" >
+<!--l. 249--><p class="indent" >   Recall that the options mean:
+<!--l. 251--><p class="indent" >
+      <dl class="description"><dt class="description">
+<span 
+class="cmtt-12">-v</span> </dt><dd 
+class="description">verbose;
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--memopt</span> </dt><dd 
+class="description">save memory;
+      </dd><dt class="description">
+<span 
+class="cmtt-12">--checktriang</span> </dt><dd 
+class="description">check seed triangulation.</dd></dl>
+    
+</body></html> 
+
+
+

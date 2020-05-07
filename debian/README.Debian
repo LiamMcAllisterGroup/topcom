@@ -18,4 +18,8 @@ We make several changes to the upstream package.
   we also insert the upstream version number during build instead of
   hardcoding it.
 
- -- Doug Torrance <dtorrance@piedmont.edu>, Thu,  7 May 2020 09:43:15 -0400
+* We include the html manual.  This is not shipped with the source, but
+  can be downloaded from:
+  http://www.rambau.wm.uni-bayreuth.de/TOPCOM/TOPCOM-manual.html.
+
+ -- Doug Torrance <dtorrance@piedmont.edu>, Thu,  7 May 2020 11:04:01 -0400
