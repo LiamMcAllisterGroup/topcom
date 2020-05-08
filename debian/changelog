@@ -1,5 +1,5 @@
-topcom (0.17.8+ds-1) UNRELEASED; urgency=medium
+topcom (0.17.8+ds-1) unstable; urgency=low
 
   * Initial release (Closes: #959826).
 
- -- Doug Torrance <dtorrance@piedmont.edu>  Tue, 05 May 2020 02:37:18 -0400
+ -- Doug Torrance <dtorrance@piedmont.edu>  Fri, 08 May 2020 00:10:59 -0400
