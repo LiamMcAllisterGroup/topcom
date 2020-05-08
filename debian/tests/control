@@ -1,0 +1,2 @@
+Test-Command: topcom-cube 4 |
+  diff /usr/share/doc/topcom-examples/examples/cube_4.dat -
