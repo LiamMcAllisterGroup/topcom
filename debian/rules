@@ -9,6 +9,9 @@ MANS = $(patsubst $(CURDIR)/debian/man/%.in, \
 	$(CURDIR)/debian/man/%, $(MANS_SOURCES))
 VERSION = $(shell echo $(DEB_VERSION_UPSTREAM) | sed 's|+ds||')
 
+# for reproducible manual
+export FORCE_SOURCE_DATE=1
+
 %:
 	dh $@
 
