@@ -3,8 +3,24 @@ topcom (0.17.8+ds-2) unstable; urgency=medium
   * Source-only upload needed for migration to testing.
   * debian/control
     - Mark topcom-examples as Multi-Arch: foreign.
+    - Add texlive-latex-base and texlive-plain-generic to Build-Depends;
+      need htlatex to generate manual.
+    - Remove unnecessary shlibs:Depends from topcom-examples.
+  * debian/manual.tex
+    - New file; obtained from topcom 0.14.0 source.
+  * debian/README.Debian
+    - Add note about how we now generate the manual.
+  * debian/rules
+    - New override_dh_installdocs target; convert README to UTF-8.
+    - Generate html manual from TeX source.
+  * debian/topcom.doc-base
+    - Update path to html manual.
+  * debian/topcom.docs
+    - Update path to html manual and include css file.
+  * debian/TOPCOM-manual.html
+    - Remove file; we will generate from source instead.
 
- -- Doug Torrance <dtorrance@piedmont.edu>  Sat, 04 Jul 2020 20:52:32 -0400
+ -- Doug Torrance <dtorrance@piedmont.edu>  Sun, 05 Jul 2020 08:34:24 -0400
 
 topcom (0.17.8+ds-1) unstable; urgency=low
 
