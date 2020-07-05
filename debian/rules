@@ -16,6 +16,10 @@ override_dh_clean:
 	rm -f $(MANS)
 	dh_clean
 
+override_dh_installdocs:
+	iconv -f ISO-8859-1 -t UTF-8 $(CURDIR)/README -o $(CURDIR)/README
+	dh_installdocs
+
 override_dh_installman: $(MANS)
 	dh_installman
 
