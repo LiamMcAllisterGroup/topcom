@@ -3,7 +3,11 @@ Section: math
 Priority: optional
 Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
 Uploaders: Doug Torrance <dtorrance@piedmont.edu>
-Build-Depends: debhelper-compat (= 13), libcdd-dev, libgmp-dev
+Build-Depends: debhelper-compat (= 13),
+               libcdd-dev,
+               libgmp-dev,
+               texlive-latex-base,
+               texlive-plain-generic
 Standards-Version: 4.5.0
 Homepage: http://www.rambau.wm.uni-bayreuth.de/TOPCOM/
 Vcs-Git: https://salsa.debian.org/science-team/topcom.git
