@@ -28,6 +28,7 @@ Description: Triangulations Of Point Configurations and Oriented Matroids
 
 Package: topcom-examples
 Architecture: all
+Multi-Arch: foreign
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Triangulations Of Point Configs and Oriented Matroids (examples)
  TOPCOM is a collection of clients to compute Triangulations Of Point
