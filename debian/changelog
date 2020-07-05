@@ -7,7 +7,7 @@ topcom (0.17.8+ds-2) unstable; urgency=medium
       need htlatex to generate manual.
     - Remove unnecessary shlibs:Depends from topcom-examples.
   * debian/manual.tex
-    - New file; obtained from topcom 0.14.0 source.
+    - New file; obtained from topcom 0.15.3 source.
   * debian/README.Debian
     - Add note about how we now generate the manual.
   * debian/rules
