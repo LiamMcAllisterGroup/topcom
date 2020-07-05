@@ -18,6 +18,7 @@ override_dh_clean:
 
 override_dh_installdocs:
 	iconv -f ISO-8859-1 -t UTF-8 $(CURDIR)/README -o $(CURDIR)/README
+	htlatex debian/manual.tex "xhtml,html5,charset=utf-8" " -cunihtf -utf8"
 	dh_installdocs
 
 override_dh_installman: $(MANS)
