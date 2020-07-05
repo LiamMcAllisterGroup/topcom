@@ -18,8 +18,10 @@ We make several changes to the upstream package.
   we also insert the upstream version number during build instead of
   hardcoding it.
 
-* We include the html manual.  This is not shipped with the source, but
-  can be downloaded from:
+* We include the html manual.  This has not been shipped with the source
+  since version 0.14.0, but is available on the upstream webpage:
   http://www.rambau.wm.uni-bayreuth.de/TOPCOM/TOPCOM-manual.html.
+  We regenerate it using the TeX source from the 0.14.0 tarball:
+  http://www.rambau.wm.uni-bayreuth.de/Software/TOPCOM-0.14.0.tar.gz
 
- -- Doug Torrance <dtorrance@piedmont.edu>, Thu,  7 May 2020 11:04:01 -0400
+ -- Doug Torrance <dtorrance@piedmont.edu>, Sun,  5 Jul 2020 08:30:09 -0400
