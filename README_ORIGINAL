@@ -1,9 +1,9 @@
 ==========================================================================
   TOPCOM: Triangulations of Point Configurations and Oriented Matroids
-               Version 0.9.1 by Jörg Rambau - 10 Jul 2002
+               Version 0.9.1 by JÃ¶rg Rambau - 10 Jul 2002
 ==========================================================================
 
-Copyright (C) 1999--2002 Jörg Rambau (rambau@zib.de)
+Copyright (C) 1999--2002 JÃ¶rg Rambau (rambau@zib.de)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Suite 500, Boston, MA  02110-1335  USA
 See the file INSTALL for generic installation instructions.
 
 
-IMPORTANT: 
+IMPORTANT:
 
 (1) You need at least gcc3.0 to build this package.
 
@@ -31,12 +31,12 @@ gmp version 4.1 or higher a copy of gmp-4.1 is included.  See the file INSTALL
 for instructions how to build and install gmp-4.1 locally.
 
 (3) On some installations of Linux the linker flag `-static' must be added in
-src/Makefile.am.  Otherwise one might get undefined references from the stdc++ 
+src/Makefile.am.  Otherwise one might get undefined references from the stdc++
 library.  Unfortunately, some systems do not allow the `-static' flag.  Since it
 mostly works without this flag, the default is not to have it set.
 
 Further references: For details concerning the Santos triangulation see
-Francisco Santos' paper 
+Francisco Santos' paper
 
-	``A Point Set whose Space of Triangulations is Disconnected'' 
+	``A Point Set whose Space of Triangulations is Disconnected''
 	Journal of the American Mathematical Society.
