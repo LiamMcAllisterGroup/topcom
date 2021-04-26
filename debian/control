@@ -16,7 +16,7 @@ Rules-Requires-Root: no
 
 Package: topcom
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}
+Depends: ${misc:Depends}
 Recommends: topcom-examples
 Description: Triangulations Of Point Configurations and Oriented Matroids
  TOPCOM is a collection of clients to compute Triangulations Of Point
