@@ -4,7 +4,7 @@ Upstream-Contact: Jörg Rambau <joerg.rambau@ni-bayreuth.de>
 Source: http://www.rambau.wm.uni-bayreuth.de/TOPCOM/
 Files-Excluded: external
 Comment: Upstream ships tarballs of the gmp and cdd libraries, but we use
- Debian packages instead.
+ Debian packages instead. Further functionality for CYTools was also included.
 
 Files: *
 Copyright: 1999-2002 Jörg Rambau <rambau@zib.de>
@@ -14,8 +14,12 @@ Files: debian/*
 Copyright: 2020 Doug Torrance <dtorrance@piedmont.edu>
 License: GPL-2+
 
+Files: README.md debian/patches/cytools-mod.patch
+Copyright: 2021 Liam McAllister Group
 License: GPL-2+
- This software is Copyright (c) 2020 by foo.
+
+License: GPL-2+
+ This software is Copyright (c) 2021 by foo.
  This is free software, licensed under:
  The GNU General Public License, Version 2, June 1991
  This program is free software; you can redistribute it and/or modify

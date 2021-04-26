@@ -1,3 +1,9 @@
+topcom (0.17.8+ds-2+cytools-1) unstable; urgency=medium
+
+  * Added functionality to compute \mathcal{K}_\cup and perform random walks in the graph of triangulations.
+
+ -- Andres Rios Tascon <ar2285@cornell.edu>  Mon, 26 Apr 2021 16:34:24 -0500
+
 topcom (0.17.8+ds-2) unstable; urgency=medium
 
   * Source-only upload needed for migration to testing.

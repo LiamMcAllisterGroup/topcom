@@ -25,3 +25,17 @@ We make several changes to the upstream package.
   http://www.rambau.wm.uni-bayreuth.de/Software/TOPCOM-0.15.3.tar.gz
 
  -- Doug Torrance <dtorrance@piedmont.edu>, Sun,  5 Jul 2020 08:30:09 -0400
+
+
+TOPCOM Mod for CYTools
+----------------------
+
+This version of TOPCOM contains additional functionality compared to the
+original one. In particular, it has the ability to perform random walks in the
+graph of triangulations by performing random flips, and it can compute
+$$\mathcal{K}_\cup$$ (i.e. the union of the Kähler cones of toric varieties
+containing a particular Calabi-Yau hypersurface that is unchanged under the
+transition to any of those varieties). These tools can be used with the
+binaries ```topcom-randomwalk``` and ```topcom-computekcup```.
+
+ -- Andres Rios-Tascon <ar2285@cornell.edu>
