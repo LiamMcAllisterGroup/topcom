@@ -10,8 +10,8 @@ Build-Depends: debhelper-compat (= 13),
                texlive-plain-generic
 Standards-Version: 4.6.0
 Homepage: https://www.wm.uni-bayreuth.de/de/team/rambau_joerg/TOPCOM/
-Vcs-Git: https://salsa.debian.org/science-team/topcom.git
-Vcs-Browser: https://salsa.debian.org/science-team/topcom
+Vcs-Git: https://salsa.debian.org/math-team/topcom.git
+Vcs-Browser: https://salsa.debian.org/math-team/topcom
 Rules-Requires-Root: no
 
 Package: topcom
