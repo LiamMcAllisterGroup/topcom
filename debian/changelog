@@ -1,3 +1,24 @@
+topcom (0.17.8+ds-3) unstable; urgency=medium
+
+  * debian/control
+    - Update Maintainer to Debian Math Team.
+    - Bump Standards-Version to 4.6.0.
+    - Update Homepage URL.
+    - Update Vcs-* fields (science-team -> math-team).
+  * debian/copyright
+    - Update my copyright years.
+    - Update Source URL.
+  * debian/README.Debian
+    - Update URL for manual.
+    - Update note about source of manual; the tarball it was obtained
+      from is no longer available online.
+  * debian/watch
+    - Update with new download URL.  Also adjust regular expression
+      for matching version number and add a uversionmangle option, as
+      upstream now uses _'s instead of .'s.
+
+ -- Doug Torrance <dtorrance@piedmont.edu>  Tue, 09 Nov 2021 12:19:06 -0500
+
 topcom (0.17.8+ds-2) unstable; urgency=medium
 
   * Source-only upload needed for migration to testing.
