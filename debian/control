@@ -1,7 +1,7 @@
 Source: topcom
 Section: math
 Priority: optional
-Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
+Maintainer: Debian Math Team <team+math@tracker.debian.org>
 Uploaders: Doug Torrance <dtorrance@piedmont.edu>
 Build-Depends: debhelper-compat (= 13),
                libcdd-dev,
