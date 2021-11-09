@@ -20,7 +20,7 @@ We make several changes to the upstream package.
 
 * We include the html manual.  This has not been shipped with the source
   since version 0.15.3, but is available on the upstream webpage:
-  http://www.rambau.wm.uni-bayreuth.de/TOPCOM/TOPCOM-manual.html.
+  https://www.wm.uni-bayreuth.de/de/team/rambau_joerg/TOPCOM-Manual/index.html
   We regenerate it using the TeX source from the 0.15.3 tarball:
   http://www.rambau.wm.uni-bayreuth.de/Software/TOPCOM-0.15.3.tar.gz
 
