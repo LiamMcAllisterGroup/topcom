@@ -8,7 +8,7 @@ Build-Depends: debhelper-compat (= 13),
                libgmp-dev,
                texlive-latex-base,
                texlive-plain-generic
-Standards-Version: 4.5.0
+Standards-Version: 4.6.0
 Homepage: http://www.rambau.wm.uni-bayreuth.de/TOPCOM/
 Vcs-Git: https://salsa.debian.org/science-team/topcom.git
 Vcs-Browser: https://salsa.debian.org/science-team/topcom
