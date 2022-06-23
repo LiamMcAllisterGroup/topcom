@@ -41,7 +41,7 @@ Last-Update: 2022-06-23
  AM_CPPFLAGS     = -I../lib-src 
  AM_CPPFLAGS    += -I../wrap-gmp-gmpxx
 -AM_CPPFLAGS    += -I../external/include
-+AM_CPPFLAGS    += -I/usr/include/cdd
++AM_CPPFLAGS    += -I/usr/include/cddlib
  AM_CPPFLAGS    += -I$(includedir)
  
  AM_CPPFLAGS    += -DVERBOSE -DGMPRATIONAL -ftemplate-depth-30
@@ -60,7 +60,7 @@ Last-Update: 2022-06-23
  AM_CPPFLAGS    += -I../lib-src-reg
  AM_CPPFLAGS    += -I../wrap-gmp-gmpxx
 -AM_CPPFLAGS    += -I../external/include
-+AM_CPPFLAGS    += -I/usr/include/cdd
++AM_CPPFLAGS    += -I/usr/include/cddlib
  AM_CPPFLAGS    += -I$(includedir)
  
  
@@ -82,7 +82,7 @@ Last-Update: 2022-06-23
  AM_CPPFLAGS     = -I../lib-src-reg
  AM_CPPFLAGS    += -I../wrap-gmp-gmpxx
 -AM_CPPFLAGS    += -I../external/include
-+AM_CPPFLAGS    += -I/usr/include/cdd
++AM_CPPFLAGS    += -I/usr/include/cddlib
  AM_CPPFLAGS    += -I$(includedir)
  
  AM_CPPFLAGS    += -DVERBOSE -DGMPRATIONAL -ftemplate-depth-35
