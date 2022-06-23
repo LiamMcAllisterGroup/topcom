@@ -1,3 +1,5 @@
+version 0.17.9: issue an error message when "--regular" is given but all
+	triangulations shall be computed
 version 0.17.8: pure bugfix: the wrong version of gmp was packaged;
 	must be 6.1.1 by now
 version 0.17.7: fixed a bug in SPXinterface.cc where a new[] had a
