@@ -1,3 +1,9 @@
+topcom (0.17.10+ds-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+
+ -- Doug Torrance <dtorrance@debian.org>  Wed, 22 Jun 2022 22:42:30 -0400
+
 topcom (0.17.8+ds-3) unstable; urgency=medium
 
   * debian/control
