@@ -1,3 +1,4 @@
+
 ////////////////////////////////////////////////////////////////////////////////
 // 
 // Flip.hh 
@@ -23,8 +24,6 @@
 
 typedef SimplicialComplex                     outflip_type;
 typedef outflip_type                          inflip_type;
-
-// typedef dependent_set_type                    fliprep_type;
 typedef Circuit                               fliprep_type;
 
 typedef Pair<outflip_type, inflip_type>       flip_type;
@@ -68,6 +67,12 @@ public:
   inline bool is_balanced() const {
     return (first.card() == second.card());
   }
+  inline const size_type keysize() const {
+    return 2;
+  }
+  inline const size_type key(const size_type n) const {
+    return n < first.keysize() ? first.key(n) : second.key(n - first.keysize());
+  }
 };
 
 class Flip : public flip_type {
@@ -98,6 +103,7 @@ private:
   void _construct(const TriangNode&, const Circuit&);
   void _construct(const Chirotope& chiro, const TriangNode& tn, const dependent_set_type& ds);
 };
+
 
 #endif
 

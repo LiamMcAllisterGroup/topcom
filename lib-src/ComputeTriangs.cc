@@ -155,8 +155,14 @@ int ComputeTriangs::run(const int flags) {
     std::cerr << "------------------------------------------------------------\n";
     std::cerr << std::endl;
   }
+
+  // terminate if non-consistent options have been chosen:
   if (input_chiro && CommandlineOptions::check_regular()) {
     std::cerr << "regularity check not possible if only chirotope is given; exiting." << std::endl;
+    exit(1);
+  }
+  if (compute_all && CommandlineOptions::check_regular()) {
+    std::cerr << "regularity check not supported for computation of all triangulations; exiting." << std::endl;
     exit(1);
   }
 
@@ -378,16 +384,22 @@ int ComputeTriangs::run(const int flags) {
       const TriangNode tn(0, no, rank, seed);
       const TriangFlips tf(chiro, tn, seed_symmetries, fine_only);
       if (CommandlineOptions::verbose()) {
-// 	std::cerr << tf.flips().load() << " flips in total." << std::endl;
+#ifndef STL_FLIPS
+	std::cerr << tf.flips().load() << " flips in total." << std::endl;
+#else
 	std::cerr << tf.flips().size() << " flips in total." << std::endl;
+#endif
 	std::cerr << "... done." << std::endl;
       }
       if (output_triangs) {
 	std::cout << tf << std::endl;
       }
       else {
-// 	std::cout << tf.flips().load() << std::endl;
+#ifndef STL_FLIPS
+ 	std::cout << tf.flips().load() << std::endl;
+#else
 	std::cout << tf.flips().size() << std::endl;
+#endif
       }
       return 0;
     }

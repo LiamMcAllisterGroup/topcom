@@ -450,14 +450,24 @@ void PlainHashTable<HashData>::_rehash(const size_type new_size) {
 
 template<class HashData>
 inline const size_type PlainHashTable<HashData>::_hash(const key_type& key) const {
-  size_type res(0);
-  for (size_type i = 0; i < _hashkeysize(key); ++i) {
-    //    res = (res + ((_randvec[i] % _size) ^ _hashkey(key, i))) % _size;
-    //    res += _randvec[i] * _hashkey(key, i);
-    //    res += _randvec[i] ^ _hashkey(key, i);
-    res ^= _hashkey(key, i);
+  // size_type res(0);
+  // for (size_type i = 0; i < _hashkeysize(key); ++i) {
+  //   //    res = (res + ((_randvec[i] % _size) ^ _hashkey(key, i))) % _size;
+  //   //    res += _randvec[i] * _hashkey(key, i);
+  //   //    res += _randvec[i] ^ _hashkey(key, i);
+  //   res ^= _hashkey(key, i);
+  // }
+  // return res % _size;
+
+  // use single-byte MurmurHash:
+  size_type result(525201411107845655ull);
+  const size_type keysize = _hashkeysize(key);
+  for (size_type i = 0; i < keysize; ++i) {
+    result ^= _hashkey(key, i);
+    result *= 0x5bd1e9955bd1e995;
+    result ^= (result >> 47UL);
   }
-  return res % _size;
+  return result % _size;
 }
 
 // constructors:
