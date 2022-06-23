@@ -1,0 +1,89 @@
+Description: Use libtool to build shared libraries.
+ Upstream only builds static libraries.  We also install the headers
+ in /usr/include/topcom instead of /usr/include.
+Author: Doug Torrance <dtorrance@debian.org>
+Last-Update: 2022-06-23
+
+--- a/src-reg/Makefile.am
++++ b/src-reg/Makefile.am
+@@ -2,8 +2,8 @@
+ 
+ topcom_checkregularity_SOURCES = checkregularity.cc
+ 
+-LDADD           = ../lib-src-reg/libCHECKREG.a \
+-                  ../lib-src/libTOPCOM.a \
++LDADD           = ../lib-src-reg/libCHECKREG.la \
++                  ../lib-src/libTOPCOM.la \
+                   -lcddgmp -lgmpxx -lgmp
+ 
+ AM_CPPFLAGS     = -I../lib-src
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -83,8 +83,8 @@
+ topcom_santos_dim4_triang_SOURCES         = santos_dim4_triang.cc
+ topcom_santos_22_triang_SOURCES           = santos_22_triang.cc
+ 
+-LDADD           = ../lib-src/libTOPCOM.a \
+-                  ../lib-src-reg/libCHECKREG.a \
++LDADD           = ../lib-src/libTOPCOM.la \
++                  ../lib-src-reg/libCHECKREG.la \
+                   -lcddgmp -lgmpxx -lgmp
+ 
+ AM_CPPFLAGS     = -I../lib-src
+--- a/lib-src-reg/Makefile.am
++++ b/lib-src-reg/Makefile.am
+@@ -1,11 +1,11 @@
+-lib_LIBRARIES = libCHECKREG.a
++lib_LTLIBRARIES = libCHECKREG.la
+ 
+-libCHECKREG_a_SOURCES = \
++libCHECKREG_la_SOURCES = \
+ SPXinterface.cc \
+ LPinterface.cc \
+ RegularityCheck.cc
+ 
+-include_HEADERS = \
++pkginclude_HEADERS = \
+ SPXinterface.hh \
+ RegularityCheck.hh \
+ LPinterface.hh
+--- a/configure.ac
++++ b/configure.ac
+@@ -9,7 +9,8 @@
+ AC_PROG_CC
+ AC_PROG_INSTALL
+ AC_PROG_CXX
+-AC_PROG_RANLIB
++
++LT_INIT
+ 
+ dnl Checks for libraries.
+ dnl Replace `main' with a function in -lg:
+--- a/lib-src/Makefile.am
++++ b/lib-src/Makefile.am
+@@ -1,6 +1,6 @@
+-lib_LIBRARIES       = libTOPCOM.a
++lib_LTLIBRARIES       = libTOPCOM.la
+ 
+-libTOPCOM_a_SOURCES = \
++libTOPCOM_la_SOURCES = \
+ Admissibles.cc \
+ CheckTriang.cc \
+ Circuits.cc \
+@@ -36,7 +36,7 @@
+ VertexFacetTableArray.cc \
+ VirtualChiro.cc
+ 
+-include_HEADERS = \
++pkginclude_HEADERS = \
+ Admissibles.hh \
+ Array.hh \
+ CheckTriang.hh \
+--- a/wrap-gmp-gmpxx/Makefile.am
++++ b/wrap-gmp-gmpxx/Makefile.am
+@@ -1,4 +1,4 @@
+-include_HEADERS = \
++pkginclude_HEADERS = \
+ Integer.h \
+ Rational.h
+ 
