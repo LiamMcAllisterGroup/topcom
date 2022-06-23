@@ -8,7 +8,8 @@ Description: Prefix all binaries with topcom-.
  This has the advantage of consistency, which is useful for other programs
  which may call TOPCOM, e.g., Macaulay2's Topcom package.
 Author: Doug Torrance <dtorrance@debian.org>
-Last-Update: 2020-05-05
+Forwarded: not-needed
+Last-Update: 2022-06-23
 
 --- a/src/Makefile.am
 +++ b/src/Makefile.am

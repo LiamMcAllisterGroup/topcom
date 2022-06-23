@@ -1,6 +1,7 @@
 Description: Use Debian gmp and cdd library packages instead of building them.
 Author: Doug Torrance <dtorrance@debian.org>
-Last-Update: 2020-05-05
+Forwarded: not-needed
+Last-Update: 2022-06-23
 
 --- a/configure.ac
 +++ b/configure.ac
