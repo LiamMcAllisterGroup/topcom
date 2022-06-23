@@ -14,8 +14,8 @@ Last-Update: 2022-06-23
 -dnl Make libcddgmp:
 -make -C external cdd
  dnl Check for soplex:
- AC_CHECK_LIB(soplex, main, , csh -c 'echo soplex not found: --soplex will not work.')
- 
+ AC_CHECK_LIB(soplex, main, ,
+   AC_MSG_WARN([soplex not found: --soplex will not work.]))
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
 @@ -85,14 +85,11 @@

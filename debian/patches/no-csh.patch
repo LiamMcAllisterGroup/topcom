@@ -1,0 +1,18 @@
+Description: Use AC_MSG_WARN instead of calling echo via csh for soplex warning.
+ Othwerwise, we'd need to add a build dependency on csh just for this message.
+ Note that soplex is nonfree and thus not in Debian, so it will not be found.
+Author: Doug Torrance <dtorrance@debian.org>
+Last-Update: 2022-06-23
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -23,7 +23,8 @@
+ dnl Make libcddgmp:
+ make -C external cdd
+ dnl Check for soplex:
+-AC_CHECK_LIB(soplex, main, , csh -c 'echo soplex not found: --soplex will not work.')
++AC_CHECK_LIB(soplex, main, ,
++  AC_MSG_WARN([soplex not found: --soplex will not work.]))
+ 
+ dnl Checks for header files.
+ AC_HEADER_STDC
