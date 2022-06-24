@@ -47,3 +47,42 @@ Description: Triangulations Of Point Configs and Oriented Matroids (examples)
  is a significant speed up compared to PUNTOS.
  .
  This package contains the architecture-independent example files.
+
+Package: libtopcom0
+Section: libs
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Recommends: topcom-examples
+Description: Triangulations Of Point Configs and Oriented Matroids (library)
+ TOPCOM is a collection of clients to compute Triangulations Of Point
+ Configurations and Oriented Matroids, resp.
+ .
+ The algorithms use only combinatorial data of the point configuration
+ as is given by its oriented matroid. Some basic commands for computing
+ and manipulating oriented matroids can also be accessed by the user.
+ .
+ It was very much inspired by the maple program PUNTOS, which was
+ written by Jesus de Loera. TOPCOM is entirely written in C++, so there
+ is a significant speed up compared to PUNTOS.
+ .
+ This package contains the shared libraries.
+
+Package: libtopcom-dev
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Recommends: topcom-examples
+Description: Triangulations Of Point Configs and Oriented Matroids (development)
+ TOPCOM is a collection of clients to compute Triangulations Of Point
+ Configurations and Oriented Matroids, resp.
+ .
+ The algorithms use only combinatorial data of the point configuration
+ as is given by its oriented matroid. Some basic commands for computing
+ and manipulating oriented matroids can also be accessed by the user.
+ .
+ It was very much inspired by the maple program PUNTOS, which was
+ written by Jesus de Loera. TOPCOM is entirely written in C++, so there
+ is a significant speed up compared to PUNTOS.
+ .
+ This package contains the static libraries, versionless symlinks to the shared
+ libraries, and header files.
