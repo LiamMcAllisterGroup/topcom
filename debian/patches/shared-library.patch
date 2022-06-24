@@ -32,11 +32,13 @@ Last-Update: 2022-06-23
  AM_CPPFLAGS     = -I../lib-src
 --- a/lib-src-reg/Makefile.am
 +++ b/lib-src-reg/Makefile.am
-@@ -1,11 +1,11 @@
+@@ -1,11 +1,13 @@
 -lib_LIBRARIES = libCHECKREG.a
 +lib_LTLIBRARIES = libCHECKREG.la
  
 -libCHECKREG_a_SOURCES = \
++libCHECKREG_la_LIBADD = -lcddgmp -lgmp -lgmpxx
++
 +libCHECKREG_la_SOURCES = \
  SPXinterface.cc \
  LPinterface.cc \
@@ -61,16 +63,18 @@ Last-Update: 2022-06-23
  dnl Replace `main' with a function in -lg:
 --- a/lib-src/Makefile.am
 +++ b/lib-src/Makefile.am
-@@ -1,6 +1,6 @@
+@@ -1,6 +1,8 @@
 -lib_LIBRARIES       = libTOPCOM.a
 +lib_LTLIBRARIES       = libTOPCOM.la
  
 -libTOPCOM_a_SOURCES = \
++libTOPCOM_la_LIBADD = -lcddgmp -lgmp -lgmpxx
++
 +libTOPCOM_la_SOURCES = \
  Admissibles.cc \
  CheckTriang.cc \
  Circuits.cc \
-@@ -36,7 +36,7 @@
+@@ -36,7 +38,7 @@
  VertexFacetTableArray.cc \
  VirtualChiro.cc
  
