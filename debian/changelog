@@ -1,8 +1,40 @@
-topcom (0.17.10+ds-1) UNRELEASED; urgency=medium
+topcom (0.17.10+ds-1) unstable; urgency=medium
 
   * New upstream release.
+  * debian/clean
+    - New file; clean files generated during build of manual.
+  * debian/control
+    - Update my email address; now a Debian Developer.
+    - Bump Standards-Version to 4.6.1.
+    - Add libtopcom0 and libtopcom-dev binary packages for the shared
+      libraries.
+  * debian/copyright
+    - Update my copyright years and email address.
+  * debian/libtopcom*.install
+    - Install headers and libraries in new binary packages.
+  * debian/not-installed
+    - Specify that we don't install libtool .la files.
+  * debian/patches/*
+    - Update my email address in Author fields.
+    - Set Forwarded field for Debian-specific patches to not-needed.
+  * debian/patches/dont-build-libraries.patch
+    - Update path to cddlib headers.
+  * debian/patch/dont-install-libs-or-headers.patch
+    - Remove patch; we now install the libraries and headers.
+  * debian/patches/no-csh.patch
+    - New patch; use AC_MSG_WARN instead of calling echo via csh for soplex
+      warning.  Otherwise, we'd need to add a build dependency on csh just
+      for this message.
+  * debian/patches/shared-library.patch
+    - New patch; use libtool to build shared libraries.
+  * debian/rules
+    - Replace various override_* targets with execute_before_*.
+  * debian/source/options
+    - New file; ignore changes made to README by iconv.
+  * debian/tests/control
+    - Add autopkgtest for shared library.
 
- -- Doug Torrance <dtorrance@debian.org>  Wed, 22 Jun 2022 22:42:30 -0400
+ -- Doug Torrance <dtorrance@debian.org>  Fri, 24 Jun 2022 07:39:36 -0400
 
 topcom (0.17.8+ds-3) unstable; urgency=medium
 
