@@ -1,2 +1,11 @@
 Test-Command: topcom-cube 4 |
   diff /usr/share/doc/topcom-examples/examples/cube_4.dat -
+Depends: topcom, topcom-examples
+Features: test-name=binary-test
+
+Test-Command: cp src/cube.cc $AUTOPKGTEST_TMP &&
+  cd $AUTOPKGTEST_TMP &&
+  g++ -I/usr/include/topcom cube.cc -lTOPCOM -lCHECKREG -lgmp -lgmpxx -o cube &&
+  ./cube 4 | diff /usr/share/doc/topcom-examples/examples/cube_4.dat -
+Depends: libtopcom-dev, topcom-examples, libgmp-dev, g++
+Features: test-name=library-test
