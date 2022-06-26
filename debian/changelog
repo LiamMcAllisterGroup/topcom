@@ -1,3 +1,13 @@
+topcom (0.17.10+ds-3) unstable; urgency=medium
+
+  * debian/control
+    - Add Multi-Arch field for libtopcom0 (same).
+  * debian/tests/control
+    - Add allow-stderr restriction for library-test; it was failing on
+      32-bit systems due to compiler warnings.
+
+ -- Doug Torrance <dtorrance@debian.org>  Sun, 26 Jun 2022 08:24:01 -0400
+
 topcom (0.17.10+ds-2) unstable; urgency=medium
 
   * Source-only upload for migration to testing.
