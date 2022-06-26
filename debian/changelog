@@ -1,3 +1,9 @@
+topcom (0.17.10+ds-2) unstable; urgency=medium
+
+  * Source-only upload for migration to testing.
+
+ -- Doug Torrance <dtorrance@debian.org>  Sat, 25 Jun 2022 21:58:07 -0400
+
 topcom (0.17.10+ds-1) unstable; urgency=medium
 
   * New upstream release.
