@@ -9,6 +9,7 @@
 
 #include "IndexTableArray.hh"
 
-IndexTableArray IndexTableArray::_index_table;
+namespace topcom {
+};
 
 // eof IndexTableArray.cc

@@ -5,12 +5,23 @@
 #include "PlacingTriang.hh"
 
 int main (const int argc, const char** argv) {
+  using namespace topcom;
+
   CommandlineOptions::init(argc, argv);
   if (CommandlineOptions::verbose()) {
     std::cerr << std::endl;
-    std::cerr << "---------------------------------------------------\n";
-    std::cerr << "computing a placing triang of a point configuration\n";
-    std::cerr << "---------------------------------------------------\n";
+    std::cerr << "------------------------------------------------------------\n";
+    std::cerr << "------------------ " << PACKAGE << " VERSION " << VERSION << " -------------------\n";
+    std::cerr << "Triangulations of Point Configurations and Oriented Matroids\n";
+    std::cerr << "--------------------- by Joerg Rambau ----------------------\n";
+    std::cerr << "------------------------------------------------------------\n";
+    std::cerr << std::endl;
+  }
+  if (CommandlineOptions::verbose()) {
+    std::cerr << std::endl;
+    std::cerr << "------------------------------------------------------------\n";
+    std::cerr << "    computing a placing triang of a point configuration\n";
+    std::cerr << "------------------------------------------------------------\n";
     std::cerr << std::endl;
   }
   PointConfiguration points;
@@ -39,3 +50,5 @@ int main (const int argc, const char** argv) {
     return 1;
   }
 }
+
+// eof points2placingtriang.cc

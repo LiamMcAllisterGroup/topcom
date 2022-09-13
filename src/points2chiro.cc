@@ -6,6 +6,8 @@
 #include "Chirotope.hh"
 
 int main (const int argc, const char** argv) {
+  using namespace topcom;
+
   CommandlineOptions::init(argc, argv);
   if (CommandlineOptions::verbose()) {
     std::cerr << std::endl;
@@ -30,9 +32,10 @@ int main (const int argc, const char** argv) {
     }
     Chirotope chiro(points, true);
     chiro.print_string(std::cout);
-    SymmetryGroup symmetry_generators(points.coldim());
-    if (symmetry_generators.read_generators(std::cin)) {
-      std::cout << symmetry_generators << std::endl;
+    SymmetryGroup symmetries(points.coldim());
+    if (symmetries.read_generators(std::cin)) {
+      symmetries.write_generators(std::cout);
+      std::cout << std::endl;
     }
     else {
       if (CommandlineOptions::verbose()) {
@@ -48,3 +51,5 @@ int main (const int argc, const char** argv) {
     return 1;
   }
 }
+
+// eof points2chiro.cc

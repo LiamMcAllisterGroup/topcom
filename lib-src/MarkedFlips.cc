@@ -10,6 +10,10 @@
 
 #include "MarkedFlips.hh"
 
-// constructors:
+namespace topcom {
+
+  // constructors:
+
+}; // namespace topcom
 
 // eof MarkedFlips.cc

@@ -12,6 +12,9 @@
 #include "SimplicialComplexTemplate_Declarations.hh"
 #include "SimplicialComplexTemplate_Definitions.hh"
 
+namespace topcom {
+};
+
 #endif
 
 // eof SimplicialComplexTemplate.hh

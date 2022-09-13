@@ -1,24 +1,19 @@
-#include <iostream>
-
+////////////////////////////////////////////////////////////////////////////////
+// 
+// chiro2circuits.cc 
+//
+//    produced: 16/07/19 jr
+// last change: 17/07/19 jr
+//
+////////////////////////////////////////////////////////////////////////////////
 #include "CommandlineOptions.hh"
-
-#include "Circuits.hh"
+#include "ComputeCircuits.hh"
 
 int main (const int argc, const char** argv) {
+  using namespace topcom;
+
   CommandlineOptions::init(argc, argv);
-  if (CommandlineOptions::verbose()) {
-    std::cerr << std::endl;
-    std::cerr << "-------------------------------------\n";
-    std::cerr << "computing the circuits of a chirotope\n";
-    std::cerr << "-------------------------------------\n";
-    std::cerr << std::endl;
-  }
-  Chirotope chiro;
-  if (chiro.read_string(std::cin)) {
-    Circuits(chiro).print_string(std::cout);
-    return 0;
-  }
-  else {
-    return 1;
-  }
+  return (ComputeCircuits::run(INPUT_CHIRO | OUTPUT_CIRCUITS));
 }
+	
+// eof chiro2circuits.cc

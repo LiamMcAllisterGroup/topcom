@@ -9,4 +9,7 @@
 
 #include "SimplicialComplexTemplate.hh"
 
+namespace topcom {
+};
+
 // eof SimplicialComplexTemplate.cc

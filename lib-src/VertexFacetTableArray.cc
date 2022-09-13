@@ -7,6 +7,9 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "VertexFacetTableArray.hh"
+// #include "VertexFacetTableArray.hh"
+
+namespace topcom {
+};
 
 // eof VertexFacetTableArray.cc
