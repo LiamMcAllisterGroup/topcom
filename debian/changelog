@@ -1,3 +1,13 @@
+topcom (1.1.0+ds-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+  * debian/patches/no-csh.patch
+    - Remove patch; no longer necessary.
+  * debian/patches/*
+    - Refresh remaining patches for new upstream release.
+
+ -- Doug Torrance <dtorrance@debian.org>  Mon, 12 Sep 2022 20:35:48 -0400
+
 topcom (0.17.10+ds-3) unstable; urgency=medium
 
   * debian/control
