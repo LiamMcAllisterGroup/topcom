@@ -6,6 +6,7 @@ Uploaders: Doug Torrance <dtorrance@debian.org>
 Build-Depends: debhelper-compat (= 13),
                libcdd-dev,
                libgmp-dev,
+               libqsopt-ex-dev,
                texlive-latex-base,
                texlive-plain-generic
 Standards-Version: 4.6.1
