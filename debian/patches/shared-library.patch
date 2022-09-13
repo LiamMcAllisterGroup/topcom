@@ -4,54 +4,9 @@ Description: Use libtool to build shared libraries.
 Author: Doug Torrance <dtorrance@debian.org>
 Last-Update: 2022-06-23
 
---- a/src-reg/Makefile.am
-+++ b/src-reg/Makefile.am
-@@ -2,8 +2,8 @@
- 
- topcom_checkregularity_SOURCES = checkregularity.cc
- 
--LDADD           = ../lib-src-reg/libCHECKREG.a \
--                  ../lib-src/libTOPCOM.a \
-+LDADD           = ../lib-src-reg/libCHECKREG.la \
-+                  ../lib-src/libTOPCOM.la \
-                   -lcddgmp -lgmpxx -lgmp
- 
- AM_CPPFLAGS     = -I../lib-src
---- a/src/Makefile.am
-+++ b/src/Makefile.am
-@@ -83,8 +83,8 @@
- topcom_santos_dim4_triang_SOURCES         = santos_dim4_triang.cc
- topcom_santos_22_triang_SOURCES           = santos_22_triang.cc
- 
--LDADD           = ../lib-src/libTOPCOM.a \
--                  ../lib-src-reg/libCHECKREG.a \
-+LDADD           = ../lib-src/libTOPCOM.la \
-+                  ../lib-src-reg/libCHECKREG.la \
-                   -lcddgmp -lgmpxx -lgmp
- 
- AM_CPPFLAGS     = -I../lib-src
---- a/lib-src-reg/Makefile.am
-+++ b/lib-src-reg/Makefile.am
-@@ -1,11 +1,13 @@
--lib_LIBRARIES = libCHECKREG.a
-+lib_LTLIBRARIES = libCHECKREG.la
- 
--libCHECKREG_a_SOURCES = \
-+libCHECKREG_la_LIBADD = -lcddgmp -lgmp -lgmpxx
-+
-+libCHECKREG_la_SOURCES = \
- SPXinterface.cc \
- LPinterface.cc \
- RegularityCheck.cc
- 
--include_HEADERS = \
-+pkginclude_HEADERS = \
- SPXinterface.hh \
- RegularityCheck.hh \
- LPinterface.hh
 --- a/configure.ac
 +++ b/configure.ac
-@@ -9,7 +9,8 @@
+@@ -23,7 +23,8 @@
  AC_PROG_CC
  AC_PROG_INSTALL
  AC_PROG_CXX
@@ -60,7 +15,7 @@ Last-Update: 2022-06-23
 +LT_INIT
  
  dnl Checks for libraries.
- dnl Replace `main' with a function in -lg:
+ dnl Check for compression libraries (qsopt_ex uses them if they are present):
 --- a/lib-src/Makefile.am
 +++ b/lib-src/Makefile.am
 @@ -1,6 +1,8 @@
@@ -74,9 +29,9 @@ Last-Update: 2022-06-23
  Admissibles.cc \
  CheckTriang.cc \
  Circuits.cc \
-@@ -36,7 +38,7 @@
- VertexFacetTableArray.cc \
- VirtualChiro.cc
+@@ -54,7 +56,7 @@
+ VirtualChiro.cc \
+ Volumes.cc
  
 -include_HEADERS = \
 +pkginclude_HEADERS = \
@@ -91,3 +46,40 @@ Last-Update: 2022-06-23
  Integer.h \
  Rational.h
  
+--- a/lib-src-reg/Makefile.am
++++ b/lib-src-reg/Makefile.am
+@@ -1,6 +1,6 @@
+-lib_LIBRARIES = libCHECKREG.a
++lib_LTLIBRARIES = libCHECKREG.la
+ 
+-libCHECKREG_a_SOURCES = \
++libCHECKREG_la_SOURCES = \
+ QSOinterface.cc \
+ SPXinterface.cc \
+ LPinterface.cc \
+--- a/src-reg/Makefile.am
++++ b/src-reg/Makefile.am
+@@ -2,8 +2,8 @@
+ 
+ topcom_checkregularity_SOURCES = checkregularity.cc
+ 
+-LDADD           = ../lib-src/libTOPCOM.a \
+-                  ../lib-src-reg/libCHECKREG.a \
++LDADD           = ../lib-src/libTOPCOM.la \
++                  ../lib-src-reg/libCHECKREG.la \
+                   -lcdd -lcddgmp -lqsopt_ex
+ if USE_SOPLEX
+ LDADD          += ../external/lib/libsoplex.a
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -121,8 +121,8 @@
+ topcom_santos_dim4_triang_SOURCES         = santos_dim4_triang.cc
+ topcom_santos_22_triang_SOURCES           = santos_22_triang.cc
+ 
+-LDADD           = ../lib-src/libTOPCOM.a \
+-                  ../lib-src-reg/libCHECKREG.a \
++LDADD           = ../lib-src/libTOPCOM.la \
++                  ../lib-src-reg/libCHECKREG.la \
+                   -lcddgmp -lqsopt_ex
+ if USE_SOPLEX
+ LDADD          += ../external/lib/libsoplex.a

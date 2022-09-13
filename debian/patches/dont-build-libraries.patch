@@ -3,86 +3,104 @@ Author: Doug Torrance <dtorrance@debian.org>
 Forwarded: not-needed
 Last-Update: 2022-06-23
 
---- a/configure.ac
-+++ b/configure.ac
-@@ -18,10 +18,6 @@
- dnl AC_CHECK_LIB(stdc, main)
- dnl Replace `main' with a function in -lstdc++:
- dnl AC_CHECK_LIB(stdc++, main)
--dnl Make libgmp:
--make -C external gmp
--dnl Make libcddgmp:
--make -C external cdd
- dnl Check for soplex:
- AC_CHECK_LIB(soplex, main, ,
-   AC_MSG_WARN([soplex not found: --soplex will not work.]))
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
-@@ -85,14 +85,11 @@
+@@ -123,19 +123,15 @@
  
  LDADD           = ../lib-src/libTOPCOM.a \
                    ../lib-src-reg/libCHECKREG.a \
 -                  ../external/lib/libcddgmp.a \
--                  ../external/lib/libgmpxx.a \
+-                  ../external/lib/libqsopt_ex.a
++                  -lcddgmp -lqsopt_ex
+ if USE_SOPLEX
+ LDADD          += ../external/lib/libsoplex.a
+ endif
+-LDADD          += ../external/lib/libgmpxx.a \
 -                  ../external/lib/libgmp.a
-+                  -lcddgmp -lgmpxx -lgmp
+-
++LDADD          += -lgmpxx -lgmp
  
- AM_CPPFLAGS     = -I../lib-src
+ AM_CPPFLAGS    += -I../lib-src
  AM_CPPFLAGS    += -I../lib-src-reg
  AM_CPPFLAGS    += -I../wrap-gmp-gmpxx
 -AM_CPPFLAGS    += -I../external/include
  AM_CPPFLAGS    += -I$(includedir)
  
- AM_CPPFLAGS    += -DVERBOSE -DGMPRATIONAL -ftemplate-depth-30
+ AM_CPPFLAGS    += -ftemplate-depth=100
 --- a/lib-src-reg/Makefile.am
 +++ b/lib-src-reg/Makefile.am
-@@ -12,7 +12,7 @@
+@@ -14,7 +14,7 @@
  
- AM_CPPFLAGS     = -I../lib-src 
+ AM_CPPFLAGS    += -I../lib-src
  AM_CPPFLAGS    += -I../wrap-gmp-gmpxx
 -AM_CPPFLAGS    += -I../external/include
 +AM_CPPFLAGS    += -I/usr/include/cddlib
  AM_CPPFLAGS    += -I$(includedir)
  
- AM_CPPFLAGS    += -DVERBOSE -DGMPRATIONAL -ftemplate-depth-30
+ AM_CPPFLAGS    += -ftemplate-depth=100
 --- a/src-reg/Makefile.am
 +++ b/src-reg/Makefile.am
-@@ -4,14 +4,12 @@
+@@ -4,18 +4,16 @@
  
- LDADD           = ../lib-src-reg/libCHECKREG.a \
-                   ../lib-src/libTOPCOM.a \
+ LDADD           = ../lib-src/libTOPCOM.a \
+                   ../lib-src-reg/libCHECKREG.a \
 -                  ../external/lib/libcddgmp.a \
--                  ../external/lib/libgmpxx.a \
+-                  ../external/lib/libqsopt_ex.a
++                  -lcdd -lcddgmp -lqsopt_ex
+ if USE_SOPLEX
+ LDADD          += ../external/lib/libsoplex.a
+ endif
+-LDADD          += ../external/lib/libgmpxx.a \
 -                  ../external/lib/libgmp.a
-+                  -lcddgmp -lgmpxx -lgmp
++LDADD          += -lgmpxx -lgmp
  
- AM_CPPFLAGS     = -I../lib-src
+ AM_CPPFLAGS    += -I../lib-src
  AM_CPPFLAGS    += -I../lib-src-reg
  AM_CPPFLAGS    += -I../wrap-gmp-gmpxx
 -AM_CPPFLAGS    += -I../external/include
 +AM_CPPFLAGS    += -I/usr/include/cddlib
  AM_CPPFLAGS    += -I$(includedir)
  
- 
+ AM_CPPFLAGS    += -ftemplate-depth=100
 --- a/wrap-gmp-gmpxx/Makefile.am
 +++ b/wrap-gmp-gmpxx/Makefile.am
-@@ -2,7 +2,6 @@
+@@ -2,5 +2,4 @@
  Integer.h \
  Rational.h
  
--AM_CPPFLAGS        = -I../external/include
--AM_CPPFLAGS       += -I$(includedir)
-+AM_CPPFLAGS       = -I$(includedir)
- 
- AM_CXXFLAGS     = -O2
+-AM_CPPFLAGS       += -I../external/include
+ AM_CPPFLAGS       += -I$(includedir)
 --- a/lib-src/Makefile.am
 +++ b/lib-src/Makefile.am
-@@ -90,7 +90,7 @@
+@@ -134,7 +134,7 @@
  
- AM_CPPFLAGS     = -I../lib-src-reg
+ AM_CPPFLAGS    += -I../lib-src-reg
  AM_CPPFLAGS    += -I../wrap-gmp-gmpxx
 -AM_CPPFLAGS    += -I../external/include
 +AM_CPPFLAGS    += -I/usr/include/cddlib
  AM_CPPFLAGS    += -I$(includedir)
  
- AM_CPPFLAGS    += -DVERBOSE -DGMPRATIONAL -ftemplate-depth-35
+ AM_CPPFLAGS    += -ftemplate-depth=100
+--- a/configure.ac
++++ b/configure.ac
+@@ -11,7 +11,6 @@
+ dnl set some compilation switches consistently:
+ AC_SUBST([AM_CPPFLAGS], ["-DSTL_SYMMETRIES -DSTL_CONTAINERS -DSTL_FLIPS -DSTL_CHIROTOPE -DGMPRATIONAL -DPERMLIB_DOMAIN_INT -DUSE_LEXORDER]")
+ AC_SUBST([AM_CXXFLAGS], [" -fvisibility=hidden -fvisibility-inlines-hidden -pthread -std=c++17"])
+-AC_SUBST([AM_LDFLAGS], ["-L../external/lib"])
+ 
+ dnl backup the user variable LDFLAGS:
+ AC_SUBST([LDFLAGS_backup], [${LDFLAGS}])
+@@ -26,12 +25,6 @@
+ AC_PROG_RANLIB
+ 
+ dnl Checks for libraries.
+-dnl Make libgmp:
+-make -C external gmp
+-dnl Make libcddgmp:
+-make -C external cdd
+-dnl Make libqsopt_ex:
+-make -C external qso
+ dnl Check for compression libraries (qsopt_ex uses them if they are present):
+ AC_CHECK_LIB([z], [gzopen], [], AC_MSG_NOTICE([compiling without libz]))
+ AC_CHECK_LIB([bz2], [BZ2_bzopen], [], AC_MSG_NOTICE([compiling without libbz2]))
