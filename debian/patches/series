@@ -1,4 +1,3 @@
-no-csh.patch
 dont-build-libraries.patch
 fix-typo.patch
 rename-binaries.patch
