@@ -5,8 +5,10 @@ Features: test-name=binary-test
 
 Test-Command: cp src/cube.cc $AUTOPKGTEST_TMP &&
   cd $AUTOPKGTEST_TMP &&
-  g++ -I/usr/include/topcom cube.cc -lTOPCOM -lCHECKREG -lgmp -lgmpxx -o cube &&
+  g++ -DSTL_SYMMETRIES -DSTL_CONTAINERS -DSTL_FLIPS -DSTL_CHIROTOPE
+    -DGMPRATIONAL -DPERMLIB_DOMAIN_INT -DUSE_LEXORDER -I/usr/include/topcom
+    cube.cc -lTOPCOM -lCHECKREG -lqsopt_ex -lgmp -lgmpxx -o cube &&
   ./cube 4 | diff /usr/share/doc/topcom-examples/examples/cube_4.dat -
-Depends: libtopcom-dev, topcom-examples, libgmp-dev, g++
+Depends: g++, libgmp-dev, libqsopt-ex-dev, libtopcom-dev, topcom-examples
 Restrictions: allow-stderr
 Features: test-name=library-test
