@@ -9,12 +9,16 @@
 
 #include "Field.hh"
 
-// #ifdef DOUBLE_ARITHMETIC
-// const Field Field::EPSILON  = Field(1E-99);
-// #endif
+namespace topcom {
 
-// const Field Field::ZERO     = Field(0);
-// const Field Field::ONE      = Field(1);
-// const Field Field::MINUSONE = Field(-1);
+  // #ifdef DOUBLE_ARITHMETIC
+  // const Field Field::EPSILON  = Field(1E-99);
+  // #endif
+
+  const Field FieldConstants::ZERO     = Field(0);
+  const Field FieldConstants::ONE      = Field(1);
+  const Field FieldConstants::MINUSONE = Field(-1);
+
+}; // namespace topcom
 
 // eof Field.cc

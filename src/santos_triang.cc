@@ -15,12 +15,15 @@
 #include "PointConfiguration.hh"
 #include "Symmetry.hh"
 #include "SimplicialComplex.hh"
+#include "HashSet.hh"
 
+namespace topcom {
+  
 PointConfiguration create_h() {
   if (CommandlineOptions::verbose()) {
     std::cerr << "constructing h ..." << std::endl;
   }
-  PointConfiguration result(Matrix(4, 8, ZERO));
+  PointConfiguration result(Matrix(4, 8, FieldConstants::ZERO));
   result[0][0] = Field(4);
   result[0][1] = Field(-4);
   result[1][0] = Field(6);
@@ -43,7 +46,7 @@ PointConfiguration create_v() {
   if (CommandlineOptions::verbose()) {
     std::cerr << "constructing v ..." << std::endl;
   }
-  PointConfiguration result(Matrix(4, 8, ZERO));
+  PointConfiguration result(Matrix(4, 8, FieldConstants::ZERO));
   result[0][2] = Field(6);
   result[1][2] = Field(4);
   result[1][3] = Field(4);
@@ -66,7 +69,7 @@ PointConfiguration create_t() {
   if (CommandlineOptions::verbose()) {
     std::cerr << "constructing t ..." << std::endl;
   }
-  PointConfiguration result(Matrix(4, 64, ZERO));
+  PointConfiguration result(Matrix(4, 64, FieldConstants::ZERO));
   PointConfiguration h(create_h());
   PointConfiguration v(create_v());
   for (size_type i = 0; i < 8; ++i) {
@@ -87,7 +90,7 @@ PointConfiguration create_s() {
   if (CommandlineOptions::verbose()) {
     std::cerr << "constructing s ..." << std::endl;
   }
-  PointConfiguration result(Matrix(4, 64, ZERO));
+  PointConfiguration result(Matrix(4, 64, FieldConstants::ZERO));
   PointConfiguration t(create_t());
   for (size_type i = 0; i < 8; ++i) {
     for (size_type j = 0; j < 8; ++j) {
@@ -115,7 +118,7 @@ PointConfiguration create_A() {
     std::cerr << "constructing four-dimensional point configuration A from v, h, s, t ..." 
 	 << std::endl;
   }
-  Matrix result(Vector(4, ZERO));
+  Matrix result(Vector(4, FieldConstants::ZERO));
   result.augment(create_h());
   result.augment(create_v());
   result.augment(create_st());
@@ -130,9 +133,9 @@ PointConfiguration create_B() {
     std::cerr << "constructing two-dimensional point configuration B ..." 
 	 << std::endl;
   }
-  Matrix result(2, 4, ZERO);
-  result[0][0] = ONE;
-  result[0][1] = ONE;
+  Matrix result(2, 4, FieldConstants::ZERO);
+  result[0][0] = FieldConstants::ONE;
+  result[0][1] = FieldConstants::ONE;
   result[1][0] = Field(3);
   result[2][1] = Field(3);
   if (CommandlineOptions::verbose()) {
@@ -251,7 +254,7 @@ SymmetryGroup create_G() {
     std::cerr << "constructing symmetry group G of A from g1, g2, g3, g4 ..." 
 	 << std::endl;
   }
-  symmetry_data result;
+  symmetry_collectordata result;
   result.insert(create_g1());
   result.insert(create_g2());
   result.insert(create_g3());
@@ -267,7 +270,7 @@ SymmetryGroup create_H() {
     std::cerr << "constructing symmetry group H of B ..." 
 	 << std::endl;
   }
-  symmetry_data result;
+  symmetry_collectordata result;
   Symmetry h1(4);
   Symmetry h2(4);
   h2[0] = 0;
@@ -298,7 +301,7 @@ SymmetryGroup create_product(const SymmetryGroup& G, const SymmetryGroup& H) {
     std::cerr << "constructing symmetry group GH of C from G and H ..." 
 	 << std::endl;
   }
-  symmetry_data result;
+  symmetry_collectordata result;
   for (SymmetryGroup::const_iterator iter1 = G.begin();
        iter1 != G.end();
        ++iter1) {
@@ -489,7 +492,7 @@ HashSet<Permutation> insert_orbit(const Permutation& s, const SymmetryGroup& G,
 #else
     const Symmetry& g(*iter);
 #endif
-    result.insert(g(s));
+    result.insert(g.map(s));
   }
   return result;
 }
@@ -615,8 +618,11 @@ SimplicialComplex create_staircase_triang(const HashSet<Permutation>& h1, const 
   return result;
 }
 
+};
 
 int main(int argc, const char** argv) {
+  using namespace topcom;
+
   CommandlineOptions::init(argc, argv);
 
   std::cout << create_C().homogenize() << std::endl;
@@ -633,3 +639,5 @@ int main(int argc, const char** argv) {
 
   return 0;
 }
+
+// eof santos_triang.cc

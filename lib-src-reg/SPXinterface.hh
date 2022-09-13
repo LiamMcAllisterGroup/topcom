@@ -17,62 +17,50 @@
 #include <math.h>
 #include <string.h>
 
+#include "Vector.hh"
 #include "Matrix.hh"
 
-// Soplex includes:
-#include "spxdefines.h"
-
-#include "spxdefaultpr.h"
-#include "spxdefaultrt.h"
-#include "slufactor.h"
-#include "spxequilisc.h"
-#include "spxaggregatesm.h"
-
-#include "svector.h"
-#include "dsvector.h"
-#include "lprow.h"
-#include "spxlp.h"
+// Soplex includes (make only sense if soplex has been installed with GMP and BOOST):
 #include "soplex.h"
 
-class SPXinterface {
-private:
-  soplex::SoPlex          _soplex_obj;
-  soplex::SPxLP           _lp_obj;
-  soplex::SPxDefaultPR*   _spxpricer_ptr;
-  soplex::SPxDefaultRT*   _spxtester_ptr;
-  soplex::SLUFactor*      _spxsolver_ptr;
-  soplex::SPxEquili*      _spxscaler_ptr;
-  soplex::SPxAggregateSM* _spxsimplifier_ptr;
-private:
-  inline SPXinterface() {}
-public:
-  // constructors:
-  SPXinterface(const Matrix&);
+namespace topcom {
 
-  // destructor:
-  inline ~SPXinterface();
-
-  // functions:
-  bool has_interior_point();
+  inline soplex::Rational __field_to_soplexrational(const Field& q) {
+    return soplex::Rational(*(mpq_t*)q.get_mpq_t());
+  }
+  inline Field __soplexrational_to_field(const soplex::Rational& q) {
+    return Field(q.backend().data());
+  }
 };
 
-inline SPXinterface::~SPXinterface() {
-  if (_spxpricer_ptr) {
-    delete _spxpricer_ptr;
-  }
-  if (_spxtester_ptr) {
-    delete _spxtester_ptr;
-  }
-  if (_spxsolver_ptr) {
-    delete _spxsolver_ptr;
-  }
-  if (_spxscaler_ptr) {
-    delete _spxscaler_ptr;
-  }
-  if (_spxsimplifier_ptr) {
-    delete _spxsimplifier_ptr;
-  }
-}
+namespace topcom {
+  
+  class SPXinterface {
+  private:
+    soplex::SoPlexBase<soplex::Real> _soplex_obj;
+    const LabelSet                   _support;
+  private:
+    inline SPXinterface() {}
+  public:
+    // constructors:
+    SPXinterface(const Matrix&, const LabelSet&);
+
+    // destructor:
+    inline ~SPXinterface();
+
+    // soplex need not be initialized and terminated,
+    // so this is for consistency only:
+    inline static void init() {}
+    inline static void term() {}
+
+    // functions:
+    bool has_interior_point(Vector* heightsptr);
+
+  };
+
+  inline SPXinterface::~SPXinterface() {}
+
+}; // namespace topcom
 
 #endif // HAVE_LIBSOPLEX
 

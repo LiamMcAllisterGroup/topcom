@@ -1,0 +1,234 @@
+% The following are macroes collected in the file |triangbook_macroes.sty|:
+% Special types of objects are denoted by a letter typeset by the following macros:
+%    \begin{macrocode}
+\DeclareRobustCommand{\emphindex}[2][]{%
+ \ifthenelse{%
+   \equal{#1}{}%
+ }{%
+   \index{#2}\emph{#2}%
+ }{%
+   \index{#1}\emph{#2}%
+ }%
+}%
+\DeclareRobustCommand{\point}[1]{%
+  \ensuremath{\mathbf{#1}}%
+}%
+\DeclareRobustCommand{\geom}[1]{%
+  \ensuremath{\mathbf{#1}}%
+}%
+\DeclareRobustCommand{\segment}[1]{%
+  \ensuremath{[{#1}]}%
+}%
+\DeclareRobustCommand{\simplex}[1]{%
+  \ensuremath{\mathbf{#1}}%
+}%
+\DeclareRobustCommand{\idxset}[1]{%
+  \ensuremath{\mathnormal{#1}}%
+}%
+\DeclareRobustCommand{\idx}[1]{%
+  \ensuremath{\mathnormal{#1}}%
+}%
+\DeclareRobustCommand{\pointconf}[1]{%
+  \ensuremath{\mathbf{#1}}%
+}%
+\DeclareRobustCommand{\subpointconf}[2]{%
+  \ensuremath{\mathbf{#1}|_{#2}}%
+}%
+\DeclareRobustCommand{\subdiv}[1]{%
+  \ensuremath{\mathcal{#1}}%
+}%
+\DeclareRobustCommand{\family}[1]{%
+  \ensuremath{\mathcal{#1}}%
+}%
+\DeclareRobustCommand{\chamber}[1]{%
+  \ensuremath{\mathcal{#1}}%
+}%
+\DeclareRobustCommand{\coeffs}[1]{%
+  \ensuremath{{#1}}%
+}%
+\DeclareRobustCommand{\refines}{%
+  \ensuremath{\preceq}%
+}%
+\DeclareRobustCommand{\strictlyrefines}{%
+  \ensuremath{\prec}%
+}%
+
+
+% Special constructions:
+\DeclareRobustCommand{\regsubdiv}[2]{%
+  \ensuremath{\subdiv{S}(#1,#2)}%
+}%
+\DeclareRobustCommand{\Cayley}[1]{%
+  \ensuremath{\operatorname{Cayley}\bigl(#1\bigr)}%
+}%
+\DeclareRobustCommand{\normalcone}[2]{%
+  \ensuremath{N_{#1}(#2)}%
+}%
+\DeclareRobustCommand{\normalfan}[1]{%
+  \ensuremath{\family{N}_{#1}}%
+}%
+\DeclareRobustCommand{\Gale}[1]{%
+  \ensuremath{\operatorname{Gale(#1)}}%
+}%  
+\DeclareRobustCommand{\Lawrence}[1]{%
+  \ensuremath{{\Lambda(#1)}}%
+}%
+\DeclareRobustCommand{\fiberpolytope}[2]{%
+  \ensuremath{\operatorname{\boldmath{\Sigma}}(#1, #2)}%
+}%
+\DeclareRobustCommand{\tilingpolytope}[1]{%
+  \ensuremath{\operatorname{\boldmath{\Sigma}}(#1)}%
+}%
+\DeclareRobustCommand{\secondarypolytope}[1]{%
+  \ensuremath{\operatorname{\boldmath{\Sigma}-poly}(#1)}%
+}%
+\DeclareRobustCommand{\splitpolytope}[1]{%
+  \ensuremath{\operatorname{\boldmath{Split}-poly}(#1)}%
+}%
+\DeclareRobustCommand{\secondaryfan}[1]{%
+  \ensuremath{\operatorname{\boldmath{\Sigma}-fan}(#1)}%
+}%
+\DeclareRobustCommand{\secondarycone}[2]{%
+  \ensuremath{\geom{C}(#1, #2)}%
+}%
+\DeclareRobustCommand{\opensecondarycone}[2]{%
+  \ensuremath{\geom{C}^{\circ}(#1, #2)}%
+}%
+\DeclareRobustCommand{\secondaryflat}[2]{%
+  \ensuremath{\geom{L}(#1, #2)}%
+}%
+\DeclareRobustCommand{\refinementposet}[1]{%
+  \ensuremath{\operatorname{Subdivs}(#1)}%
+}%
+\DeclareRobustCommand{\regularrefinementposet}[1]{%
+  \ensuremath{\operatorname{Subdivs_{reg}}(#1)}%
+}%
+\DeclareRobustCommand{\GKZvector}[2]{%
+  \ensuremath{\phi_{#1}(#2)}%
+}%
+\DeclareRobustCommand{\HST}[3]{%
+  \ensuremath{\operatorname{HST}_{#1}(#2, #3)}%
+}%
+\DeclareRobustCommand{\universal}[1]{%
+  \ensuremath{\operatorname{\boldmath{U}-poly}(#1)}%
+}%
+\DeclareRobustCommand{\uniregular}[1]{%
+  \ensuremath{\operatorname{\boldmath{U}-poly^{\text{reg}}}(#1)}%
+}%
+\DeclareRobustCommand{\unirelax}[1]{%
+  \ensuremath{\operatorname{\boldmath{Q}-poly}(#1)}%
+}%
+%    \end{macrocode}
+% The face macro is special: it has three arguments: the ambient
+% configuration, a label set, and a direction vector.  If one wants a face of
+% a subconfiguration directly then the first argument should be empty and the
+% second argument gets the configuration:
+%    \begin{macrocode}
+\DeclareRobustCommand{\face}[3]{%
+  \ensuremath{\operatorname{face}_{#1}(#2,#3)}%
+}
+%    \end{macrocode}
+% Versions of bordermatrix with only left/right brackets for linebreaks:
+%    \begin{macrocode}
+\def\leftbordermatrix#1{\begingroup \m@th
+  \@tempdima 8.75\p@
+  \setbox\z@\vbox{%
+    \def\cr{\crcr\noalign{\kern2\p@\global\let\cr\endline}}%
+    \ialign{$##$\hfil\kern2\p@\kern\@tempdima&\thinspace\hfil$##$\hfil
+      &&\quad\hfil$##$\hfil\crcr
+      \omit\strut\hfil\crcr\noalign{\kern-\baselineskip}%
+      #1\crcr\omit\strut\cr}}%
+  \setbox\tw@\vbox{\unvcopy\z@\global\setbox\@ne\lastbox}%
+  \setbox\tw@\hbox{\unhbox\@ne\unskip\global\setbox\@ne\lastbox}%
+  \setbox\tw@\hbox{$\kern\wd\@ne\kern-\@tempdima\left(\kern-\wd\@ne
+    \global\setbox\@ne\vbox{\box\@ne\kern2\p@}%
+    \vcenter{\kern-\ht\@ne\unvbox\z@\kern-\baselineskip}\,\right.$}%
+  \null\;\vbox{\kern\ht\@ne\box\tw@}\endgroup}
+\def\rightbordermatrix#1{\begingroup \m@th
+  \@tempdima 8.75\p@
+  \setbox\z@\vbox{%
+    \def\cr{\crcr\noalign{\kern2\p@\global\let\cr\endline}}%
+    \ialign{$##$\hfil\kern2\p@\kern\@tempdima&\thinspace\hfil$##$\hfil
+      &&\quad\hfil$##$\hfil\crcr
+      \omit\strut\hfil\crcr\noalign{\kern-\baselineskip}%
+      #1\crcr\omit\strut\cr}}%
+  \setbox\tw@\vbox{\unvcopy\z@\global\setbox\@ne\lastbox}%
+  \setbox\tw@\hbox{\unhbox\@ne\unskip\global\setbox\@ne\lastbox}%
+  \setbox\tw@\hbox{$\kern\wd\@ne\kern-\@tempdima\left.\kern-\wd\@ne
+    \global\setbox\@ne\vbox{\box\@ne\kern2\p@}%
+    \vcenter{\kern-\ht\@ne\unvbox\z@\kern-\baselineskip}\,\right)$}%
+  \null\;\vbox{\kern\ht\@ne\box\tw@}\endgroup}
+%    \end{macrocode}
+% Domains:
+%    \begin{macrocode}
+\DeclareRobustCommand{\nat}{\mathbb{N}}
+\DeclareRobustCommand{\integer}{\mathbb{Z}}
+\DeclareRobustCommand{\real}{ {\mathbb{R}} }
+\DeclareRobustCommand{\rational}{\mathbb{Q}}
+\DeclareRobustCommand{\complex}{\mathbb{C}}
+\DeclareRobustCommand{\RP}{{\real}P}
+%    \end{macrocode}
+% Useful abbreviations:
+%    \begin{macrocode}
+\DeclareRobustCommand{\software}[1]{\texttt{#1}} % how we print software names
+\DeclareRobustCommand{\law}[1]{\hskip-3pt \ensuremath{\uparrow}^#1_#1\,} % lawrence lift
+\DeclareRobustCommand{\ops}[1]{\hskip-3pt \ensuremath{\updownarrow}^#1_#1\,} % one-point-suspension
+\DeclareRobustCommand{\triangraph}{\operatorname{\mathcal{G}_{\mathrm{tri}}}}
+\DeclareRobustCommand{\orientgraph}{\operatorname{\mathcal{G}_{\mathrm{l.a.o.}}}}
+\DeclareRobustCommand{\no}{\ensuremath{n}}
+\DeclareRobustCommand{\rank}{\ensuremath{r}}
+\DeclareRobustCommand{\corank}{\ensuremath{c}}
+\DeclareRobustCommand{\dimn}{\ensuremath{d}}
+\DeclareRobustCommand{\closure}[1]{\bar{#1}}
+\DeclareRobustCommand{\CM}{\operatorname{CM}}
+\DeclareRobustCommand{\colvec}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\DeclareRobustCommand{\Cov}{\operatorname{Cov}}
+\DeclareRobustCommand{\Ess}{\operatorname{Ess}}
+\DeclareRobustCommand{\POL}{\operatorname{POL}}
+\DeclareRobustCommand{\abs}[1]{\ensuremath{\left\vert #1 \right\vert}}
+\DeclareRobustCommand{\aff}{\operatorname{aff}}
+\DeclareRobustCommand{\as}{\operatorname{ast}}
+\DeclareRobustCommand{\card}{\operatorname{card}}
+\DeclareRobustCommand{\carrier}{\operatorname{carrier}}
+\DeclareRobustCommand{\codim}{\operatorname{codim}}
+\DeclareRobustCommand{\cone}{\operatorname{cone}}
+\DeclareRobustCommand{\conv}{\operatorname{conv}}
+\DeclareRobustCommand{\del}{\operatorname{del}}
+\DeclareRobustCommand{\dir}{\operatorname{dir}}
+\DeclareRobustCommand{\flip}{\operatorname{flip}}
+\DeclareRobustCommand{\holim}{\operatorname{holim}}
+\DeclareRobustCommand{\im}{\operatorname{im}}
+\DeclareRobustCommand{\id}{\operatorname{id}}
+\DeclareRobustCommand{\ind}{\operatorname{ind}}
+\DeclareRobustCommand{\interior}{\operatorname{int}}
+\DeclareRobustCommand{\inv}{\operatorname{inv}}
+\DeclareRobustCommand{\lab}{\operatorname{lab}}
+\DeclareRobustCommand{\lex}{\operatorname{lex}}
+\DeclareRobustCommand{\lin}{\operatorname{lin}}
+\DeclareRobustCommand{\lk}{\operatorname{link}}
+\DeclareRobustCommand{\maxfaces}[1]{\hat{#1}}
+\DeclareRobustCommand{\prism}{\operatorname{prism}}
+\DeclareRobustCommand{\pull}{\operatorname{pull}}
+\DeclareRobustCommand{\push}{\operatorname{push}}
+\DeclareRobustCommand{\pyr}{\operatorname{pyram}}
+\DeclareRobustCommand{\relint}{\operatorname{relint}}
+\DeclareRobustCommand{\rev}{\operatorname{rev}}
+\DeclareRobustCommand{\sign}{\operatorname{sign}}
+\DeclareRobustCommand{\sm}{{\setminus}}
+\DeclareRobustCommand{\st}{\operatorname{st}}
+\DeclareRobustCommand{\ast}{\operatorname{ast}}
+\DeclareRobustCommand{\supp}{\operatorname{supp}}
+\DeclareRobustCommand{\support}[1]{#1}
+\DeclareRobustCommand{\susp}{\operatorname{susp}}
+\DeclareRobustCommand{\tcolvec}[1]{\left(\begin{smallmatrix}#1\end{smallmatrix}\right)}
+\DeclareRobustCommand{\verts}{\operatorname{vert}}
+\DeclareRobustCommand{\vol}{\operatorname{vol}}
+\DeclareRobustCommand{\zeromatrix}{\ensuremath{\mathbb{O}}}
+\DeclareRobustCommand{\allonematrix}{\ensuremath{\mathbb{I}}}
+\DeclareRobustCommand{\setof}[2]{\left\{\,{#1}\,:\,{#2}\:\right\}}
+\DeclareRobustCommand{\scalp}[2]{\langle {#1}, {#2} \rangle}
+\DeclareRobustCommand{\bigsetof}[2]{\bigm\{{#1}\,:\,{#2}\bigm\}}
+\DeclareRobustCommand{\Bigsetof}[2]{\Bigm\{{#1}\,:\,{#2}\Bigm\}}
+\DeclareRobustCommand{\biggsetof}[2]{\biggm\{{#1}\,:\,{#2}\biggm\}}
+\DeclareRobustCommand{\Biggsetof}[2]{\Biggm\{{#1}\,:\,{#2}\Biggm\}}
+%    \end{macrocode}
