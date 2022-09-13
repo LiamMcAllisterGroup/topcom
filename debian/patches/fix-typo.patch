@@ -22,6 +22,15 @@ Last-Update: 2020-05-05
  	}
        }
        if (_pointsptr) {
+@@ -1270,7 +1270,7 @@
+ 	    exit(1);
+ 	  }
+ 	  if (CommandlineOptions::debug()) {
+-	    std::cerr << "points of input conincide with points in dump file: okay" << std::endl;
++	    std::cerr << "points of input coincide with points in dump file: okay" << std::endl;
+ 	  }
+ 	}
+       }
 @@ -1290,7 +1290,7 @@
  	    exit(1);
  	  }
@@ -31,3 +40,41 @@ Last-Update: 2020-05-05
  	  }
  	}
        }
+@@ -1308,7 +1308,7 @@
+ 	  exit(1);
+ 	}
+ 	if (CommandlineOptions::debug()) {
+-	  std::cerr << "symmetries of input conincide with _symmetries in dump file: okay" << std::endl;
++	  std::cerr << "symmetries of input coincide with _symmetries in dump file: okay" << std::endl;
+ 	}
+       }
+       // finally, parse the partial computational result from the dump file:
+--- a/lib-src/Graphics.cc
++++ b/lib-src/Graphics.cc
+@@ -467,7 +467,7 @@
+     Graphics::asy_stream() << "  label(pic=tree_pic, L=minipage(labelsetstring, width=2*size_x), position=new_pos, align=Center, p=fontsize(1.5 * size_x/(labelset.length + 2)));" << std::endl;
+     Graphics::asy_stream() << "}" << std::endl;
+     Graphics::asy_stream() << "//////////////////////////////////////////////////////////////////////////////" << std::endl;
+-    Graphics::asy_stream() << "// end of drawing defintions section." << std::endl;
++    Graphics::asy_stream() << "// end of drawing definitions section." << std::endl;
+     Graphics::asy_stream() << "//////////////////////////////////////////////////////////////////////////////" << std::endl;
+     Graphics::asy_stream() << std::endl;
+     std::cerr << "... done." << std::endl;
+@@ -519,7 +519,7 @@
+     }
+     Graphics::asy_stream() << "}" << std::endl;
+     Graphics::asy_stream() << "//////////////////////////////////////////////////////////////////////////////" << std::endl;
+-    Graphics::asy_stream() << "// end of drawing defintions section." << std::endl;
++    Graphics::asy_stream() << "// end of drawing definitions section." << std::endl;
+     Graphics::asy_stream() << "//////////////////////////////////////////////////////////////////////////////" << std::endl;
+     Graphics::asy_stream() << std::endl;
+     std::cerr << "... done." << std::endl;
+@@ -568,7 +568,7 @@
+     Graphics::asy_stream() << "  label(pic=tree_pic, L=labelsetstring, position=new_pos_labelset, align=S, p=fontsize(2 * size_x/(2 * (maxelmno + 2))));" << std::endl;    
+     Graphics::asy_stream() << "}" << std::endl;
+     Graphics::asy_stream() << "//////////////////////////////////////////////////////////////////////////////" << std::endl;
+-    Graphics::asy_stream() << "// end of drawing defintions section." << std::endl;
++    Graphics::asy_stream() << "// end of drawing definitions section." << std::endl;
+     Graphics::asy_stream() << "//////////////////////////////////////////////////////////////////////////////" << std::endl;
+     Graphics::asy_stream() << std::endl;
+     std::cerr << "... done." << std::endl;
