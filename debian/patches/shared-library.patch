@@ -6,7 +6,16 @@ Last-Update: 2022-06-23
 
 --- a/configure.ac
 +++ b/configure.ac
-@@ -23,7 +23,8 @@
+@@ -10,7 +10,7 @@
+ 
+ dnl set some compilation switches consistently:
+ AC_SUBST([AM_CPPFLAGS], ["-DSTL_SYMMETRIES -DSTL_CONTAINERS -DSTL_FLIPS -DSTL_CHIROTOPE -DGMPRATIONAL -DPERMLIB_DOMAIN_INT -DUSE_LEXORDER]")
+-AC_SUBST([AM_CXXFLAGS], [" -fvisibility=hidden -fvisibility-inlines-hidden -pthread -std=c++17"])
++AC_SUBST([AM_CXXFLAGS], [" -pthread -std=c++17"])
+ 
+ dnl backup the user variable LDFLAGS:
+ AC_SUBST([LDFLAGS_backup], [${LDFLAGS}])
+@@ -22,7 +22,8 @@
  AC_PROG_CC
  AC_PROG_INSTALL
  AC_PROG_CXX
