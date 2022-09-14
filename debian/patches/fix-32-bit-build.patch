@@ -1,0 +1,152 @@
+Description: Avoid "cannot be overloaded" compiler errors.
+ On 32-bit systems, size_t and unsigned int are the same, and so we're trying
+ to declare the same thing twice.  We use autoconf's AC_CHECK_SIZEOF to create
+ macros for each size and only declare the second versions when these sizes
+ differ.
+ We also use the 32-bit version of MurmurHash to avoid compiler warnings on
+ 32-bit systems.
+Author: Doug Torrance <dtorrance@debian.org>
+Origin: https://stackoverflow.com/questions/7666509/hash-function-for-string
+Last-Update: 2022-09-13
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -59,6 +59,8 @@
+ 
+ dnl Checks for typedefs, structures, and compiler characteristics.
+ AC_C_CONST
++AC_CHECK_SIZEOF([size_t])
++AC_CHECK_SIZEOF([unsigned int])
+ 
+ dnl Checks for library functions.
+ 
+--- a/lib-src/IntegerSet.hh
++++ b/lib-src/IntegerSet.hh
+@@ -102,10 +102,14 @@
+     IntegerSet(const PlainArray<size_type>&);               // constructor with given PlainArray of integers
+ #else
+     explicit IntegerSet(const std::set<size_type>&);        // constructor with given std::set of size_types
++#if SIZEOF_SIZE_T != SIZEOF_UNSIGNED_INT
+     explicit IntegerSet(const std::set<parameter_type>&);   // constructor with given std::set of parameter_types
++#endif
+     explicit IntegerSet(const std::vector<size_type>&);     // constructor with given std::vector of size_types
++#if SIZEOF_SIZE_T != SIZEOF_UNSIGNED_INT
+     explicit IntegerSet(const std::vector<parameter_type>&);// constructor with given std::vector of parameter_types
+ #endif
++#endif
+     // destructor:
+     ~IntegerSet();   	     			            // destructor
+     // keys for containers:
+--- a/lib-src/Symmetry.hh
++++ b/lib-src/Symmetry.hh
+@@ -55,7 +55,9 @@
+   public:
+     // actions on various data types:
+     inline parameter_type   map(const parameter_type)                const;
++#if SIZEOF_SIZE_T != SIZEOF_UNSIGNED_INT
+     inline parameter_type   map(const size_type)                     const;
++#endif
+     IntegerSet64            map(const IntegerSet64&)                 const;
+     IntegerSet              map(const IntegerSet&)                   const;
+     FastSimplicialComplex   map(const FastSimplicialComplex&)        const;
+@@ -66,7 +68,9 @@
+     Vector                  map(const Vector&)                       const;
+     
+     std::vector<parameter_type> map(const std::vector<parameter_type>&)  const;
++#if SIZEOF_SIZE_T != SIZEOF_UNSIGNED_INT
+     std::vector<size_type>      map(const std::vector<size_type>&)       const;
++#endif
+ 
+     // actions filling a prepared result data structure in place:
+     void                    map_into(const IntegerSet64&, IntegerSet64&)   const;
+@@ -219,10 +223,12 @@
+     return (*this)(i);
+   }
+ 
++#if SIZEOF_SIZE_T != SIZEOF_UNSIGNED_INT
+   inline parameter_type Symmetry::map(const size_type i) const {
+     assert(i < std::numeric_limits<parameter_type>::max());
+     return (*this)(i);
+   }
++#endif
+ 
+ #ifndef STL_SYMMETRIES
+ #include "PlainArray.hh"
+--- a/lib-src/IntegerSet.cc
++++ b/lib-src/IntegerSet.cc
+@@ -806,6 +806,7 @@
+ #endif
+   }
+ 
++#if SIZEOF_SIZE_T != SIZEOF_UNSIGNED_INT
+   IntegerSet::IntegerSet(const std::set<parameter_type>& init) : 
+     _no_of_blocks(0UL), _memsize(1UL), _invariant(0UL) {
+ #ifdef CONSTRUCTOR_DEBUG
+@@ -873,6 +874,7 @@
+     set_maxblockno();
+ #endif
+   }
++#endif
+ 
+   IntegerSet::IntegerSet(const std::vector<size_type>& init) : 
+     _no_of_blocks(0UL), _memsize(1UL), _invariant(0UL) {
+@@ -938,6 +940,7 @@
+ #endif
+   }
+ 
++#if SIZEOF_SIZE_T != SIZEOF_UNSIGNED_INT
+   IntegerSet::IntegerSet(const std::vector<parameter_type>& init) : 
+     _no_of_blocks(0UL), _memsize(1UL), _invariant(0UL) {
+ #ifdef CONSTRUCTOR_DEBUG
+@@ -1001,6 +1004,7 @@
+     set_maxblockno();
+ #endif
+   }
++#endif
+ 
+ #endif
+ 
+--- a/lib-src/Symmetry.cc
++++ b/lib-src/Symmetry.cc
+@@ -217,6 +217,7 @@
+     return result;  
+   }
+ 
++#if SIZEOF_SIZE_T != SIZEOF_UNSIGNED_INT
+   std::vector<size_type> Symmetry::map(const std::vector<size_type>& v) const {
+ #ifdef STATISTICS
+     Statistics::new_map_call();
+@@ -227,6 +228,7 @@
+     }
+     return result;  
+   }
++#endif
+   
+   void Symmetry::map_into(const IntegerSet64& is,
+ 			  IntegerSet64& result) const {
+--- a/lib-src/HashKey.hh
++++ b/lib-src/HashKey.hh
+@@ -31,14 +31,23 @@
+   public:
+     inline size_type operator()(const Key& key) const {
+       // use single-byte MurmurHash:
++#if SIZEOF_SIZE_T == 4
++      size_type result(3323198485ul);
++#else
+       size_type result(525201411107845655ull);
++#endif
+       const size_type keysize = key.keysize();
+       for (size_type i = 0; i < keysize; ++i) {
+ 	// result = (result << 5) - result;
+ 	// result += key.key(i);
+ 	result ^= key.key(i);
++#if SIZEOF_SIZE_T == 4
++	result *= 0x5bd1e995;
++	result ^= (result >> 15);
++#else
+ 	result *= 0x5bd1e9955bd1e995;
+ 	result ^= (result >> 47UL);
++#endif
+       }
+       return result;
+     }

@@ -2,3 +2,4 @@ dont-build-libraries.patch
 fix-typo.patch
 rename-binaries.patch
 shared-library.patch
+fix-32-bit-build.patch
