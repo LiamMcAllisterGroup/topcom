@@ -1,0 +1,20 @@
+Description: Add pkg-config file.
+Author: Doug Torrance <dtorrance@debian.org>
+Forwarded: not-needed
+Last-Update: 2022-09-14
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -61,8 +61,11 @@
+ AC_C_CONST
+ AC_CHECK_SIZEOF([size_t])
+ AC_CHECK_SIZEOF([unsigned int])
++AC_SUBST([SIZEOF_DEFINES],
++  ["-DSIZEOF_SIZE_T=${ac_cv_sizeof_size_t} \
++    -DSIZEOF_UNSIGNED_INT=${ac_cv_sizeof_unsigned_int}"])
+ 
+ dnl Checks for library functions.
+ 
+-AC_CONFIG_FILES([wrap-gmp-gmpxx/Makefile lib-src/Makefile lib-src-reg/Makefile src/Makefile src-reg/Makefile examples/Makefile share/Makefile Makefile])
++AC_CONFIG_FILES([wrap-gmp-gmpxx/Makefile lib-src/Makefile lib-src-reg/Makefile src/Makefile src-reg/Makefile examples/Makefile share/Makefile Makefile debian/topcom.pc])
+ AC_OUTPUT
