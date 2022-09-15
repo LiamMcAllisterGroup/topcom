@@ -258,7 +258,7 @@ Last-Update: 2022-06-23
 +topcom_santos_22_triang_SOURCES           = santos_22_triang.cc
  
  LDADD           = ../lib-src/libTOPCOM.a \
-                   ../lib-src-reg/libCHECKREG.a \
+                   ../lib-src-reg/libCHECKREG.a
 --- a/src-reg/Makefile.am
 +++ b/src-reg/Makefile.am
 @@ -1,6 +1,6 @@

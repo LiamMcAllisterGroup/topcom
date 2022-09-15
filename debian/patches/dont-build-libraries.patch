@@ -5,13 +5,14 @@ Last-Update: 2022-06-23
 
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
-@@ -123,19 +123,15 @@
+@@ -122,20 +122,15 @@
+ santos_22_triang_SOURCES           = santos_22_triang.cc
  
  LDADD           = ../lib-src/libTOPCOM.a \
-                   ../lib-src-reg/libCHECKREG.a \
+-                  ../lib-src-reg/libCHECKREG.a \
 -                  ../external/lib/libcddgmp.a \
 -                  ../external/lib/libqsopt_ex.a
-+                  -lcddgmp -lqsopt_ex
++                  ../lib-src-reg/libCHECKREG.a
  if USE_SOPLEX
  LDADD          += ../external/lib/libsoplex.a
  endif
@@ -46,13 +47,13 @@ Last-Update: 2022-06-23
                    ../lib-src-reg/libCHECKREG.a \
 -                  ../external/lib/libcddgmp.a \
 -                  ../external/lib/libqsopt_ex.a
-+                  -lcdd -lcddgmp -lqsopt_ex
++                  -lcddgmp
  if USE_SOPLEX
  LDADD          += ../external/lib/libsoplex.a
  endif
 -LDADD          += ../external/lib/libgmpxx.a \
 -                  ../external/lib/libgmp.a
-+LDADD          += -lgmpxx -lgmp
++LDADD          += -lgmp
  
  AM_CPPFLAGS    += -I../lib-src
  AM_CPPFLAGS    += -I../lib-src-reg

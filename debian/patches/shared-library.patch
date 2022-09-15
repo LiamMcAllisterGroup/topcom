@@ -57,11 +57,13 @@ Last-Update: 2022-06-23
  
 --- a/lib-src-reg/Makefile.am
 +++ b/lib-src-reg/Makefile.am
-@@ -1,6 +1,6 @@
+@@ -1,6 +1,8 @@
 -lib_LIBRARIES = libCHECKREG.a
 +lib_LTLIBRARIES = libCHECKREG.la
  
 -libCHECKREG_a_SOURCES = \
++libCHECKREG_la_LIBADD = -lcddgmp -lqsopt_ex
++
 +libCHECKREG_la_SOURCES = \
  QSOinterface.cc \
  SPXinterface.cc \
@@ -76,7 +78,7 @@ Last-Update: 2022-06-23
 -                  ../lib-src-reg/libCHECKREG.a \
 +LDADD           = ../lib-src/libTOPCOM.la \
 +                  ../lib-src-reg/libCHECKREG.la \
-                   -lcdd -lcddgmp -lqsopt_ex
+                   -lcddgmp
  if USE_SOPLEX
  LDADD          += ../external/lib/libsoplex.a
 --- a/src/Makefile.am
@@ -86,9 +88,9 @@ Last-Update: 2022-06-23
  topcom_santos_22_triang_SOURCES           = santos_22_triang.cc
  
 -LDADD           = ../lib-src/libTOPCOM.a \
--                  ../lib-src-reg/libCHECKREG.a \
+-                  ../lib-src-reg/libCHECKREG.a
 +LDADD           = ../lib-src/libTOPCOM.la \
-+                  ../lib-src-reg/libCHECKREG.la \
-                   -lcddgmp -lqsopt_ex
++                  ../lib-src-reg/libCHECKREG.la
  if USE_SOPLEX
  LDADD          += ../external/lib/libsoplex.a
+ endif
