@@ -14,7 +14,7 @@ Last-Update: 2022-06-23
 +AC_SUBST([AM_CXXFLAGS], [" -pthread -std=c++17"])
  
  dnl backup the user variable LDFLAGS:
- AC_SUBST([LDFLAGS_backup], [${LDFLAGS}])
+ dnl AC_SUBST([LDFLAGS_backup], [${LDFLAGS}])
 @@ -22,7 +22,8 @@
  AC_PROG_CC
  AC_PROG_INSTALL
@@ -23,8 +23,8 @@ Last-Update: 2022-06-23
 +
 +LT_INIT
  
- dnl Checks for libraries.
- dnl Check for compression libraries (qsopt_ex uses them if they are present):
+ dnl Check for libraries:
+ dnl Make libgmp if requested:
 --- a/lib-src/Makefile.am
 +++ b/lib-src/Makefile.am
 @@ -1,6 +1,8 @@
@@ -79,8 +79,8 @@ Last-Update: 2022-06-23
 +LDADD           = ../lib-src/libTOPCOM.la \
 +                  ../lib-src-reg/libCHECKREG.la \
                    -lcddgmp
- if USE_SOPLEX
- LDADD          += ../external/lib/libsoplex.a
+ if USE_QSOPTEX
+ LDADD          += -lqsopt_ex
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
 @@ -121,8 +121,8 @@
@@ -91,6 +91,6 @@ Last-Update: 2022-06-23
 -                  ../lib-src-reg/libCHECKREG.a
 +LDADD           = ../lib-src/libTOPCOM.la \
 +                  ../lib-src-reg/libCHECKREG.la
- if USE_SOPLEX
- LDADD          += ../external/lib/libsoplex.a
+ if USE_QSOPTEX
+ LDADD          += -lqsopt_ex
  endif
