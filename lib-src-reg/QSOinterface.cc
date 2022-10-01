@@ -2,10 +2,12 @@
 // 
 // QSOinterface.cc
 //
-//    produced: 2003/01/15 jr
-// last change: 2003/01/15 jr
+//    produced: 2022/01/15 jr
+// last change: 2022/09/13 jr
 //
 ////////////////////////////////////////////////////////////////////////////////
+
+#ifdef HAVE_LIBQSOPTEX
 
 #include <string>
 #include <iostream>
@@ -345,5 +347,7 @@ namespace topcom {
   }
 
 }; // namespace topcom
+
+#endif // HAVE_QSOPTEX
 
 // eof QSOinterface.cc

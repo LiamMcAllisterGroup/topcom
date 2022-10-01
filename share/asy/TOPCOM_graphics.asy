@@ -6,11 +6,11 @@
 // begin node type section:
 //////////////////////////////////////////////////////////////////////////////
 struct node_type {
-  int[]   labelset;
-  int[][] partialtriang;
-  void operator init(int[] init_labelset, int[][] init_partialtriang) {
-    labelset      = copy(init_labelset) ;
-    partialtriang = copy(init_partialtriang);
+  int[]    labelset;
+  real[][] matrix;
+  void operator init(int[] init_labelset, real[][] init_matrix) {
+    labelset = copy(init_labelset);
+    matrix   = copy(init_matrix);
   }
   int length() {
     return labelset.length;
@@ -49,69 +49,60 @@ real thicklinewidth = size_x * 0.05pt;
 real thinlinewidth = size_x * 0.02pt;
 
 //////////////////////////////////////////////////////////////////////////////
-// begin of vertices section (indices of vertices go here):
+// new worker:
 //////////////////////////////////////////////////////////////////////////////
-
-int[] A_extremepoints = {0,1,2};
-
-/////////////////////////////////////////////////////////////////////////////
-// end of vertices section.
+tree_nodes.push(new node_type[][]);
+tree_arcs.push(new int[][][]);
+deadend_nodes.push(new int[][]);
+earlydeadend_nodes.push(new int[][]);
+veryearlydeadend_nodes.push(new int[][]);
+missingvolume_nodes.push(new int[][]);
+notnew_nodes.push(new int[][]);
+solution_nodes.push(new int[][]);
 //////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-// begin of points section (coordinates of points go here):
-//////////////////////////////////////////////////////////////////////////////
-
-pair[] point_coords = {(-2, -1300077228592327/1125899906842624), (2, -1300077228592327/1125899906842624), (0, 1300077228592327/562949953421312), (-1/2, -1300077228592327/4503599627370496), (1/2, -1300077228592327/4503599627370496), (0, 1300077228592327/2251799813685248)};
-
-real max_x = point_coords[0].x;
-real min_x = point_coords[0].x;
-real max_y = point_coords[0].y;
-real min_y = point_coords[0].y;
-
-for (int i = 1; i < point_coords.length; ++i) {
-  if (point_coords[i].x > max_x) {
-    max_x = point_coords[i].x;
-  }
-  if (point_coords[i].x < min_x) {
-    min_x = point_coords[i].x;
-  }
-  if (point_coords[i].y > max_y) {
-    max_y = point_coords[i].y;
-  }
-  if (point_coords[i].y < min_y) {
-    min_y = point_coords[i].y;
-  }
-}
-
-real coord_size_x = (max_x - min_x);
-real coord_size_y = (max_y - min_y);
-real scale_pointconf = size_x / coord_size_x;
-center_x = scale_pointconf * ((max_x + min_x) / 2);
-center_y = scale_pointconf * ((max_y + min_y) / 2);
-scale_symbols = size_x / (18pt);
-thicklinewidth = size_x * 0.05pt;
-thinlinewidth = size_x * 0.02pt;
-
-default_pointconf_pen = default_pointconf_pen + linewidth(thicklinewidth);
-secondary_pointconf_pen = secondary_pointconf_pen + linewidth(thinlinewidth);
-
-pointconf A = shift(-center_x, -center_y) * scale(scale_pointconf) * pointconf(L=Label("", align=S), coords=point_coords, extremepoints=A_extremepoints, start_label=0);
-pointconf A_scaled = scale(10) * pointconf(A, copy=true);
-
-picture pointconf_pic;
-
-A_scaled.draw(pic=pointconf_pic);
-shipout("TOPCOM" + filename_postfix + "points", pointconf_pic);
-
-//////////////////////////////////////////////////////////////////////////////
-// end of points section.
+// end new worker.
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-// begin of size correction if points are drawn as nodes:
+// new worker:
 //////////////////////////////////////////////////////////////////////////////
-size_y = scale_pointconf * coord_size_y;
-/////////////////////////////////////////////////////////////////////////////
-// end of size correction if points are drawn as nodes.
+tree_nodes.push(new node_type[][]);
+tree_arcs.push(new int[][][]);
+deadend_nodes.push(new int[][]);
+earlydeadend_nodes.push(new int[][]);
+veryearlydeadend_nodes.push(new int[][]);
+missingvolume_nodes.push(new int[][]);
+notnew_nodes.push(new int[][]);
+solution_nodes.push(new int[][]);
+//////////////////////////////////////////////////////////////////////////////
+// end new worker.
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+// new worker:
+//////////////////////////////////////////////////////////////////////////////
+tree_nodes.push(new node_type[][]);
+tree_arcs.push(new int[][][]);
+deadend_nodes.push(new int[][]);
+earlydeadend_nodes.push(new int[][]);
+veryearlydeadend_nodes.push(new int[][]);
+missingvolume_nodes.push(new int[][]);
+notnew_nodes.push(new int[][]);
+solution_nodes.push(new int[][]);
+//////////////////////////////////////////////////////////////////////////////
+// end new worker.
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+// new worker:
+//////////////////////////////////////////////////////////////////////////////
+tree_nodes.push(new node_type[][]);
+tree_arcs.push(new int[][][]);
+deadend_nodes.push(new int[][]);
+earlydeadend_nodes.push(new int[][]);
+veryearlydeadend_nodes.push(new int[][]);
+missingvolume_nodes.push(new int[][]);
+notnew_nodes.push(new int[][]);
+solution_nodes.push(new int[][]);
+//////////////////////////////////////////////////////////////////////////////
+// end new worker.
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 // new worker:
@@ -142,1453 +133,8294 @@ solution_nodes[0].push(new int[]);
 // end new run for worker 0.
 //////////////////////////////////////////////////////////////////////////////
 
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {}, new int[][] {}));
-// end new partial triangulation node.
+// begin new staircase matrix:
+int rowdim_0 = 0;
+int coldim_0 = 0;
+real[][] new_matrix_0 = new real[coldim_0][rowdim_0];
 
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {0}, new int[][] {{0,1,2}}));
-// end new partial triangulation node.
+// begin new label set:
+int[] new_labelset_0 = new int[] {};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][0].push(node_type(new_labelset_0, new_matrix_0));
+// end new node.
+
+// begin new staircase matrix:
+int rowdim_1 = 9;
+int coldim_1 = 1;
+real[][] new_matrix_1 = new real[coldim_1][rowdim_1];
+new_matrix_1[0][0] = 0;
+new_matrix_1[0][1] = 0;
+new_matrix_1[0][2] = 0;
+new_matrix_1[0][3] = 0;
+new_matrix_1[0][4] = 0;
+new_matrix_1[0][5] = 0;
+new_matrix_1[0][6] = 0;
+new_matrix_1[0][7] = 0;
+new_matrix_1[0][8] = 1;
+
+// begin new label set:
+int[] new_labelset_1 = new int[] {17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][0].push(node_type(new_labelset_1, new_matrix_1));
+// end new node.
 
 // begin new extension arc:
 tree_arcs[0][0].push(new int[] {0, 1});
 // end new extension arc.
 
-// begin new solution node:
-solution_nodes[0][0].push(1);
-// end new solution node.
+// begin new staircase matrix:
+int rowdim_2 = 9;
+int coldim_2 = 1;
+real[][] new_matrix_2 = new real[coldim_2][rowdim_2];
+new_matrix_2[0][0] = 0;
+new_matrix_2[0][1] = 0;
+new_matrix_2[0][2] = 0;
+new_matrix_2[0][3] = 0;
+new_matrix_2[0][4] = 0;
+new_matrix_2[0][5] = 0;
+new_matrix_2[0][6] = 0;
+new_matrix_2[0][7] = 1;
+new_matrix_2[0][8] = 0;
 
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1}, new int[][] {{0,1,3}}));
-// end new partial triangulation node.
+// begin new label set:
+int[] new_labelset_2 = new int[] {16};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][0].push(node_type(new_labelset_2, new_matrix_2));
+// end new node.
 
 // begin new extension arc:
 tree_arcs[0][0].push(new int[] {0, 2});
 // end new extension arc.
 
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4}, new int[][] {{0,1,3},{0,2,3}}));
-// end new partial triangulation node.
+// begin new not-new node:
+notnew_nodes[0][0].push(2);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_3 = 9;
+int coldim_3 = 1;
+real[][] new_matrix_3 = new real[coldim_3][rowdim_3];
+new_matrix_3[0][0] = 0;
+new_matrix_3[0][1] = 0;
+new_matrix_3[0][2] = 0;
+new_matrix_3[0][3] = 0;
+new_matrix_3[0][4] = 0;
+new_matrix_3[0][5] = 0;
+new_matrix_3[0][6] = 1;
+new_matrix_3[0][7] = 0;
+new_matrix_3[0][8] = 0;
+
+// begin new label set:
+int[] new_labelset_3 = new int[] {15};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][0].push(node_type(new_labelset_3, new_matrix_3));
+// end new node.
 
 // begin new extension arc:
-tree_arcs[0][0].push(new int[] {2, 3});
+tree_arcs[0][0].push(new int[] {0, 3});
 // end new extension arc.
 
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,10}, new int[][] {{0,1,3},{0,2,3},{1,2,3}}));
-// end new partial triangulation node.
+// begin new not-new node:
+notnew_nodes[0][0].push(3);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_4 = 9;
+int coldim_4 = 1;
+real[][] new_matrix_4 = new real[coldim_4][rowdim_4];
+new_matrix_4[0][0] = 0;
+new_matrix_4[0][1] = 0;
+new_matrix_4[0][2] = 0;
+new_matrix_4[0][3] = 0;
+new_matrix_4[0][4] = 0;
+new_matrix_4[0][5] = 1;
+new_matrix_4[0][6] = 0;
+new_matrix_4[0][7] = 0;
+new_matrix_4[0][8] = 0;
+
+// begin new label set:
+int[] new_labelset_4 = new int[] {14};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][0].push(node_type(new_labelset_4, new_matrix_4));
+// end new node.
 
 // begin new extension arc:
-tree_arcs[0][0].push(new int[] {3, 4});
+tree_arcs[0][0].push(new int[] {0, 4});
 // end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][0].push(4);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_5 = 9;
+int coldim_5 = 1;
+real[][] new_matrix_5 = new real[coldim_5][rowdim_5];
+new_matrix_5[0][0] = 0;
+new_matrix_5[0][1] = 0;
+new_matrix_5[0][2] = 0;
+new_matrix_5[0][3] = 0;
+new_matrix_5[0][4] = 1;
+new_matrix_5[0][5] = 0;
+new_matrix_5[0][6] = 0;
+new_matrix_5[0][7] = 0;
+new_matrix_5[0][8] = 0;
+
+// begin new label set:
+int[] new_labelset_5 = new int[] {13};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][0].push(node_type(new_labelset_5, new_matrix_5));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][0].push(new int[] {0, 5});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][0].push(5);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_6 = 9;
+int coldim_6 = 1;
+real[][] new_matrix_6 = new real[coldim_6][rowdim_6];
+new_matrix_6[0][0] = 0;
+new_matrix_6[0][1] = 0;
+new_matrix_6[0][2] = 0;
+new_matrix_6[0][3] = 1;
+new_matrix_6[0][4] = 0;
+new_matrix_6[0][5] = 0;
+new_matrix_6[0][6] = 0;
+new_matrix_6[0][7] = 0;
+new_matrix_6[0][8] = 0;
+
+// begin new label set:
+int[] new_labelset_6 = new int[] {12};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][0].push(node_type(new_labelset_6, new_matrix_6));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][0].push(new int[] {0, 6});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][0].push(6);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_7 = 9;
+int coldim_7 = 1;
+real[][] new_matrix_7 = new real[coldim_7][rowdim_7];
+new_matrix_7[0][0] = 0;
+new_matrix_7[0][1] = 0;
+new_matrix_7[0][2] = 1;
+new_matrix_7[0][3] = 0;
+new_matrix_7[0][4] = 0;
+new_matrix_7[0][5] = 0;
+new_matrix_7[0][6] = 0;
+new_matrix_7[0][7] = 0;
+new_matrix_7[0][8] = 0;
+
+// begin new label set:
+int[] new_labelset_7 = new int[] {11};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][0].push(node_type(new_labelset_7, new_matrix_7));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][0].push(new int[] {0, 7});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][0].push(7);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_8 = 9;
+int coldim_8 = 1;
+real[][] new_matrix_8 = new real[coldim_8][rowdim_8];
+new_matrix_8[0][0] = 0;
+new_matrix_8[0][1] = 1;
+new_matrix_8[0][2] = 0;
+new_matrix_8[0][3] = 0;
+new_matrix_8[0][4] = 0;
+new_matrix_8[0][5] = 0;
+new_matrix_8[0][6] = 0;
+new_matrix_8[0][7] = 0;
+new_matrix_8[0][8] = 0;
+
+// begin new label set:
+int[] new_labelset_8 = new int[] {10};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][0].push(node_type(new_labelset_8, new_matrix_8));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][0].push(new int[] {0, 8});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][0].push(8);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_9 = 9;
+int coldim_9 = 1;
+real[][] new_matrix_9 = new real[coldim_9][rowdim_9];
+new_matrix_9[0][0] = 1;
+new_matrix_9[0][1] = 0;
+new_matrix_9[0][2] = 0;
+new_matrix_9[0][3] = 0;
+new_matrix_9[0][4] = 0;
+new_matrix_9[0][5] = 0;
+new_matrix_9[0][6] = 0;
+new_matrix_9[0][7] = 0;
+new_matrix_9[0][8] = 0;
+
+// begin new label set:
+int[] new_labelset_9 = new int[] {9};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][0].push(node_type(new_labelset_9, new_matrix_9));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][0].push(new int[] {0, 9});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][0].push(9);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_10 = 9;
+int coldim_10 = 1;
+real[][] new_matrix_10 = new real[coldim_10][rowdim_10];
+new_matrix_10[0][0] = 0;
+new_matrix_10[0][1] = 0;
+new_matrix_10[0][2] = 0;
+new_matrix_10[0][3] = 0;
+new_matrix_10[0][4] = 0;
+new_matrix_10[0][5] = 0;
+new_matrix_10[0][6] = 0;
+new_matrix_10[0][7] = 0;
+new_matrix_10[0][8] = 1;
+
+// begin new label set:
+int[] new_labelset_10 = new int[] {8};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][0].push(node_type(new_labelset_10, new_matrix_10));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][0].push(new int[] {0, 10});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][0].push(10);
+// end new earlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_11 = 9;
+int coldim_11 = 1;
+real[][] new_matrix_11 = new real[coldim_11][rowdim_11];
+new_matrix_11[0][0] = 0;
+new_matrix_11[0][1] = 0;
+new_matrix_11[0][2] = 0;
+new_matrix_11[0][3] = 0;
+new_matrix_11[0][4] = 0;
+new_matrix_11[0][5] = 0;
+new_matrix_11[0][6] = 0;
+new_matrix_11[0][7] = 1;
+new_matrix_11[0][8] = 0;
+
+// begin new label set:
+int[] new_labelset_11 = new int[] {7};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][0].push(node_type(new_labelset_11, new_matrix_11));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][0].push(new int[] {0, 11});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][0].push(11);
+// end new earlydeadend node.
+//////////////////////////////////////////////////////////////////////////////
+// new run for worker 0:
+//////////////////////////////////////////////////////////////////////////////
+tree_nodes[0].push(new node_type[]);
+tree_arcs[0].push(new int[][]);
+deadend_nodes[0].push(new int[]);
+earlydeadend_nodes[0].push(new int[]);
+veryearlydeadend_nodes[0].push(new int[]);
+missingvolume_nodes[0].push(new int[]);
+notnew_nodes[0].push(new int[]);
+solution_nodes[0].push(new int[]);
+//////////////////////////////////////////////////////////////////////////////
+// end new run for worker 0.
+//////////////////////////////////////////////////////////////////////////////
+
+// begin new staircase matrix:
+int rowdim_12 = 9;
+int coldim_12 = 1;
+real[][] new_matrix_12 = new real[coldim_12][rowdim_12];
+new_matrix_12[0][0] = 0;
+new_matrix_12[0][1] = 0;
+new_matrix_12[0][2] = 0;
+new_matrix_12[0][3] = 0;
+new_matrix_12[0][4] = 0;
+new_matrix_12[0][5] = 0;
+new_matrix_12[0][6] = 0;
+new_matrix_12[0][7] = 0;
+new_matrix_12[0][8] = 1;
+
+// begin new label set:
+int[] new_labelset_12 = new int[] {17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][1].push(node_type(new_labelset_12, new_matrix_12));
+// end new node.
+
+// begin new staircase matrix:
+int rowdim_13 = 9;
+int coldim_13 = 2;
+real[][] new_matrix_13 = new real[coldim_13][rowdim_13];
+new_matrix_13[0][0] = 0;
+new_matrix_13[0][1] = 0;
+new_matrix_13[0][2] = 0;
+new_matrix_13[0][3] = 0;
+new_matrix_13[0][4] = 0;
+new_matrix_13[0][5] = 0;
+new_matrix_13[0][6] = 0;
+new_matrix_13[0][7] = 1;
+new_matrix_13[0][8] = 0;
+new_matrix_13[1][0] = 0;
+new_matrix_13[1][1] = 0;
+new_matrix_13[1][2] = 0;
+new_matrix_13[1][3] = 0;
+new_matrix_13[1][4] = 0;
+new_matrix_13[1][5] = 0;
+new_matrix_13[1][6] = 0;
+new_matrix_13[1][7] = 0;
+new_matrix_13[1][8] = 1;
+
+// begin new label set:
+int[] new_labelset_13 = new int[] {16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][1].push(node_type(new_labelset_13, new_matrix_13));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][1].push(new int[] {0, 1});
+// end new extension arc.
+
+// begin new staircase matrix:
+int rowdim_14 = 9;
+int coldim_14 = 2;
+real[][] new_matrix_14 = new real[coldim_14][rowdim_14];
+new_matrix_14[0][0] = 0;
+new_matrix_14[0][1] = 0;
+new_matrix_14[0][2] = 0;
+new_matrix_14[0][3] = 0;
+new_matrix_14[0][4] = 0;
+new_matrix_14[0][5] = 0;
+new_matrix_14[0][6] = 1;
+new_matrix_14[0][7] = 0;
+new_matrix_14[0][8] = 0;
+new_matrix_14[1][0] = 0;
+new_matrix_14[1][1] = 0;
+new_matrix_14[1][2] = 0;
+new_matrix_14[1][3] = 0;
+new_matrix_14[1][4] = 0;
+new_matrix_14[1][5] = 0;
+new_matrix_14[1][6] = 0;
+new_matrix_14[1][7] = 0;
+new_matrix_14[1][8] = 1;
+
+// begin new label set:
+int[] new_labelset_14 = new int[] {15,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][1].push(node_type(new_labelset_14, new_matrix_14));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][1].push(new int[] {0, 2});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][1].push(2);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_15 = 9;
+int coldim_15 = 2;
+real[][] new_matrix_15 = new real[coldim_15][rowdim_15];
+new_matrix_15[0][0] = 0;
+new_matrix_15[0][1] = 0;
+new_matrix_15[0][2] = 0;
+new_matrix_15[0][3] = 0;
+new_matrix_15[0][4] = 0;
+new_matrix_15[0][5] = 1;
+new_matrix_15[0][6] = 0;
+new_matrix_15[0][7] = 0;
+new_matrix_15[0][8] = 0;
+new_matrix_15[1][0] = 0;
+new_matrix_15[1][1] = 0;
+new_matrix_15[1][2] = 0;
+new_matrix_15[1][3] = 0;
+new_matrix_15[1][4] = 0;
+new_matrix_15[1][5] = 0;
+new_matrix_15[1][6] = 0;
+new_matrix_15[1][7] = 0;
+new_matrix_15[1][8] = 1;
+
+// begin new label set:
+int[] new_labelset_15 = new int[] {14,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][1].push(node_type(new_labelset_15, new_matrix_15));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][1].push(new int[] {0, 3});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][1].push(3);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_16 = 9;
+int coldim_16 = 2;
+real[][] new_matrix_16 = new real[coldim_16][rowdim_16];
+new_matrix_16[0][0] = 0;
+new_matrix_16[0][1] = 0;
+new_matrix_16[0][2] = 0;
+new_matrix_16[0][3] = 0;
+new_matrix_16[0][4] = 1;
+new_matrix_16[0][5] = 0;
+new_matrix_16[0][6] = 0;
+new_matrix_16[0][7] = 0;
+new_matrix_16[0][8] = 0;
+new_matrix_16[1][0] = 0;
+new_matrix_16[1][1] = 0;
+new_matrix_16[1][2] = 0;
+new_matrix_16[1][3] = 0;
+new_matrix_16[1][4] = 0;
+new_matrix_16[1][5] = 0;
+new_matrix_16[1][6] = 0;
+new_matrix_16[1][7] = 0;
+new_matrix_16[1][8] = 1;
+
+// begin new label set:
+int[] new_labelset_16 = new int[] {13,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][1].push(node_type(new_labelset_16, new_matrix_16));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][1].push(new int[] {0, 4});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][1].push(4);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_17 = 9;
+int coldim_17 = 2;
+real[][] new_matrix_17 = new real[coldim_17][rowdim_17];
+new_matrix_17[0][0] = 0;
+new_matrix_17[0][1] = 0;
+new_matrix_17[0][2] = 0;
+new_matrix_17[0][3] = 1;
+new_matrix_17[0][4] = 0;
+new_matrix_17[0][5] = 0;
+new_matrix_17[0][6] = 0;
+new_matrix_17[0][7] = 0;
+new_matrix_17[0][8] = 0;
+new_matrix_17[1][0] = 0;
+new_matrix_17[1][1] = 0;
+new_matrix_17[1][2] = 0;
+new_matrix_17[1][3] = 0;
+new_matrix_17[1][4] = 0;
+new_matrix_17[1][5] = 0;
+new_matrix_17[1][6] = 0;
+new_matrix_17[1][7] = 0;
+new_matrix_17[1][8] = 1;
+
+// begin new label set:
+int[] new_labelset_17 = new int[] {12,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][1].push(node_type(new_labelset_17, new_matrix_17));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][1].push(new int[] {0, 5});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][1].push(5);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_18 = 9;
+int coldim_18 = 2;
+real[][] new_matrix_18 = new real[coldim_18][rowdim_18];
+new_matrix_18[0][0] = 0;
+new_matrix_18[0][1] = 0;
+new_matrix_18[0][2] = 1;
+new_matrix_18[0][3] = 0;
+new_matrix_18[0][4] = 0;
+new_matrix_18[0][5] = 0;
+new_matrix_18[0][6] = 0;
+new_matrix_18[0][7] = 0;
+new_matrix_18[0][8] = 0;
+new_matrix_18[1][0] = 0;
+new_matrix_18[1][1] = 0;
+new_matrix_18[1][2] = 0;
+new_matrix_18[1][3] = 0;
+new_matrix_18[1][4] = 0;
+new_matrix_18[1][5] = 0;
+new_matrix_18[1][6] = 0;
+new_matrix_18[1][7] = 0;
+new_matrix_18[1][8] = 1;
+
+// begin new label set:
+int[] new_labelset_18 = new int[] {11,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][1].push(node_type(new_labelset_18, new_matrix_18));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][1].push(new int[] {0, 6});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][1].push(6);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_19 = 9;
+int coldim_19 = 2;
+real[][] new_matrix_19 = new real[coldim_19][rowdim_19];
+new_matrix_19[0][0] = 0;
+new_matrix_19[0][1] = 1;
+new_matrix_19[0][2] = 0;
+new_matrix_19[0][3] = 0;
+new_matrix_19[0][4] = 0;
+new_matrix_19[0][5] = 0;
+new_matrix_19[0][6] = 0;
+new_matrix_19[0][7] = 0;
+new_matrix_19[0][8] = 0;
+new_matrix_19[1][0] = 0;
+new_matrix_19[1][1] = 0;
+new_matrix_19[1][2] = 0;
+new_matrix_19[1][3] = 0;
+new_matrix_19[1][4] = 0;
+new_matrix_19[1][5] = 0;
+new_matrix_19[1][6] = 0;
+new_matrix_19[1][7] = 0;
+new_matrix_19[1][8] = 1;
+
+// begin new label set:
+int[] new_labelset_19 = new int[] {10,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][1].push(node_type(new_labelset_19, new_matrix_19));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][1].push(new int[] {0, 7});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][1].push(7);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_20 = 9;
+int coldim_20 = 2;
+real[][] new_matrix_20 = new real[coldim_20][rowdim_20];
+new_matrix_20[0][0] = 1;
+new_matrix_20[0][1] = 0;
+new_matrix_20[0][2] = 0;
+new_matrix_20[0][3] = 0;
+new_matrix_20[0][4] = 0;
+new_matrix_20[0][5] = 0;
+new_matrix_20[0][6] = 0;
+new_matrix_20[0][7] = 0;
+new_matrix_20[0][8] = 0;
+new_matrix_20[1][0] = 0;
+new_matrix_20[1][1] = 0;
+new_matrix_20[1][2] = 0;
+new_matrix_20[1][3] = 0;
+new_matrix_20[1][4] = 0;
+new_matrix_20[1][5] = 0;
+new_matrix_20[1][6] = 0;
+new_matrix_20[1][7] = 0;
+new_matrix_20[1][8] = 1;
+
+// begin new label set:
+int[] new_labelset_20 = new int[] {9,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][1].push(node_type(new_labelset_20, new_matrix_20));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][1].push(new int[] {0, 8});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][1].push(8);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_21 = 9;
+int coldim_21 = 2;
+real[][] new_matrix_21 = new real[coldim_21][rowdim_21];
+new_matrix_21[0][0] = 0;
+new_matrix_21[0][1] = 0;
+new_matrix_21[0][2] = 0;
+new_matrix_21[0][3] = 0;
+new_matrix_21[0][4] = 0;
+new_matrix_21[0][5] = 0;
+new_matrix_21[0][6] = 0;
+new_matrix_21[0][7] = 0;
+new_matrix_21[0][8] = 1;
+new_matrix_21[1][0] = 0;
+new_matrix_21[1][1] = 0;
+new_matrix_21[1][2] = 0;
+new_matrix_21[1][3] = 0;
+new_matrix_21[1][4] = 0;
+new_matrix_21[1][5] = 0;
+new_matrix_21[1][6] = 0;
+new_matrix_21[1][7] = 0;
+new_matrix_21[1][8] = 0;
+
+// begin new label set:
+int[] new_labelset_21 = new int[] {8,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][1].push(node_type(new_labelset_21, new_matrix_21));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][1].push(new int[] {0, 9});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][1].push(9);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_22 = 9;
+int coldim_22 = 3;
+real[][] new_matrix_22 = new real[coldim_22][rowdim_22];
+new_matrix_22[0][0] = 0;
+new_matrix_22[0][1] = 0;
+new_matrix_22[0][2] = 0;
+new_matrix_22[0][3] = 0;
+new_matrix_22[0][4] = 0;
+new_matrix_22[0][5] = 0;
+new_matrix_22[0][6] = 0;
+new_matrix_22[0][7] = 1;
+new_matrix_22[0][8] = 0;
+new_matrix_22[1][0] = 0;
+new_matrix_22[1][1] = 0;
+new_matrix_22[1][2] = 0;
+new_matrix_22[1][3] = 0;
+new_matrix_22[1][4] = 0;
+new_matrix_22[1][5] = 0;
+new_matrix_22[1][6] = 0;
+new_matrix_22[1][7] = 0;
+new_matrix_22[1][8] = 1;
+new_matrix_22[2][0] = 0;
+new_matrix_22[2][1] = 0;
+new_matrix_22[2][2] = 0;
+new_matrix_22[2][3] = 0;
+new_matrix_22[2][4] = 0;
+new_matrix_22[2][5] = 0;
+new_matrix_22[2][6] = 0;
+new_matrix_22[2][7] = 0;
+new_matrix_22[2][8] = 0;
+
+// begin new label set:
+int[] new_labelset_22 = new int[] {7,8,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][1].push(node_type(new_labelset_22, new_matrix_22));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][1].push(new int[] {9, 10});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][1].push(10);
+// end new earlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_23 = 9;
+int coldim_23 = 3;
+real[][] new_matrix_23 = new real[coldim_23][rowdim_23];
+new_matrix_23[0][0] = 0;
+new_matrix_23[0][1] = 0;
+new_matrix_23[0][2] = 0;
+new_matrix_23[0][3] = 0;
+new_matrix_23[0][4] = 0;
+new_matrix_23[0][5] = 0;
+new_matrix_23[0][6] = 1;
+new_matrix_23[0][7] = 0;
+new_matrix_23[0][8] = 0;
+new_matrix_23[1][0] = 0;
+new_matrix_23[1][1] = 0;
+new_matrix_23[1][2] = 0;
+new_matrix_23[1][3] = 0;
+new_matrix_23[1][4] = 0;
+new_matrix_23[1][5] = 0;
+new_matrix_23[1][6] = 0;
+new_matrix_23[1][7] = 0;
+new_matrix_23[1][8] = 1;
+new_matrix_23[2][0] = 0;
+new_matrix_23[2][1] = 0;
+new_matrix_23[2][2] = 0;
+new_matrix_23[2][3] = 0;
+new_matrix_23[2][4] = 0;
+new_matrix_23[2][5] = 0;
+new_matrix_23[2][6] = 0;
+new_matrix_23[2][7] = 0;
+new_matrix_23[2][8] = 0;
+
+// begin new label set:
+int[] new_labelset_23 = new int[] {6,8,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][1].push(node_type(new_labelset_23, new_matrix_23));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][1].push(new int[] {9, 11});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][1].push(11);
+// end new earlydeadend node.
+//////////////////////////////////////////////////////////////////////////////
+// new run for worker 0:
+//////////////////////////////////////////////////////////////////////////////
+tree_nodes[0].push(new node_type[]);
+tree_arcs[0].push(new int[][]);
+deadend_nodes[0].push(new int[]);
+earlydeadend_nodes[0].push(new int[]);
+veryearlydeadend_nodes[0].push(new int[]);
+missingvolume_nodes[0].push(new int[]);
+notnew_nodes[0].push(new int[]);
+solution_nodes[0].push(new int[]);
+//////////////////////////////////////////////////////////////////////////////
+// end new run for worker 0.
+//////////////////////////////////////////////////////////////////////////////
+
+// begin new staircase matrix:
+int rowdim_24 = 9;
+int coldim_24 = 2;
+real[][] new_matrix_24 = new real[coldim_24][rowdim_24];
+new_matrix_24[0][0] = 0;
+new_matrix_24[0][1] = 0;
+new_matrix_24[0][2] = 0;
+new_matrix_24[0][3] = 0;
+new_matrix_24[0][4] = 0;
+new_matrix_24[0][5] = 0;
+new_matrix_24[0][6] = 0;
+new_matrix_24[0][7] = 1;
+new_matrix_24[0][8] = 0;
+new_matrix_24[1][0] = 0;
+new_matrix_24[1][1] = 0;
+new_matrix_24[1][2] = 0;
+new_matrix_24[1][3] = 0;
+new_matrix_24[1][4] = 0;
+new_matrix_24[1][5] = 0;
+new_matrix_24[1][6] = 0;
+new_matrix_24[1][7] = 0;
+new_matrix_24[1][8] = 1;
+
+// begin new label set:
+int[] new_labelset_24 = new int[] {16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][2].push(node_type(new_labelset_24, new_matrix_24));
+// end new node.
+
+// begin new staircase matrix:
+int rowdim_25 = 9;
+int coldim_25 = 3;
+real[][] new_matrix_25 = new real[coldim_25][rowdim_25];
+new_matrix_25[0][0] = 0;
+new_matrix_25[0][1] = 0;
+new_matrix_25[0][2] = 0;
+new_matrix_25[0][3] = 0;
+new_matrix_25[0][4] = 0;
+new_matrix_25[0][5] = 0;
+new_matrix_25[0][6] = 1;
+new_matrix_25[0][7] = 0;
+new_matrix_25[0][8] = 0;
+new_matrix_25[1][0] = 0;
+new_matrix_25[1][1] = 0;
+new_matrix_25[1][2] = 0;
+new_matrix_25[1][3] = 0;
+new_matrix_25[1][4] = 0;
+new_matrix_25[1][5] = 0;
+new_matrix_25[1][6] = 0;
+new_matrix_25[1][7] = 1;
+new_matrix_25[1][8] = 0;
+new_matrix_25[2][0] = 0;
+new_matrix_25[2][1] = 0;
+new_matrix_25[2][2] = 0;
+new_matrix_25[2][3] = 0;
+new_matrix_25[2][4] = 0;
+new_matrix_25[2][5] = 0;
+new_matrix_25[2][6] = 0;
+new_matrix_25[2][7] = 0;
+new_matrix_25[2][8] = 1;
+
+// begin new label set:
+int[] new_labelset_25 = new int[] {15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][2].push(node_type(new_labelset_25, new_matrix_25));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][2].push(new int[] {0, 1});
+// end new extension arc.
+
+// begin new staircase matrix:
+int rowdim_26 = 9;
+int coldim_26 = 3;
+real[][] new_matrix_26 = new real[coldim_26][rowdim_26];
+new_matrix_26[0][0] = 0;
+new_matrix_26[0][1] = 0;
+new_matrix_26[0][2] = 0;
+new_matrix_26[0][3] = 0;
+new_matrix_26[0][4] = 0;
+new_matrix_26[0][5] = 1;
+new_matrix_26[0][6] = 0;
+new_matrix_26[0][7] = 0;
+new_matrix_26[0][8] = 0;
+new_matrix_26[1][0] = 0;
+new_matrix_26[1][1] = 0;
+new_matrix_26[1][2] = 0;
+new_matrix_26[1][3] = 0;
+new_matrix_26[1][4] = 0;
+new_matrix_26[1][5] = 0;
+new_matrix_26[1][6] = 0;
+new_matrix_26[1][7] = 1;
+new_matrix_26[1][8] = 0;
+new_matrix_26[2][0] = 0;
+new_matrix_26[2][1] = 0;
+new_matrix_26[2][2] = 0;
+new_matrix_26[2][3] = 0;
+new_matrix_26[2][4] = 0;
+new_matrix_26[2][5] = 0;
+new_matrix_26[2][6] = 0;
+new_matrix_26[2][7] = 0;
+new_matrix_26[2][8] = 1;
+
+// begin new label set:
+int[] new_labelset_26 = new int[] {14,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][2].push(node_type(new_labelset_26, new_matrix_26));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][2].push(new int[] {0, 2});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][2].push(2);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_27 = 9;
+int coldim_27 = 3;
+real[][] new_matrix_27 = new real[coldim_27][rowdim_27];
+new_matrix_27[0][0] = 0;
+new_matrix_27[0][1] = 0;
+new_matrix_27[0][2] = 0;
+new_matrix_27[0][3] = 0;
+new_matrix_27[0][4] = 1;
+new_matrix_27[0][5] = 0;
+new_matrix_27[0][6] = 0;
+new_matrix_27[0][7] = 0;
+new_matrix_27[0][8] = 0;
+new_matrix_27[1][0] = 0;
+new_matrix_27[1][1] = 0;
+new_matrix_27[1][2] = 0;
+new_matrix_27[1][3] = 0;
+new_matrix_27[1][4] = 0;
+new_matrix_27[1][5] = 0;
+new_matrix_27[1][6] = 0;
+new_matrix_27[1][7] = 1;
+new_matrix_27[1][8] = 0;
+new_matrix_27[2][0] = 0;
+new_matrix_27[2][1] = 0;
+new_matrix_27[2][2] = 0;
+new_matrix_27[2][3] = 0;
+new_matrix_27[2][4] = 0;
+new_matrix_27[2][5] = 0;
+new_matrix_27[2][6] = 0;
+new_matrix_27[2][7] = 0;
+new_matrix_27[2][8] = 1;
+
+// begin new label set:
+int[] new_labelset_27 = new int[] {13,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][2].push(node_type(new_labelset_27, new_matrix_27));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][2].push(new int[] {0, 3});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][2].push(3);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_28 = 9;
+int coldim_28 = 3;
+real[][] new_matrix_28 = new real[coldim_28][rowdim_28];
+new_matrix_28[0][0] = 0;
+new_matrix_28[0][1] = 0;
+new_matrix_28[0][2] = 0;
+new_matrix_28[0][3] = 1;
+new_matrix_28[0][4] = 0;
+new_matrix_28[0][5] = 0;
+new_matrix_28[0][6] = 0;
+new_matrix_28[0][7] = 0;
+new_matrix_28[0][8] = 0;
+new_matrix_28[1][0] = 0;
+new_matrix_28[1][1] = 0;
+new_matrix_28[1][2] = 0;
+new_matrix_28[1][3] = 0;
+new_matrix_28[1][4] = 0;
+new_matrix_28[1][5] = 0;
+new_matrix_28[1][6] = 0;
+new_matrix_28[1][7] = 1;
+new_matrix_28[1][8] = 0;
+new_matrix_28[2][0] = 0;
+new_matrix_28[2][1] = 0;
+new_matrix_28[2][2] = 0;
+new_matrix_28[2][3] = 0;
+new_matrix_28[2][4] = 0;
+new_matrix_28[2][5] = 0;
+new_matrix_28[2][6] = 0;
+new_matrix_28[2][7] = 0;
+new_matrix_28[2][8] = 1;
+
+// begin new label set:
+int[] new_labelset_28 = new int[] {12,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][2].push(node_type(new_labelset_28, new_matrix_28));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][2].push(new int[] {0, 4});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][2].push(4);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_29 = 9;
+int coldim_29 = 3;
+real[][] new_matrix_29 = new real[coldim_29][rowdim_29];
+new_matrix_29[0][0] = 0;
+new_matrix_29[0][1] = 0;
+new_matrix_29[0][2] = 1;
+new_matrix_29[0][3] = 0;
+new_matrix_29[0][4] = 0;
+new_matrix_29[0][5] = 0;
+new_matrix_29[0][6] = 0;
+new_matrix_29[0][7] = 0;
+new_matrix_29[0][8] = 0;
+new_matrix_29[1][0] = 0;
+new_matrix_29[1][1] = 0;
+new_matrix_29[1][2] = 0;
+new_matrix_29[1][3] = 0;
+new_matrix_29[1][4] = 0;
+new_matrix_29[1][5] = 0;
+new_matrix_29[1][6] = 0;
+new_matrix_29[1][7] = 1;
+new_matrix_29[1][8] = 0;
+new_matrix_29[2][0] = 0;
+new_matrix_29[2][1] = 0;
+new_matrix_29[2][2] = 0;
+new_matrix_29[2][3] = 0;
+new_matrix_29[2][4] = 0;
+new_matrix_29[2][5] = 0;
+new_matrix_29[2][6] = 0;
+new_matrix_29[2][7] = 0;
+new_matrix_29[2][8] = 1;
+
+// begin new label set:
+int[] new_labelset_29 = new int[] {11,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][2].push(node_type(new_labelset_29, new_matrix_29));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][2].push(new int[] {0, 5});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][2].push(5);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_30 = 9;
+int coldim_30 = 3;
+real[][] new_matrix_30 = new real[coldim_30][rowdim_30];
+new_matrix_30[0][0] = 0;
+new_matrix_30[0][1] = 1;
+new_matrix_30[0][2] = 0;
+new_matrix_30[0][3] = 0;
+new_matrix_30[0][4] = 0;
+new_matrix_30[0][5] = 0;
+new_matrix_30[0][6] = 0;
+new_matrix_30[0][7] = 0;
+new_matrix_30[0][8] = 0;
+new_matrix_30[1][0] = 0;
+new_matrix_30[1][1] = 0;
+new_matrix_30[1][2] = 0;
+new_matrix_30[1][3] = 0;
+new_matrix_30[1][4] = 0;
+new_matrix_30[1][5] = 0;
+new_matrix_30[1][6] = 0;
+new_matrix_30[1][7] = 1;
+new_matrix_30[1][8] = 0;
+new_matrix_30[2][0] = 0;
+new_matrix_30[2][1] = 0;
+new_matrix_30[2][2] = 0;
+new_matrix_30[2][3] = 0;
+new_matrix_30[2][4] = 0;
+new_matrix_30[2][5] = 0;
+new_matrix_30[2][6] = 0;
+new_matrix_30[2][7] = 0;
+new_matrix_30[2][8] = 1;
+
+// begin new label set:
+int[] new_labelset_30 = new int[] {10,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][2].push(node_type(new_labelset_30, new_matrix_30));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][2].push(new int[] {0, 6});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][2].push(6);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_31 = 9;
+int coldim_31 = 3;
+real[][] new_matrix_31 = new real[coldim_31][rowdim_31];
+new_matrix_31[0][0] = 1;
+new_matrix_31[0][1] = 0;
+new_matrix_31[0][2] = 0;
+new_matrix_31[0][3] = 0;
+new_matrix_31[0][4] = 0;
+new_matrix_31[0][5] = 0;
+new_matrix_31[0][6] = 0;
+new_matrix_31[0][7] = 0;
+new_matrix_31[0][8] = 0;
+new_matrix_31[1][0] = 0;
+new_matrix_31[1][1] = 0;
+new_matrix_31[1][2] = 0;
+new_matrix_31[1][3] = 0;
+new_matrix_31[1][4] = 0;
+new_matrix_31[1][5] = 0;
+new_matrix_31[1][6] = 0;
+new_matrix_31[1][7] = 1;
+new_matrix_31[1][8] = 0;
+new_matrix_31[2][0] = 0;
+new_matrix_31[2][1] = 0;
+new_matrix_31[2][2] = 0;
+new_matrix_31[2][3] = 0;
+new_matrix_31[2][4] = 0;
+new_matrix_31[2][5] = 0;
+new_matrix_31[2][6] = 0;
+new_matrix_31[2][7] = 0;
+new_matrix_31[2][8] = 1;
+
+// begin new label set:
+int[] new_labelset_31 = new int[] {9,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][2].push(node_type(new_labelset_31, new_matrix_31));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][2].push(new int[] {0, 7});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][2].push(7);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_32 = 9;
+int coldim_32 = 3;
+real[][] new_matrix_32 = new real[coldim_32][rowdim_32];
+new_matrix_32[0][0] = 0;
+new_matrix_32[0][1] = 0;
+new_matrix_32[0][2] = 0;
+new_matrix_32[0][3] = 0;
+new_matrix_32[0][4] = 0;
+new_matrix_32[0][5] = 0;
+new_matrix_32[0][6] = 0;
+new_matrix_32[0][7] = 1;
+new_matrix_32[0][8] = 0;
+new_matrix_32[1][0] = 0;
+new_matrix_32[1][1] = 0;
+new_matrix_32[1][2] = 0;
+new_matrix_32[1][3] = 0;
+new_matrix_32[1][4] = 0;
+new_matrix_32[1][5] = 0;
+new_matrix_32[1][6] = 0;
+new_matrix_32[1][7] = 0;
+new_matrix_32[1][8] = 1;
+new_matrix_32[2][0] = 0;
+new_matrix_32[2][1] = 0;
+new_matrix_32[2][2] = 0;
+new_matrix_32[2][3] = 0;
+new_matrix_32[2][4] = 0;
+new_matrix_32[2][5] = 0;
+new_matrix_32[2][6] = 0;
+new_matrix_32[2][7] = 0;
+new_matrix_32[2][8] = 0;
+
+// begin new label set:
+int[] new_labelset_32 = new int[] {8,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][2].push(node_type(new_labelset_32, new_matrix_32));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][2].push(new int[] {0, 8});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][2].push(8);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_33 = 9;
+int coldim_33 = 4;
+real[][] new_matrix_33 = new real[coldim_33][rowdim_33];
+new_matrix_33[0][0] = 0;
+new_matrix_33[0][1] = 0;
+new_matrix_33[0][2] = 0;
+new_matrix_33[0][3] = 0;
+new_matrix_33[0][4] = 0;
+new_matrix_33[0][5] = 0;
+new_matrix_33[0][6] = 0;
+new_matrix_33[0][7] = 1;
+new_matrix_33[0][8] = 0;
+new_matrix_33[1][0] = 0;
+new_matrix_33[1][1] = 0;
+new_matrix_33[1][2] = 0;
+new_matrix_33[1][3] = 0;
+new_matrix_33[1][4] = 0;
+new_matrix_33[1][5] = 0;
+new_matrix_33[1][6] = 0;
+new_matrix_33[1][7] = 0;
+new_matrix_33[1][8] = 1;
+new_matrix_33[2][0] = 0;
+new_matrix_33[2][1] = 0;
+new_matrix_33[2][2] = 0;
+new_matrix_33[2][3] = 0;
+new_matrix_33[2][4] = 0;
+new_matrix_33[2][5] = 0;
+new_matrix_33[2][6] = 0;
+new_matrix_33[2][7] = 0;
+new_matrix_33[2][8] = 0;
+new_matrix_33[3][0] = 0;
+new_matrix_33[3][1] = 0;
+new_matrix_33[3][2] = 0;
+new_matrix_33[3][3] = 0;
+new_matrix_33[3][4] = 0;
+new_matrix_33[3][5] = 0;
+new_matrix_33[3][6] = 0;
+new_matrix_33[3][7] = 0;
+new_matrix_33[3][8] = 0;
+
+// begin new label set:
+int[] new_labelset_33 = new int[] {7,8,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][2].push(node_type(new_labelset_33, new_matrix_33));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][2].push(new int[] {8, 9});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][2].push(9);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_34 = 9;
+int coldim_34 = 5;
+real[][] new_matrix_34 = new real[coldim_34][rowdim_34];
+new_matrix_34[0][0] = 0;
+new_matrix_34[0][1] = 0;
+new_matrix_34[0][2] = 0;
+new_matrix_34[0][3] = 0;
+new_matrix_34[0][4] = 0;
+new_matrix_34[0][5] = 0;
+new_matrix_34[0][6] = 1;
+new_matrix_34[0][7] = 0;
+new_matrix_34[0][8] = 0;
+new_matrix_34[1][0] = 0;
+new_matrix_34[1][1] = 0;
+new_matrix_34[1][2] = 0;
+new_matrix_34[1][3] = 0;
+new_matrix_34[1][4] = 0;
+new_matrix_34[1][5] = 0;
+new_matrix_34[1][6] = 0;
+new_matrix_34[1][7] = 1;
+new_matrix_34[1][8] = 0;
+new_matrix_34[2][0] = 0;
+new_matrix_34[2][1] = 0;
+new_matrix_34[2][2] = 0;
+new_matrix_34[2][3] = 0;
+new_matrix_34[2][4] = 0;
+new_matrix_34[2][5] = 0;
+new_matrix_34[2][6] = 0;
+new_matrix_34[2][7] = 0;
+new_matrix_34[2][8] = 1;
+new_matrix_34[3][0] = 0;
+new_matrix_34[3][1] = 0;
+new_matrix_34[3][2] = 0;
+new_matrix_34[3][3] = 0;
+new_matrix_34[3][4] = 0;
+new_matrix_34[3][5] = 0;
+new_matrix_34[3][6] = 0;
+new_matrix_34[3][7] = 0;
+new_matrix_34[3][8] = 0;
+new_matrix_34[4][0] = 0;
+new_matrix_34[4][1] = 0;
+new_matrix_34[4][2] = 0;
+new_matrix_34[4][3] = 0;
+new_matrix_34[4][4] = 0;
+new_matrix_34[4][5] = 0;
+new_matrix_34[4][6] = 0;
+new_matrix_34[4][7] = 0;
+new_matrix_34[4][8] = 0;
+
+// begin new label set:
+int[] new_labelset_34 = new int[] {6,7,8,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][2].push(node_type(new_labelset_34, new_matrix_34));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][2].push(new int[] {9, 10});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][2].push(10);
+// end new earlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_35 = 9;
+int coldim_35 = 5;
+real[][] new_matrix_35 = new real[coldim_35][rowdim_35];
+new_matrix_35[0][0] = 0;
+new_matrix_35[0][1] = 0;
+new_matrix_35[0][2] = 0;
+new_matrix_35[0][3] = 0;
+new_matrix_35[0][4] = 0;
+new_matrix_35[0][5] = 1;
+new_matrix_35[0][6] = 0;
+new_matrix_35[0][7] = 0;
+new_matrix_35[0][8] = 0;
+new_matrix_35[1][0] = 0;
+new_matrix_35[1][1] = 0;
+new_matrix_35[1][2] = 0;
+new_matrix_35[1][3] = 0;
+new_matrix_35[1][4] = 0;
+new_matrix_35[1][5] = 0;
+new_matrix_35[1][6] = 0;
+new_matrix_35[1][7] = 1;
+new_matrix_35[1][8] = 0;
+new_matrix_35[2][0] = 0;
+new_matrix_35[2][1] = 0;
+new_matrix_35[2][2] = 0;
+new_matrix_35[2][3] = 0;
+new_matrix_35[2][4] = 0;
+new_matrix_35[2][5] = 0;
+new_matrix_35[2][6] = 0;
+new_matrix_35[2][7] = 0;
+new_matrix_35[2][8] = 1;
+new_matrix_35[3][0] = 0;
+new_matrix_35[3][1] = 0;
+new_matrix_35[3][2] = 0;
+new_matrix_35[3][3] = 0;
+new_matrix_35[3][4] = 0;
+new_matrix_35[3][5] = 0;
+new_matrix_35[3][6] = 0;
+new_matrix_35[3][7] = 0;
+new_matrix_35[3][8] = 0;
+new_matrix_35[4][0] = 0;
+new_matrix_35[4][1] = 0;
+new_matrix_35[4][2] = 0;
+new_matrix_35[4][3] = 0;
+new_matrix_35[4][4] = 0;
+new_matrix_35[4][5] = 0;
+new_matrix_35[4][6] = 0;
+new_matrix_35[4][7] = 0;
+new_matrix_35[4][8] = 0;
+
+// begin new label set:
+int[] new_labelset_35 = new int[] {5,7,8,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][2].push(node_type(new_labelset_35, new_matrix_35));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][2].push(new int[] {9, 11});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][2].push(11);
+// end new earlydeadend node.
+//////////////////////////////////////////////////////////////////////////////
+// new run for worker 0:
+//////////////////////////////////////////////////////////////////////////////
+tree_nodes[0].push(new node_type[]);
+tree_arcs[0].push(new int[][]);
+deadend_nodes[0].push(new int[]);
+earlydeadend_nodes[0].push(new int[]);
+veryearlydeadend_nodes[0].push(new int[]);
+missingvolume_nodes[0].push(new int[]);
+notnew_nodes[0].push(new int[]);
+solution_nodes[0].push(new int[]);
+//////////////////////////////////////////////////////////////////////////////
+// end new run for worker 0.
+//////////////////////////////////////////////////////////////////////////////
+
+// begin new staircase matrix:
+int rowdim_36 = 9;
+int coldim_36 = 3;
+real[][] new_matrix_36 = new real[coldim_36][rowdim_36];
+new_matrix_36[0][0] = 0;
+new_matrix_36[0][1] = 0;
+new_matrix_36[0][2] = 0;
+new_matrix_36[0][3] = 0;
+new_matrix_36[0][4] = 0;
+new_matrix_36[0][5] = 0;
+new_matrix_36[0][6] = 1;
+new_matrix_36[0][7] = 0;
+new_matrix_36[0][8] = 0;
+new_matrix_36[1][0] = 0;
+new_matrix_36[1][1] = 0;
+new_matrix_36[1][2] = 0;
+new_matrix_36[1][3] = 0;
+new_matrix_36[1][4] = 0;
+new_matrix_36[1][5] = 0;
+new_matrix_36[1][6] = 0;
+new_matrix_36[1][7] = 1;
+new_matrix_36[1][8] = 0;
+new_matrix_36[2][0] = 0;
+new_matrix_36[2][1] = 0;
+new_matrix_36[2][2] = 0;
+new_matrix_36[2][3] = 0;
+new_matrix_36[2][4] = 0;
+new_matrix_36[2][5] = 0;
+new_matrix_36[2][6] = 0;
+new_matrix_36[2][7] = 0;
+new_matrix_36[2][8] = 1;
+
+// begin new label set:
+int[] new_labelset_36 = new int[] {15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][3].push(node_type(new_labelset_36, new_matrix_36));
+// end new node.
+
+// begin new staircase matrix:
+int rowdim_37 = 9;
+int coldim_37 = 4;
+real[][] new_matrix_37 = new real[coldim_37][rowdim_37];
+new_matrix_37[0][0] = 0;
+new_matrix_37[0][1] = 0;
+new_matrix_37[0][2] = 0;
+new_matrix_37[0][3] = 0;
+new_matrix_37[0][4] = 0;
+new_matrix_37[0][5] = 1;
+new_matrix_37[0][6] = 0;
+new_matrix_37[0][7] = 0;
+new_matrix_37[0][8] = 0;
+new_matrix_37[1][0] = 0;
+new_matrix_37[1][1] = 0;
+new_matrix_37[1][2] = 0;
+new_matrix_37[1][3] = 0;
+new_matrix_37[1][4] = 0;
+new_matrix_37[1][5] = 0;
+new_matrix_37[1][6] = 1;
+new_matrix_37[1][7] = 0;
+new_matrix_37[1][8] = 0;
+new_matrix_37[2][0] = 0;
+new_matrix_37[2][1] = 0;
+new_matrix_37[2][2] = 0;
+new_matrix_37[2][3] = 0;
+new_matrix_37[2][4] = 0;
+new_matrix_37[2][5] = 0;
+new_matrix_37[2][6] = 0;
+new_matrix_37[2][7] = 1;
+new_matrix_37[2][8] = 0;
+new_matrix_37[3][0] = 0;
+new_matrix_37[3][1] = 0;
+new_matrix_37[3][2] = 0;
+new_matrix_37[3][3] = 0;
+new_matrix_37[3][4] = 0;
+new_matrix_37[3][5] = 0;
+new_matrix_37[3][6] = 0;
+new_matrix_37[3][7] = 0;
+new_matrix_37[3][8] = 1;
+
+// begin new label set:
+int[] new_labelset_37 = new int[] {14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][3].push(node_type(new_labelset_37, new_matrix_37));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][3].push(new int[] {0, 1});
+// end new extension arc.
+
+// begin new staircase matrix:
+int rowdim_38 = 9;
+int coldim_38 = 4;
+real[][] new_matrix_38 = new real[coldim_38][rowdim_38];
+new_matrix_38[0][0] = 0;
+new_matrix_38[0][1] = 0;
+new_matrix_38[0][2] = 0;
+new_matrix_38[0][3] = 0;
+new_matrix_38[0][4] = 1;
+new_matrix_38[0][5] = 0;
+new_matrix_38[0][6] = 0;
+new_matrix_38[0][7] = 0;
+new_matrix_38[0][8] = 0;
+new_matrix_38[1][0] = 0;
+new_matrix_38[1][1] = 0;
+new_matrix_38[1][2] = 0;
+new_matrix_38[1][3] = 0;
+new_matrix_38[1][4] = 0;
+new_matrix_38[1][5] = 0;
+new_matrix_38[1][6] = 1;
+new_matrix_38[1][7] = 0;
+new_matrix_38[1][8] = 0;
+new_matrix_38[2][0] = 0;
+new_matrix_38[2][1] = 0;
+new_matrix_38[2][2] = 0;
+new_matrix_38[2][3] = 0;
+new_matrix_38[2][4] = 0;
+new_matrix_38[2][5] = 0;
+new_matrix_38[2][6] = 0;
+new_matrix_38[2][7] = 1;
+new_matrix_38[2][8] = 0;
+new_matrix_38[3][0] = 0;
+new_matrix_38[3][1] = 0;
+new_matrix_38[3][2] = 0;
+new_matrix_38[3][3] = 0;
+new_matrix_38[3][4] = 0;
+new_matrix_38[3][5] = 0;
+new_matrix_38[3][6] = 0;
+new_matrix_38[3][7] = 0;
+new_matrix_38[3][8] = 1;
+
+// begin new label set:
+int[] new_labelset_38 = new int[] {13,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][3].push(node_type(new_labelset_38, new_matrix_38));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][3].push(new int[] {0, 2});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][3].push(2);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_39 = 9;
+int coldim_39 = 4;
+real[][] new_matrix_39 = new real[coldim_39][rowdim_39];
+new_matrix_39[0][0] = 0;
+new_matrix_39[0][1] = 0;
+new_matrix_39[0][2] = 0;
+new_matrix_39[0][3] = 1;
+new_matrix_39[0][4] = 0;
+new_matrix_39[0][5] = 0;
+new_matrix_39[0][6] = 0;
+new_matrix_39[0][7] = 0;
+new_matrix_39[0][8] = 0;
+new_matrix_39[1][0] = 0;
+new_matrix_39[1][1] = 0;
+new_matrix_39[1][2] = 0;
+new_matrix_39[1][3] = 0;
+new_matrix_39[1][4] = 0;
+new_matrix_39[1][5] = 0;
+new_matrix_39[1][6] = 1;
+new_matrix_39[1][7] = 0;
+new_matrix_39[1][8] = 0;
+new_matrix_39[2][0] = 0;
+new_matrix_39[2][1] = 0;
+new_matrix_39[2][2] = 0;
+new_matrix_39[2][3] = 0;
+new_matrix_39[2][4] = 0;
+new_matrix_39[2][5] = 0;
+new_matrix_39[2][6] = 0;
+new_matrix_39[2][7] = 1;
+new_matrix_39[2][8] = 0;
+new_matrix_39[3][0] = 0;
+new_matrix_39[3][1] = 0;
+new_matrix_39[3][2] = 0;
+new_matrix_39[3][3] = 0;
+new_matrix_39[3][4] = 0;
+new_matrix_39[3][5] = 0;
+new_matrix_39[3][6] = 0;
+new_matrix_39[3][7] = 0;
+new_matrix_39[3][8] = 1;
+
+// begin new label set:
+int[] new_labelset_39 = new int[] {12,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][3].push(node_type(new_labelset_39, new_matrix_39));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][3].push(new int[] {0, 3});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][3].push(3);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_40 = 9;
+int coldim_40 = 4;
+real[][] new_matrix_40 = new real[coldim_40][rowdim_40];
+new_matrix_40[0][0] = 0;
+new_matrix_40[0][1] = 0;
+new_matrix_40[0][2] = 1;
+new_matrix_40[0][3] = 0;
+new_matrix_40[0][4] = 0;
+new_matrix_40[0][5] = 0;
+new_matrix_40[0][6] = 0;
+new_matrix_40[0][7] = 0;
+new_matrix_40[0][8] = 0;
+new_matrix_40[1][0] = 0;
+new_matrix_40[1][1] = 0;
+new_matrix_40[1][2] = 0;
+new_matrix_40[1][3] = 0;
+new_matrix_40[1][4] = 0;
+new_matrix_40[1][5] = 0;
+new_matrix_40[1][6] = 1;
+new_matrix_40[1][7] = 0;
+new_matrix_40[1][8] = 0;
+new_matrix_40[2][0] = 0;
+new_matrix_40[2][1] = 0;
+new_matrix_40[2][2] = 0;
+new_matrix_40[2][3] = 0;
+new_matrix_40[2][4] = 0;
+new_matrix_40[2][5] = 0;
+new_matrix_40[2][6] = 0;
+new_matrix_40[2][7] = 1;
+new_matrix_40[2][8] = 0;
+new_matrix_40[3][0] = 0;
+new_matrix_40[3][1] = 0;
+new_matrix_40[3][2] = 0;
+new_matrix_40[3][3] = 0;
+new_matrix_40[3][4] = 0;
+new_matrix_40[3][5] = 0;
+new_matrix_40[3][6] = 0;
+new_matrix_40[3][7] = 0;
+new_matrix_40[3][8] = 1;
+
+// begin new label set:
+int[] new_labelset_40 = new int[] {11,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][3].push(node_type(new_labelset_40, new_matrix_40));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][3].push(new int[] {0, 4});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][3].push(4);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_41 = 9;
+int coldim_41 = 4;
+real[][] new_matrix_41 = new real[coldim_41][rowdim_41];
+new_matrix_41[0][0] = 0;
+new_matrix_41[0][1] = 1;
+new_matrix_41[0][2] = 0;
+new_matrix_41[0][3] = 0;
+new_matrix_41[0][4] = 0;
+new_matrix_41[0][5] = 0;
+new_matrix_41[0][6] = 0;
+new_matrix_41[0][7] = 0;
+new_matrix_41[0][8] = 0;
+new_matrix_41[1][0] = 0;
+new_matrix_41[1][1] = 0;
+new_matrix_41[1][2] = 0;
+new_matrix_41[1][3] = 0;
+new_matrix_41[1][4] = 0;
+new_matrix_41[1][5] = 0;
+new_matrix_41[1][6] = 1;
+new_matrix_41[1][7] = 0;
+new_matrix_41[1][8] = 0;
+new_matrix_41[2][0] = 0;
+new_matrix_41[2][1] = 0;
+new_matrix_41[2][2] = 0;
+new_matrix_41[2][3] = 0;
+new_matrix_41[2][4] = 0;
+new_matrix_41[2][5] = 0;
+new_matrix_41[2][6] = 0;
+new_matrix_41[2][7] = 1;
+new_matrix_41[2][8] = 0;
+new_matrix_41[3][0] = 0;
+new_matrix_41[3][1] = 0;
+new_matrix_41[3][2] = 0;
+new_matrix_41[3][3] = 0;
+new_matrix_41[3][4] = 0;
+new_matrix_41[3][5] = 0;
+new_matrix_41[3][6] = 0;
+new_matrix_41[3][7] = 0;
+new_matrix_41[3][8] = 1;
+
+// begin new label set:
+int[] new_labelset_41 = new int[] {10,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][3].push(node_type(new_labelset_41, new_matrix_41));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][3].push(new int[] {0, 5});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][3].push(5);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_42 = 9;
+int coldim_42 = 4;
+real[][] new_matrix_42 = new real[coldim_42][rowdim_42];
+new_matrix_42[0][0] = 1;
+new_matrix_42[0][1] = 0;
+new_matrix_42[0][2] = 0;
+new_matrix_42[0][3] = 0;
+new_matrix_42[0][4] = 0;
+new_matrix_42[0][5] = 0;
+new_matrix_42[0][6] = 0;
+new_matrix_42[0][7] = 0;
+new_matrix_42[0][8] = 0;
+new_matrix_42[1][0] = 0;
+new_matrix_42[1][1] = 0;
+new_matrix_42[1][2] = 0;
+new_matrix_42[1][3] = 0;
+new_matrix_42[1][4] = 0;
+new_matrix_42[1][5] = 0;
+new_matrix_42[1][6] = 1;
+new_matrix_42[1][7] = 0;
+new_matrix_42[1][8] = 0;
+new_matrix_42[2][0] = 0;
+new_matrix_42[2][1] = 0;
+new_matrix_42[2][2] = 0;
+new_matrix_42[2][3] = 0;
+new_matrix_42[2][4] = 0;
+new_matrix_42[2][5] = 0;
+new_matrix_42[2][6] = 0;
+new_matrix_42[2][7] = 1;
+new_matrix_42[2][8] = 0;
+new_matrix_42[3][0] = 0;
+new_matrix_42[3][1] = 0;
+new_matrix_42[3][2] = 0;
+new_matrix_42[3][3] = 0;
+new_matrix_42[3][4] = 0;
+new_matrix_42[3][5] = 0;
+new_matrix_42[3][6] = 0;
+new_matrix_42[3][7] = 0;
+new_matrix_42[3][8] = 1;
+
+// begin new label set:
+int[] new_labelset_42 = new int[] {9,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][3].push(node_type(new_labelset_42, new_matrix_42));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][3].push(new int[] {0, 6});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][3].push(6);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_43 = 9;
+int coldim_43 = 4;
+real[][] new_matrix_43 = new real[coldim_43][rowdim_43];
+new_matrix_43[0][0] = 0;
+new_matrix_43[0][1] = 0;
+new_matrix_43[0][2] = 0;
+new_matrix_43[0][3] = 0;
+new_matrix_43[0][4] = 0;
+new_matrix_43[0][5] = 0;
+new_matrix_43[0][6] = 1;
+new_matrix_43[0][7] = 0;
+new_matrix_43[0][8] = 0;
+new_matrix_43[1][0] = 0;
+new_matrix_43[1][1] = 0;
+new_matrix_43[1][2] = 0;
+new_matrix_43[1][3] = 0;
+new_matrix_43[1][4] = 0;
+new_matrix_43[1][5] = 0;
+new_matrix_43[1][6] = 0;
+new_matrix_43[1][7] = 1;
+new_matrix_43[1][8] = 0;
+new_matrix_43[2][0] = 0;
+new_matrix_43[2][1] = 0;
+new_matrix_43[2][2] = 0;
+new_matrix_43[2][3] = 0;
+new_matrix_43[2][4] = 0;
+new_matrix_43[2][5] = 0;
+new_matrix_43[2][6] = 0;
+new_matrix_43[2][7] = 0;
+new_matrix_43[2][8] = 1;
+new_matrix_43[3][0] = 0;
+new_matrix_43[3][1] = 0;
+new_matrix_43[3][2] = 0;
+new_matrix_43[3][3] = 0;
+new_matrix_43[3][4] = 0;
+new_matrix_43[3][5] = 0;
+new_matrix_43[3][6] = 0;
+new_matrix_43[3][7] = 0;
+new_matrix_43[3][8] = 0;
+
+// begin new label set:
+int[] new_labelset_43 = new int[] {8,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][3].push(node_type(new_labelset_43, new_matrix_43));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][3].push(new int[] {0, 7});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][3].push(7);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_44 = 9;
+int coldim_44 = 5;
+real[][] new_matrix_44 = new real[coldim_44][rowdim_44];
+new_matrix_44[0][0] = 0;
+new_matrix_44[0][1] = 0;
+new_matrix_44[0][2] = 0;
+new_matrix_44[0][3] = 0;
+new_matrix_44[0][4] = 0;
+new_matrix_44[0][5] = 0;
+new_matrix_44[0][6] = 1;
+new_matrix_44[0][7] = 0;
+new_matrix_44[0][8] = 0;
+new_matrix_44[1][0] = 0;
+new_matrix_44[1][1] = 0;
+new_matrix_44[1][2] = 0;
+new_matrix_44[1][3] = 0;
+new_matrix_44[1][4] = 0;
+new_matrix_44[1][5] = 0;
+new_matrix_44[1][6] = 0;
+new_matrix_44[1][7] = 1;
+new_matrix_44[1][8] = 0;
+new_matrix_44[2][0] = 0;
+new_matrix_44[2][1] = 0;
+new_matrix_44[2][2] = 0;
+new_matrix_44[2][3] = 0;
+new_matrix_44[2][4] = 0;
+new_matrix_44[2][5] = 0;
+new_matrix_44[2][6] = 0;
+new_matrix_44[2][7] = 0;
+new_matrix_44[2][8] = 1;
+new_matrix_44[3][0] = 0;
+new_matrix_44[3][1] = 0;
+new_matrix_44[3][2] = 0;
+new_matrix_44[3][3] = 0;
+new_matrix_44[3][4] = 0;
+new_matrix_44[3][5] = 0;
+new_matrix_44[3][6] = 0;
+new_matrix_44[3][7] = 0;
+new_matrix_44[3][8] = 0;
+new_matrix_44[4][0] = 0;
+new_matrix_44[4][1] = 0;
+new_matrix_44[4][2] = 0;
+new_matrix_44[4][3] = 0;
+new_matrix_44[4][4] = 0;
+new_matrix_44[4][5] = 0;
+new_matrix_44[4][6] = 0;
+new_matrix_44[4][7] = 0;
+new_matrix_44[4][8] = 0;
+
+// begin new label set:
+int[] new_labelset_44 = new int[] {7,8,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][3].push(node_type(new_labelset_44, new_matrix_44));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][3].push(new int[] {7, 8});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][3].push(8);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_45 = 9;
+int coldim_45 = 6;
+real[][] new_matrix_45 = new real[coldim_45][rowdim_45];
+new_matrix_45[0][0] = 0;
+new_matrix_45[0][1] = 0;
+new_matrix_45[0][2] = 0;
+new_matrix_45[0][3] = 0;
+new_matrix_45[0][4] = 0;
+new_matrix_45[0][5] = 0;
+new_matrix_45[0][6] = 1;
+new_matrix_45[0][7] = 0;
+new_matrix_45[0][8] = 0;
+new_matrix_45[1][0] = 0;
+new_matrix_45[1][1] = 0;
+new_matrix_45[1][2] = 0;
+new_matrix_45[1][3] = 0;
+new_matrix_45[1][4] = 0;
+new_matrix_45[1][5] = 0;
+new_matrix_45[1][6] = 0;
+new_matrix_45[1][7] = 1;
+new_matrix_45[1][8] = 0;
+new_matrix_45[2][0] = 0;
+new_matrix_45[2][1] = 0;
+new_matrix_45[2][2] = 0;
+new_matrix_45[2][3] = 0;
+new_matrix_45[2][4] = 0;
+new_matrix_45[2][5] = 0;
+new_matrix_45[2][6] = 0;
+new_matrix_45[2][7] = 0;
+new_matrix_45[2][8] = 1;
+new_matrix_45[3][0] = 0;
+new_matrix_45[3][1] = 0;
+new_matrix_45[3][2] = 0;
+new_matrix_45[3][3] = 0;
+new_matrix_45[3][4] = 0;
+new_matrix_45[3][5] = 0;
+new_matrix_45[3][6] = 0;
+new_matrix_45[3][7] = 0;
+new_matrix_45[3][8] = 0;
+new_matrix_45[4][0] = 0;
+new_matrix_45[4][1] = 0;
+new_matrix_45[4][2] = 0;
+new_matrix_45[4][3] = 0;
+new_matrix_45[4][4] = 0;
+new_matrix_45[4][5] = 0;
+new_matrix_45[4][6] = 0;
+new_matrix_45[4][7] = 0;
+new_matrix_45[4][8] = 0;
+new_matrix_45[5][0] = 0;
+new_matrix_45[5][1] = 0;
+new_matrix_45[5][2] = 0;
+new_matrix_45[5][3] = 0;
+new_matrix_45[5][4] = 0;
+new_matrix_45[5][5] = 0;
+new_matrix_45[5][6] = 0;
+new_matrix_45[5][7] = 0;
+new_matrix_45[5][8] = 0;
+
+// begin new label set:
+int[] new_labelset_45 = new int[] {6,7,8,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][3].push(node_type(new_labelset_45, new_matrix_45));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][3].push(new int[] {8, 9});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][3].push(9);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_46 = 9;
+int coldim_46 = 7;
+real[][] new_matrix_46 = new real[coldim_46][rowdim_46];
+new_matrix_46[0][0] = 0;
+new_matrix_46[0][1] = 0;
+new_matrix_46[0][2] = 0;
+new_matrix_46[0][3] = 0;
+new_matrix_46[0][4] = 0;
+new_matrix_46[0][5] = 1;
+new_matrix_46[0][6] = 0;
+new_matrix_46[0][7] = 0;
+new_matrix_46[0][8] = 0;
+new_matrix_46[1][0] = 0;
+new_matrix_46[1][1] = 0;
+new_matrix_46[1][2] = 0;
+new_matrix_46[1][3] = 0;
+new_matrix_46[1][4] = 0;
+new_matrix_46[1][5] = 0;
+new_matrix_46[1][6] = 1;
+new_matrix_46[1][7] = 0;
+new_matrix_46[1][8] = 0;
+new_matrix_46[2][0] = 0;
+new_matrix_46[2][1] = 0;
+new_matrix_46[2][2] = 0;
+new_matrix_46[2][3] = 0;
+new_matrix_46[2][4] = 0;
+new_matrix_46[2][5] = 0;
+new_matrix_46[2][6] = 0;
+new_matrix_46[2][7] = 1;
+new_matrix_46[2][8] = 0;
+new_matrix_46[3][0] = 0;
+new_matrix_46[3][1] = 0;
+new_matrix_46[3][2] = 0;
+new_matrix_46[3][3] = 0;
+new_matrix_46[3][4] = 0;
+new_matrix_46[3][5] = 0;
+new_matrix_46[3][6] = 0;
+new_matrix_46[3][7] = 0;
+new_matrix_46[3][8] = 1;
+new_matrix_46[4][0] = 0;
+new_matrix_46[4][1] = 0;
+new_matrix_46[4][2] = 0;
+new_matrix_46[4][3] = 0;
+new_matrix_46[4][4] = 0;
+new_matrix_46[4][5] = 0;
+new_matrix_46[4][6] = 0;
+new_matrix_46[4][7] = 0;
+new_matrix_46[4][8] = 0;
+new_matrix_46[5][0] = 0;
+new_matrix_46[5][1] = 0;
+new_matrix_46[5][2] = 0;
+new_matrix_46[5][3] = 0;
+new_matrix_46[5][4] = 0;
+new_matrix_46[5][5] = 0;
+new_matrix_46[5][6] = 0;
+new_matrix_46[5][7] = 0;
+new_matrix_46[5][8] = 0;
+new_matrix_46[6][0] = 0;
+new_matrix_46[6][1] = 0;
+new_matrix_46[6][2] = 0;
+new_matrix_46[6][3] = 0;
+new_matrix_46[6][4] = 0;
+new_matrix_46[6][5] = 0;
+new_matrix_46[6][6] = 0;
+new_matrix_46[6][7] = 0;
+new_matrix_46[6][8] = 0;
+
+// begin new label set:
+int[] new_labelset_46 = new int[] {5,6,7,8,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][3].push(node_type(new_labelset_46, new_matrix_46));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][3].push(new int[] {9, 10});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][3].push(10);
+// end new earlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_47 = 9;
+int coldim_47 = 7;
+real[][] new_matrix_47 = new real[coldim_47][rowdim_47];
+new_matrix_47[0][0] = 0;
+new_matrix_47[0][1] = 0;
+new_matrix_47[0][2] = 0;
+new_matrix_47[0][3] = 0;
+new_matrix_47[0][4] = 1;
+new_matrix_47[0][5] = 0;
+new_matrix_47[0][6] = 0;
+new_matrix_47[0][7] = 0;
+new_matrix_47[0][8] = 0;
+new_matrix_47[1][0] = 0;
+new_matrix_47[1][1] = 0;
+new_matrix_47[1][2] = 0;
+new_matrix_47[1][3] = 0;
+new_matrix_47[1][4] = 0;
+new_matrix_47[1][5] = 0;
+new_matrix_47[1][6] = 1;
+new_matrix_47[1][7] = 0;
+new_matrix_47[1][8] = 0;
+new_matrix_47[2][0] = 0;
+new_matrix_47[2][1] = 0;
+new_matrix_47[2][2] = 0;
+new_matrix_47[2][3] = 0;
+new_matrix_47[2][4] = 0;
+new_matrix_47[2][5] = 0;
+new_matrix_47[2][6] = 0;
+new_matrix_47[2][7] = 1;
+new_matrix_47[2][8] = 0;
+new_matrix_47[3][0] = 0;
+new_matrix_47[3][1] = 0;
+new_matrix_47[3][2] = 0;
+new_matrix_47[3][3] = 0;
+new_matrix_47[3][4] = 0;
+new_matrix_47[3][5] = 0;
+new_matrix_47[3][6] = 0;
+new_matrix_47[3][7] = 0;
+new_matrix_47[3][8] = 1;
+new_matrix_47[4][0] = 0;
+new_matrix_47[4][1] = 0;
+new_matrix_47[4][2] = 0;
+new_matrix_47[4][3] = 0;
+new_matrix_47[4][4] = 0;
+new_matrix_47[4][5] = 0;
+new_matrix_47[4][6] = 0;
+new_matrix_47[4][7] = 0;
+new_matrix_47[4][8] = 0;
+new_matrix_47[5][0] = 0;
+new_matrix_47[5][1] = 0;
+new_matrix_47[5][2] = 0;
+new_matrix_47[5][3] = 0;
+new_matrix_47[5][4] = 0;
+new_matrix_47[5][5] = 0;
+new_matrix_47[5][6] = 0;
+new_matrix_47[5][7] = 0;
+new_matrix_47[5][8] = 0;
+new_matrix_47[6][0] = 0;
+new_matrix_47[6][1] = 0;
+new_matrix_47[6][2] = 0;
+new_matrix_47[6][3] = 0;
+new_matrix_47[6][4] = 0;
+new_matrix_47[6][5] = 0;
+new_matrix_47[6][6] = 0;
+new_matrix_47[6][7] = 0;
+new_matrix_47[6][8] = 0;
+
+// begin new label set:
+int[] new_labelset_47 = new int[] {4,6,7,8,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][3].push(node_type(new_labelset_47, new_matrix_47));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][3].push(new int[] {9, 11});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][3].push(11);
+// end new earlydeadend node.
+//////////////////////////////////////////////////////////////////////////////
+// new run for worker 0:
+//////////////////////////////////////////////////////////////////////////////
+tree_nodes[0].push(new node_type[]);
+tree_arcs[0].push(new int[][]);
+deadend_nodes[0].push(new int[]);
+earlydeadend_nodes[0].push(new int[]);
+veryearlydeadend_nodes[0].push(new int[]);
+missingvolume_nodes[0].push(new int[]);
+notnew_nodes[0].push(new int[]);
+solution_nodes[0].push(new int[]);
+//////////////////////////////////////////////////////////////////////////////
+// end new run for worker 0.
+//////////////////////////////////////////////////////////////////////////////
+
+// begin new staircase matrix:
+int rowdim_48 = 9;
+int coldim_48 = 4;
+real[][] new_matrix_48 = new real[coldim_48][rowdim_48];
+new_matrix_48[0][0] = 0;
+new_matrix_48[0][1] = 0;
+new_matrix_48[0][2] = 0;
+new_matrix_48[0][3] = 0;
+new_matrix_48[0][4] = 0;
+new_matrix_48[0][5] = 1;
+new_matrix_48[0][6] = 0;
+new_matrix_48[0][7] = 0;
+new_matrix_48[0][8] = 0;
+new_matrix_48[1][0] = 0;
+new_matrix_48[1][1] = 0;
+new_matrix_48[1][2] = 0;
+new_matrix_48[1][3] = 0;
+new_matrix_48[1][4] = 0;
+new_matrix_48[1][5] = 0;
+new_matrix_48[1][6] = 1;
+new_matrix_48[1][7] = 0;
+new_matrix_48[1][8] = 0;
+new_matrix_48[2][0] = 0;
+new_matrix_48[2][1] = 0;
+new_matrix_48[2][2] = 0;
+new_matrix_48[2][3] = 0;
+new_matrix_48[2][4] = 0;
+new_matrix_48[2][5] = 0;
+new_matrix_48[2][6] = 0;
+new_matrix_48[2][7] = 1;
+new_matrix_48[2][8] = 0;
+new_matrix_48[3][0] = 0;
+new_matrix_48[3][1] = 0;
+new_matrix_48[3][2] = 0;
+new_matrix_48[3][3] = 0;
+new_matrix_48[3][4] = 0;
+new_matrix_48[3][5] = 0;
+new_matrix_48[3][6] = 0;
+new_matrix_48[3][7] = 0;
+new_matrix_48[3][8] = 1;
+
+// begin new label set:
+int[] new_labelset_48 = new int[] {14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][4].push(node_type(new_labelset_48, new_matrix_48));
+// end new node.
+
+// begin new staircase matrix:
+int rowdim_49 = 9;
+int coldim_49 = 5;
+real[][] new_matrix_49 = new real[coldim_49][rowdim_49];
+new_matrix_49[0][0] = 0;
+new_matrix_49[0][1] = 0;
+new_matrix_49[0][2] = 0;
+new_matrix_49[0][3] = 0;
+new_matrix_49[0][4] = 1;
+new_matrix_49[0][5] = 0;
+new_matrix_49[0][6] = 0;
+new_matrix_49[0][7] = 0;
+new_matrix_49[0][8] = 0;
+new_matrix_49[1][0] = 0;
+new_matrix_49[1][1] = 0;
+new_matrix_49[1][2] = 0;
+new_matrix_49[1][3] = 0;
+new_matrix_49[1][4] = 0;
+new_matrix_49[1][5] = 1;
+new_matrix_49[1][6] = 0;
+new_matrix_49[1][7] = 0;
+new_matrix_49[1][8] = 0;
+new_matrix_49[2][0] = 0;
+new_matrix_49[2][1] = 0;
+new_matrix_49[2][2] = 0;
+new_matrix_49[2][3] = 0;
+new_matrix_49[2][4] = 0;
+new_matrix_49[2][5] = 0;
+new_matrix_49[2][6] = 1;
+new_matrix_49[2][7] = 0;
+new_matrix_49[2][8] = 0;
+new_matrix_49[3][0] = 0;
+new_matrix_49[3][1] = 0;
+new_matrix_49[3][2] = 0;
+new_matrix_49[3][3] = 0;
+new_matrix_49[3][4] = 0;
+new_matrix_49[3][5] = 0;
+new_matrix_49[3][6] = 0;
+new_matrix_49[3][7] = 1;
+new_matrix_49[3][8] = 0;
+new_matrix_49[4][0] = 0;
+new_matrix_49[4][1] = 0;
+new_matrix_49[4][2] = 0;
+new_matrix_49[4][3] = 0;
+new_matrix_49[4][4] = 0;
+new_matrix_49[4][5] = 0;
+new_matrix_49[4][6] = 0;
+new_matrix_49[4][7] = 0;
+new_matrix_49[4][8] = 1;
+
+// begin new label set:
+int[] new_labelset_49 = new int[] {13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][4].push(node_type(new_labelset_49, new_matrix_49));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][4].push(new int[] {0, 1});
+// end new extension arc.
+
+// begin new staircase matrix:
+int rowdim_50 = 9;
+int coldim_50 = 5;
+real[][] new_matrix_50 = new real[coldim_50][rowdim_50];
+new_matrix_50[0][0] = 0;
+new_matrix_50[0][1] = 0;
+new_matrix_50[0][2] = 0;
+new_matrix_50[0][3] = 1;
+new_matrix_50[0][4] = 0;
+new_matrix_50[0][5] = 0;
+new_matrix_50[0][6] = 0;
+new_matrix_50[0][7] = 0;
+new_matrix_50[0][8] = 0;
+new_matrix_50[1][0] = 0;
+new_matrix_50[1][1] = 0;
+new_matrix_50[1][2] = 0;
+new_matrix_50[1][3] = 0;
+new_matrix_50[1][4] = 0;
+new_matrix_50[1][5] = 1;
+new_matrix_50[1][6] = 0;
+new_matrix_50[1][7] = 0;
+new_matrix_50[1][8] = 0;
+new_matrix_50[2][0] = 0;
+new_matrix_50[2][1] = 0;
+new_matrix_50[2][2] = 0;
+new_matrix_50[2][3] = 0;
+new_matrix_50[2][4] = 0;
+new_matrix_50[2][5] = 0;
+new_matrix_50[2][6] = 1;
+new_matrix_50[2][7] = 0;
+new_matrix_50[2][8] = 0;
+new_matrix_50[3][0] = 0;
+new_matrix_50[3][1] = 0;
+new_matrix_50[3][2] = 0;
+new_matrix_50[3][3] = 0;
+new_matrix_50[3][4] = 0;
+new_matrix_50[3][5] = 0;
+new_matrix_50[3][6] = 0;
+new_matrix_50[3][7] = 1;
+new_matrix_50[3][8] = 0;
+new_matrix_50[4][0] = 0;
+new_matrix_50[4][1] = 0;
+new_matrix_50[4][2] = 0;
+new_matrix_50[4][3] = 0;
+new_matrix_50[4][4] = 0;
+new_matrix_50[4][5] = 0;
+new_matrix_50[4][6] = 0;
+new_matrix_50[4][7] = 0;
+new_matrix_50[4][8] = 1;
+
+// begin new label set:
+int[] new_labelset_50 = new int[] {12,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][4].push(node_type(new_labelset_50, new_matrix_50));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][4].push(new int[] {0, 2});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][4].push(2);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_51 = 9;
+int coldim_51 = 5;
+real[][] new_matrix_51 = new real[coldim_51][rowdim_51];
+new_matrix_51[0][0] = 0;
+new_matrix_51[0][1] = 0;
+new_matrix_51[0][2] = 1;
+new_matrix_51[0][3] = 0;
+new_matrix_51[0][4] = 0;
+new_matrix_51[0][5] = 0;
+new_matrix_51[0][6] = 0;
+new_matrix_51[0][7] = 0;
+new_matrix_51[0][8] = 0;
+new_matrix_51[1][0] = 0;
+new_matrix_51[1][1] = 0;
+new_matrix_51[1][2] = 0;
+new_matrix_51[1][3] = 0;
+new_matrix_51[1][4] = 0;
+new_matrix_51[1][5] = 1;
+new_matrix_51[1][6] = 0;
+new_matrix_51[1][7] = 0;
+new_matrix_51[1][8] = 0;
+new_matrix_51[2][0] = 0;
+new_matrix_51[2][1] = 0;
+new_matrix_51[2][2] = 0;
+new_matrix_51[2][3] = 0;
+new_matrix_51[2][4] = 0;
+new_matrix_51[2][5] = 0;
+new_matrix_51[2][6] = 1;
+new_matrix_51[2][7] = 0;
+new_matrix_51[2][8] = 0;
+new_matrix_51[3][0] = 0;
+new_matrix_51[3][1] = 0;
+new_matrix_51[3][2] = 0;
+new_matrix_51[3][3] = 0;
+new_matrix_51[3][4] = 0;
+new_matrix_51[3][5] = 0;
+new_matrix_51[3][6] = 0;
+new_matrix_51[3][7] = 1;
+new_matrix_51[3][8] = 0;
+new_matrix_51[4][0] = 0;
+new_matrix_51[4][1] = 0;
+new_matrix_51[4][2] = 0;
+new_matrix_51[4][3] = 0;
+new_matrix_51[4][4] = 0;
+new_matrix_51[4][5] = 0;
+new_matrix_51[4][6] = 0;
+new_matrix_51[4][7] = 0;
+new_matrix_51[4][8] = 1;
+
+// begin new label set:
+int[] new_labelset_51 = new int[] {11,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][4].push(node_type(new_labelset_51, new_matrix_51));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][4].push(new int[] {0, 3});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][4].push(3);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_52 = 9;
+int coldim_52 = 5;
+real[][] new_matrix_52 = new real[coldim_52][rowdim_52];
+new_matrix_52[0][0] = 0;
+new_matrix_52[0][1] = 1;
+new_matrix_52[0][2] = 0;
+new_matrix_52[0][3] = 0;
+new_matrix_52[0][4] = 0;
+new_matrix_52[0][5] = 0;
+new_matrix_52[0][6] = 0;
+new_matrix_52[0][7] = 0;
+new_matrix_52[0][8] = 0;
+new_matrix_52[1][0] = 0;
+new_matrix_52[1][1] = 0;
+new_matrix_52[1][2] = 0;
+new_matrix_52[1][3] = 0;
+new_matrix_52[1][4] = 0;
+new_matrix_52[1][5] = 1;
+new_matrix_52[1][6] = 0;
+new_matrix_52[1][7] = 0;
+new_matrix_52[1][8] = 0;
+new_matrix_52[2][0] = 0;
+new_matrix_52[2][1] = 0;
+new_matrix_52[2][2] = 0;
+new_matrix_52[2][3] = 0;
+new_matrix_52[2][4] = 0;
+new_matrix_52[2][5] = 0;
+new_matrix_52[2][6] = 1;
+new_matrix_52[2][7] = 0;
+new_matrix_52[2][8] = 0;
+new_matrix_52[3][0] = 0;
+new_matrix_52[3][1] = 0;
+new_matrix_52[3][2] = 0;
+new_matrix_52[3][3] = 0;
+new_matrix_52[3][4] = 0;
+new_matrix_52[3][5] = 0;
+new_matrix_52[3][6] = 0;
+new_matrix_52[3][7] = 1;
+new_matrix_52[3][8] = 0;
+new_matrix_52[4][0] = 0;
+new_matrix_52[4][1] = 0;
+new_matrix_52[4][2] = 0;
+new_matrix_52[4][3] = 0;
+new_matrix_52[4][4] = 0;
+new_matrix_52[4][5] = 0;
+new_matrix_52[4][6] = 0;
+new_matrix_52[4][7] = 0;
+new_matrix_52[4][8] = 1;
+
+// begin new label set:
+int[] new_labelset_52 = new int[] {10,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][4].push(node_type(new_labelset_52, new_matrix_52));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][4].push(new int[] {0, 4});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][4].push(4);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_53 = 9;
+int coldim_53 = 5;
+real[][] new_matrix_53 = new real[coldim_53][rowdim_53];
+new_matrix_53[0][0] = 1;
+new_matrix_53[0][1] = 0;
+new_matrix_53[0][2] = 0;
+new_matrix_53[0][3] = 0;
+new_matrix_53[0][4] = 0;
+new_matrix_53[0][5] = 0;
+new_matrix_53[0][6] = 0;
+new_matrix_53[0][7] = 0;
+new_matrix_53[0][8] = 0;
+new_matrix_53[1][0] = 0;
+new_matrix_53[1][1] = 0;
+new_matrix_53[1][2] = 0;
+new_matrix_53[1][3] = 0;
+new_matrix_53[1][4] = 0;
+new_matrix_53[1][5] = 1;
+new_matrix_53[1][6] = 0;
+new_matrix_53[1][7] = 0;
+new_matrix_53[1][8] = 0;
+new_matrix_53[2][0] = 0;
+new_matrix_53[2][1] = 0;
+new_matrix_53[2][2] = 0;
+new_matrix_53[2][3] = 0;
+new_matrix_53[2][4] = 0;
+new_matrix_53[2][5] = 0;
+new_matrix_53[2][6] = 1;
+new_matrix_53[2][7] = 0;
+new_matrix_53[2][8] = 0;
+new_matrix_53[3][0] = 0;
+new_matrix_53[3][1] = 0;
+new_matrix_53[3][2] = 0;
+new_matrix_53[3][3] = 0;
+new_matrix_53[3][4] = 0;
+new_matrix_53[3][5] = 0;
+new_matrix_53[3][6] = 0;
+new_matrix_53[3][7] = 1;
+new_matrix_53[3][8] = 0;
+new_matrix_53[4][0] = 0;
+new_matrix_53[4][1] = 0;
+new_matrix_53[4][2] = 0;
+new_matrix_53[4][3] = 0;
+new_matrix_53[4][4] = 0;
+new_matrix_53[4][5] = 0;
+new_matrix_53[4][6] = 0;
+new_matrix_53[4][7] = 0;
+new_matrix_53[4][8] = 1;
+
+// begin new label set:
+int[] new_labelset_53 = new int[] {9,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][4].push(node_type(new_labelset_53, new_matrix_53));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][4].push(new int[] {0, 5});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][4].push(5);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_54 = 9;
+int coldim_54 = 5;
+real[][] new_matrix_54 = new real[coldim_54][rowdim_54];
+new_matrix_54[0][0] = 0;
+new_matrix_54[0][1] = 0;
+new_matrix_54[0][2] = 0;
+new_matrix_54[0][3] = 0;
+new_matrix_54[0][4] = 0;
+new_matrix_54[0][5] = 1;
+new_matrix_54[0][6] = 0;
+new_matrix_54[0][7] = 0;
+new_matrix_54[0][8] = 0;
+new_matrix_54[1][0] = 0;
+new_matrix_54[1][1] = 0;
+new_matrix_54[1][2] = 0;
+new_matrix_54[1][3] = 0;
+new_matrix_54[1][4] = 0;
+new_matrix_54[1][5] = 0;
+new_matrix_54[1][6] = 1;
+new_matrix_54[1][7] = 0;
+new_matrix_54[1][8] = 0;
+new_matrix_54[2][0] = 0;
+new_matrix_54[2][1] = 0;
+new_matrix_54[2][2] = 0;
+new_matrix_54[2][3] = 0;
+new_matrix_54[2][4] = 0;
+new_matrix_54[2][5] = 0;
+new_matrix_54[2][6] = 0;
+new_matrix_54[2][7] = 1;
+new_matrix_54[2][8] = 0;
+new_matrix_54[3][0] = 0;
+new_matrix_54[3][1] = 0;
+new_matrix_54[3][2] = 0;
+new_matrix_54[3][3] = 0;
+new_matrix_54[3][4] = 0;
+new_matrix_54[3][5] = 0;
+new_matrix_54[3][6] = 0;
+new_matrix_54[3][7] = 0;
+new_matrix_54[3][8] = 1;
+new_matrix_54[4][0] = 0;
+new_matrix_54[4][1] = 0;
+new_matrix_54[4][2] = 0;
+new_matrix_54[4][3] = 0;
+new_matrix_54[4][4] = 0;
+new_matrix_54[4][5] = 0;
+new_matrix_54[4][6] = 0;
+new_matrix_54[4][7] = 0;
+new_matrix_54[4][8] = 0;
+
+// begin new label set:
+int[] new_labelset_54 = new int[] {8,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][4].push(node_type(new_labelset_54, new_matrix_54));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][4].push(new int[] {0, 6});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][4].push(6);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_55 = 9;
+int coldim_55 = 6;
+real[][] new_matrix_55 = new real[coldim_55][rowdim_55];
+new_matrix_55[0][0] = 0;
+new_matrix_55[0][1] = 0;
+new_matrix_55[0][2] = 0;
+new_matrix_55[0][3] = 0;
+new_matrix_55[0][4] = 0;
+new_matrix_55[0][5] = 1;
+new_matrix_55[0][6] = 0;
+new_matrix_55[0][7] = 0;
+new_matrix_55[0][8] = 0;
+new_matrix_55[1][0] = 0;
+new_matrix_55[1][1] = 0;
+new_matrix_55[1][2] = 0;
+new_matrix_55[1][3] = 0;
+new_matrix_55[1][4] = 0;
+new_matrix_55[1][5] = 0;
+new_matrix_55[1][6] = 1;
+new_matrix_55[1][7] = 0;
+new_matrix_55[1][8] = 0;
+new_matrix_55[2][0] = 0;
+new_matrix_55[2][1] = 0;
+new_matrix_55[2][2] = 0;
+new_matrix_55[2][3] = 0;
+new_matrix_55[2][4] = 0;
+new_matrix_55[2][5] = 0;
+new_matrix_55[2][6] = 0;
+new_matrix_55[2][7] = 1;
+new_matrix_55[2][8] = 0;
+new_matrix_55[3][0] = 0;
+new_matrix_55[3][1] = 0;
+new_matrix_55[3][2] = 0;
+new_matrix_55[3][3] = 0;
+new_matrix_55[3][4] = 0;
+new_matrix_55[3][5] = 0;
+new_matrix_55[3][6] = 0;
+new_matrix_55[3][7] = 0;
+new_matrix_55[3][8] = 1;
+new_matrix_55[4][0] = 0;
+new_matrix_55[4][1] = 0;
+new_matrix_55[4][2] = 0;
+new_matrix_55[4][3] = 0;
+new_matrix_55[4][4] = 0;
+new_matrix_55[4][5] = 0;
+new_matrix_55[4][6] = 0;
+new_matrix_55[4][7] = 0;
+new_matrix_55[4][8] = 0;
+new_matrix_55[5][0] = 0;
+new_matrix_55[5][1] = 0;
+new_matrix_55[5][2] = 0;
+new_matrix_55[5][3] = 0;
+new_matrix_55[5][4] = 0;
+new_matrix_55[5][5] = 0;
+new_matrix_55[5][6] = 0;
+new_matrix_55[5][7] = 0;
+new_matrix_55[5][8] = 0;
+
+// begin new label set:
+int[] new_labelset_55 = new int[] {7,8,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][4].push(node_type(new_labelset_55, new_matrix_55));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][4].push(new int[] {6, 7});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][4].push(7);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_56 = 9;
+int coldim_56 = 7;
+real[][] new_matrix_56 = new real[coldim_56][rowdim_56];
+new_matrix_56[0][0] = 0;
+new_matrix_56[0][1] = 0;
+new_matrix_56[0][2] = 0;
+new_matrix_56[0][3] = 0;
+new_matrix_56[0][4] = 0;
+new_matrix_56[0][5] = 1;
+new_matrix_56[0][6] = 0;
+new_matrix_56[0][7] = 0;
+new_matrix_56[0][8] = 0;
+new_matrix_56[1][0] = 0;
+new_matrix_56[1][1] = 0;
+new_matrix_56[1][2] = 0;
+new_matrix_56[1][3] = 0;
+new_matrix_56[1][4] = 0;
+new_matrix_56[1][5] = 0;
+new_matrix_56[1][6] = 1;
+new_matrix_56[1][7] = 0;
+new_matrix_56[1][8] = 0;
+new_matrix_56[2][0] = 0;
+new_matrix_56[2][1] = 0;
+new_matrix_56[2][2] = 0;
+new_matrix_56[2][3] = 0;
+new_matrix_56[2][4] = 0;
+new_matrix_56[2][5] = 0;
+new_matrix_56[2][6] = 0;
+new_matrix_56[2][7] = 1;
+new_matrix_56[2][8] = 0;
+new_matrix_56[3][0] = 0;
+new_matrix_56[3][1] = 0;
+new_matrix_56[3][2] = 0;
+new_matrix_56[3][3] = 0;
+new_matrix_56[3][4] = 0;
+new_matrix_56[3][5] = 0;
+new_matrix_56[3][6] = 0;
+new_matrix_56[3][7] = 0;
+new_matrix_56[3][8] = 1;
+new_matrix_56[4][0] = 0;
+new_matrix_56[4][1] = 0;
+new_matrix_56[4][2] = 0;
+new_matrix_56[4][3] = 0;
+new_matrix_56[4][4] = 0;
+new_matrix_56[4][5] = 0;
+new_matrix_56[4][6] = 0;
+new_matrix_56[4][7] = 0;
+new_matrix_56[4][8] = 0;
+new_matrix_56[5][0] = 0;
+new_matrix_56[5][1] = 0;
+new_matrix_56[5][2] = 0;
+new_matrix_56[5][3] = 0;
+new_matrix_56[5][4] = 0;
+new_matrix_56[5][5] = 0;
+new_matrix_56[5][6] = 0;
+new_matrix_56[5][7] = 0;
+new_matrix_56[5][8] = 0;
+new_matrix_56[6][0] = 0;
+new_matrix_56[6][1] = 0;
+new_matrix_56[6][2] = 0;
+new_matrix_56[6][3] = 0;
+new_matrix_56[6][4] = 0;
+new_matrix_56[6][5] = 0;
+new_matrix_56[6][6] = 0;
+new_matrix_56[6][7] = 0;
+new_matrix_56[6][8] = 0;
+
+// begin new label set:
+int[] new_labelset_56 = new int[] {6,7,8,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][4].push(node_type(new_labelset_56, new_matrix_56));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][4].push(new int[] {7, 8});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][4].push(8);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_57 = 9;
+int coldim_57 = 8;
+real[][] new_matrix_57 = new real[coldim_57][rowdim_57];
+new_matrix_57[0][0] = 0;
+new_matrix_57[0][1] = 0;
+new_matrix_57[0][2] = 0;
+new_matrix_57[0][3] = 0;
+new_matrix_57[0][4] = 0;
+new_matrix_57[0][5] = 1;
+new_matrix_57[0][6] = 0;
+new_matrix_57[0][7] = 0;
+new_matrix_57[0][8] = 0;
+new_matrix_57[1][0] = 0;
+new_matrix_57[1][1] = 0;
+new_matrix_57[1][2] = 0;
+new_matrix_57[1][3] = 0;
+new_matrix_57[1][4] = 0;
+new_matrix_57[1][5] = 0;
+new_matrix_57[1][6] = 1;
+new_matrix_57[1][7] = 0;
+new_matrix_57[1][8] = 0;
+new_matrix_57[2][0] = 0;
+new_matrix_57[2][1] = 0;
+new_matrix_57[2][2] = 0;
+new_matrix_57[2][3] = 0;
+new_matrix_57[2][4] = 0;
+new_matrix_57[2][5] = 0;
+new_matrix_57[2][6] = 0;
+new_matrix_57[2][7] = 1;
+new_matrix_57[2][8] = 0;
+new_matrix_57[3][0] = 0;
+new_matrix_57[3][1] = 0;
+new_matrix_57[3][2] = 0;
+new_matrix_57[3][3] = 0;
+new_matrix_57[3][4] = 0;
+new_matrix_57[3][5] = 0;
+new_matrix_57[3][6] = 0;
+new_matrix_57[3][7] = 0;
+new_matrix_57[3][8] = 1;
+new_matrix_57[4][0] = 0;
+new_matrix_57[4][1] = 0;
+new_matrix_57[4][2] = 0;
+new_matrix_57[4][3] = 0;
+new_matrix_57[4][4] = 0;
+new_matrix_57[4][5] = 0;
+new_matrix_57[4][6] = 0;
+new_matrix_57[4][7] = 0;
+new_matrix_57[4][8] = 0;
+new_matrix_57[5][0] = 0;
+new_matrix_57[5][1] = 0;
+new_matrix_57[5][2] = 0;
+new_matrix_57[5][3] = 0;
+new_matrix_57[5][4] = 0;
+new_matrix_57[5][5] = 0;
+new_matrix_57[5][6] = 0;
+new_matrix_57[5][7] = 0;
+new_matrix_57[5][8] = 0;
+new_matrix_57[6][0] = 0;
+new_matrix_57[6][1] = 0;
+new_matrix_57[6][2] = 0;
+new_matrix_57[6][3] = 0;
+new_matrix_57[6][4] = 0;
+new_matrix_57[6][5] = 0;
+new_matrix_57[6][6] = 0;
+new_matrix_57[6][7] = 0;
+new_matrix_57[6][8] = 0;
+new_matrix_57[7][0] = 0;
+new_matrix_57[7][1] = 0;
+new_matrix_57[7][2] = 0;
+new_matrix_57[7][3] = 0;
+new_matrix_57[7][4] = 0;
+new_matrix_57[7][5] = 0;
+new_matrix_57[7][6] = 0;
+new_matrix_57[7][7] = 0;
+new_matrix_57[7][8] = 0;
+
+// begin new label set:
+int[] new_labelset_57 = new int[] {5,6,7,8,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][4].push(node_type(new_labelset_57, new_matrix_57));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][4].push(new int[] {8, 9});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][4].push(9);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_58 = 9;
+int coldim_58 = 9;
+real[][] new_matrix_58 = new real[coldim_58][rowdim_58];
+new_matrix_58[0][0] = 0;
+new_matrix_58[0][1] = 0;
+new_matrix_58[0][2] = 0;
+new_matrix_58[0][3] = 0;
+new_matrix_58[0][4] = 1;
+new_matrix_58[0][5] = 0;
+new_matrix_58[0][6] = 0;
+new_matrix_58[0][7] = 0;
+new_matrix_58[0][8] = 0;
+new_matrix_58[1][0] = 0;
+new_matrix_58[1][1] = 0;
+new_matrix_58[1][2] = 0;
+new_matrix_58[1][3] = 0;
+new_matrix_58[1][4] = 0;
+new_matrix_58[1][5] = 1;
+new_matrix_58[1][6] = 0;
+new_matrix_58[1][7] = 0;
+new_matrix_58[1][8] = 0;
+new_matrix_58[2][0] = 0;
+new_matrix_58[2][1] = 0;
+new_matrix_58[2][2] = 0;
+new_matrix_58[2][3] = 0;
+new_matrix_58[2][4] = 0;
+new_matrix_58[2][5] = 0;
+new_matrix_58[2][6] = 1;
+new_matrix_58[2][7] = 0;
+new_matrix_58[2][8] = 0;
+new_matrix_58[3][0] = 0;
+new_matrix_58[3][1] = 0;
+new_matrix_58[3][2] = 0;
+new_matrix_58[3][3] = 0;
+new_matrix_58[3][4] = 0;
+new_matrix_58[3][5] = 0;
+new_matrix_58[3][6] = 0;
+new_matrix_58[3][7] = 1;
+new_matrix_58[3][8] = 0;
+new_matrix_58[4][0] = 0;
+new_matrix_58[4][1] = 0;
+new_matrix_58[4][2] = 0;
+new_matrix_58[4][3] = 0;
+new_matrix_58[4][4] = 0;
+new_matrix_58[4][5] = 0;
+new_matrix_58[4][6] = 0;
+new_matrix_58[4][7] = 0;
+new_matrix_58[4][8] = 1;
+new_matrix_58[5][0] = 0;
+new_matrix_58[5][1] = 0;
+new_matrix_58[5][2] = 0;
+new_matrix_58[5][3] = 0;
+new_matrix_58[5][4] = 0;
+new_matrix_58[5][5] = 0;
+new_matrix_58[5][6] = 0;
+new_matrix_58[5][7] = 0;
+new_matrix_58[5][8] = 0;
+new_matrix_58[6][0] = 0;
+new_matrix_58[6][1] = 0;
+new_matrix_58[6][2] = 0;
+new_matrix_58[6][3] = 0;
+new_matrix_58[6][4] = 0;
+new_matrix_58[6][5] = 0;
+new_matrix_58[6][6] = 0;
+new_matrix_58[6][7] = 0;
+new_matrix_58[6][8] = 0;
+new_matrix_58[7][0] = 0;
+new_matrix_58[7][1] = 0;
+new_matrix_58[7][2] = 0;
+new_matrix_58[7][3] = 0;
+new_matrix_58[7][4] = 0;
+new_matrix_58[7][5] = 0;
+new_matrix_58[7][6] = 0;
+new_matrix_58[7][7] = 0;
+new_matrix_58[7][8] = 0;
+new_matrix_58[8][0] = 0;
+new_matrix_58[8][1] = 0;
+new_matrix_58[8][2] = 0;
+new_matrix_58[8][3] = 0;
+new_matrix_58[8][4] = 0;
+new_matrix_58[8][5] = 0;
+new_matrix_58[8][6] = 0;
+new_matrix_58[8][7] = 0;
+new_matrix_58[8][8] = 0;
+
+// begin new label set:
+int[] new_labelset_58 = new int[] {4,5,6,7,8,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][4].push(node_type(new_labelset_58, new_matrix_58));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][4].push(new int[] {9, 10});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][4].push(10);
+// end new earlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_59 = 9;
+int coldim_59 = 9;
+real[][] new_matrix_59 = new real[coldim_59][rowdim_59];
+new_matrix_59[0][0] = 0;
+new_matrix_59[0][1] = 0;
+new_matrix_59[0][2] = 0;
+new_matrix_59[0][3] = 1;
+new_matrix_59[0][4] = 0;
+new_matrix_59[0][5] = 0;
+new_matrix_59[0][6] = 0;
+new_matrix_59[0][7] = 0;
+new_matrix_59[0][8] = 0;
+new_matrix_59[1][0] = 0;
+new_matrix_59[1][1] = 0;
+new_matrix_59[1][2] = 0;
+new_matrix_59[1][3] = 0;
+new_matrix_59[1][4] = 0;
+new_matrix_59[1][5] = 1;
+new_matrix_59[1][6] = 0;
+new_matrix_59[1][7] = 0;
+new_matrix_59[1][8] = 0;
+new_matrix_59[2][0] = 0;
+new_matrix_59[2][1] = 0;
+new_matrix_59[2][2] = 0;
+new_matrix_59[2][3] = 0;
+new_matrix_59[2][4] = 0;
+new_matrix_59[2][5] = 0;
+new_matrix_59[2][6] = 1;
+new_matrix_59[2][7] = 0;
+new_matrix_59[2][8] = 0;
+new_matrix_59[3][0] = 0;
+new_matrix_59[3][1] = 0;
+new_matrix_59[3][2] = 0;
+new_matrix_59[3][3] = 0;
+new_matrix_59[3][4] = 0;
+new_matrix_59[3][5] = 0;
+new_matrix_59[3][6] = 0;
+new_matrix_59[3][7] = 1;
+new_matrix_59[3][8] = 0;
+new_matrix_59[4][0] = 0;
+new_matrix_59[4][1] = 0;
+new_matrix_59[4][2] = 0;
+new_matrix_59[4][3] = 0;
+new_matrix_59[4][4] = 0;
+new_matrix_59[4][5] = 0;
+new_matrix_59[4][6] = 0;
+new_matrix_59[4][7] = 0;
+new_matrix_59[4][8] = 1;
+new_matrix_59[5][0] = 0;
+new_matrix_59[5][1] = 0;
+new_matrix_59[5][2] = 0;
+new_matrix_59[5][3] = 0;
+new_matrix_59[5][4] = 0;
+new_matrix_59[5][5] = 0;
+new_matrix_59[5][6] = 0;
+new_matrix_59[5][7] = 0;
+new_matrix_59[5][8] = 0;
+new_matrix_59[6][0] = 0;
+new_matrix_59[6][1] = 0;
+new_matrix_59[6][2] = 0;
+new_matrix_59[6][3] = 0;
+new_matrix_59[6][4] = 0;
+new_matrix_59[6][5] = 0;
+new_matrix_59[6][6] = 0;
+new_matrix_59[6][7] = 0;
+new_matrix_59[6][8] = 0;
+new_matrix_59[7][0] = 0;
+new_matrix_59[7][1] = 0;
+new_matrix_59[7][2] = 0;
+new_matrix_59[7][3] = 0;
+new_matrix_59[7][4] = 0;
+new_matrix_59[7][5] = 0;
+new_matrix_59[7][6] = 0;
+new_matrix_59[7][7] = 0;
+new_matrix_59[7][8] = 0;
+new_matrix_59[8][0] = 0;
+new_matrix_59[8][1] = 0;
+new_matrix_59[8][2] = 0;
+new_matrix_59[8][3] = 0;
+new_matrix_59[8][4] = 0;
+new_matrix_59[8][5] = 0;
+new_matrix_59[8][6] = 0;
+new_matrix_59[8][7] = 0;
+new_matrix_59[8][8] = 0;
+
+// begin new label set:
+int[] new_labelset_59 = new int[] {3,5,6,7,8,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][4].push(node_type(new_labelset_59, new_matrix_59));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][4].push(new int[] {9, 11});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][4].push(11);
+// end new earlydeadend node.
+//////////////////////////////////////////////////////////////////////////////
+// new run for worker 0:
+//////////////////////////////////////////////////////////////////////////////
+tree_nodes[0].push(new node_type[]);
+tree_arcs[0].push(new int[][]);
+deadend_nodes[0].push(new int[]);
+earlydeadend_nodes[0].push(new int[]);
+veryearlydeadend_nodes[0].push(new int[]);
+missingvolume_nodes[0].push(new int[]);
+notnew_nodes[0].push(new int[]);
+solution_nodes[0].push(new int[]);
+//////////////////////////////////////////////////////////////////////////////
+// end new run for worker 0.
+//////////////////////////////////////////////////////////////////////////////
+
+// begin new staircase matrix:
+int rowdim_60 = 9;
+int coldim_60 = 5;
+real[][] new_matrix_60 = new real[coldim_60][rowdim_60];
+new_matrix_60[0][0] = 0;
+new_matrix_60[0][1] = 0;
+new_matrix_60[0][2] = 0;
+new_matrix_60[0][3] = 0;
+new_matrix_60[0][4] = 1;
+new_matrix_60[0][5] = 0;
+new_matrix_60[0][6] = 0;
+new_matrix_60[0][7] = 0;
+new_matrix_60[0][8] = 0;
+new_matrix_60[1][0] = 0;
+new_matrix_60[1][1] = 0;
+new_matrix_60[1][2] = 0;
+new_matrix_60[1][3] = 0;
+new_matrix_60[1][4] = 0;
+new_matrix_60[1][5] = 1;
+new_matrix_60[1][6] = 0;
+new_matrix_60[1][7] = 0;
+new_matrix_60[1][8] = 0;
+new_matrix_60[2][0] = 0;
+new_matrix_60[2][1] = 0;
+new_matrix_60[2][2] = 0;
+new_matrix_60[2][3] = 0;
+new_matrix_60[2][4] = 0;
+new_matrix_60[2][5] = 0;
+new_matrix_60[2][6] = 1;
+new_matrix_60[2][7] = 0;
+new_matrix_60[2][8] = 0;
+new_matrix_60[3][0] = 0;
+new_matrix_60[3][1] = 0;
+new_matrix_60[3][2] = 0;
+new_matrix_60[3][3] = 0;
+new_matrix_60[3][4] = 0;
+new_matrix_60[3][5] = 0;
+new_matrix_60[3][6] = 0;
+new_matrix_60[3][7] = 1;
+new_matrix_60[3][8] = 0;
+new_matrix_60[4][0] = 0;
+new_matrix_60[4][1] = 0;
+new_matrix_60[4][2] = 0;
+new_matrix_60[4][3] = 0;
+new_matrix_60[4][4] = 0;
+new_matrix_60[4][5] = 0;
+new_matrix_60[4][6] = 0;
+new_matrix_60[4][7] = 0;
+new_matrix_60[4][8] = 1;
+
+// begin new label set:
+int[] new_labelset_60 = new int[] {13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][5].push(node_type(new_labelset_60, new_matrix_60));
+// end new node.
+
+// begin new staircase matrix:
+int rowdim_61 = 9;
+int coldim_61 = 6;
+real[][] new_matrix_61 = new real[coldim_61][rowdim_61];
+new_matrix_61[0][0] = 0;
+new_matrix_61[0][1] = 0;
+new_matrix_61[0][2] = 0;
+new_matrix_61[0][3] = 1;
+new_matrix_61[0][4] = 0;
+new_matrix_61[0][5] = 0;
+new_matrix_61[0][6] = 0;
+new_matrix_61[0][7] = 0;
+new_matrix_61[0][8] = 0;
+new_matrix_61[1][0] = 0;
+new_matrix_61[1][1] = 0;
+new_matrix_61[1][2] = 0;
+new_matrix_61[1][3] = 0;
+new_matrix_61[1][4] = 1;
+new_matrix_61[1][5] = 0;
+new_matrix_61[1][6] = 0;
+new_matrix_61[1][7] = 0;
+new_matrix_61[1][8] = 0;
+new_matrix_61[2][0] = 0;
+new_matrix_61[2][1] = 0;
+new_matrix_61[2][2] = 0;
+new_matrix_61[2][3] = 0;
+new_matrix_61[2][4] = 0;
+new_matrix_61[2][5] = 1;
+new_matrix_61[2][6] = 0;
+new_matrix_61[2][7] = 0;
+new_matrix_61[2][8] = 0;
+new_matrix_61[3][0] = 0;
+new_matrix_61[3][1] = 0;
+new_matrix_61[3][2] = 0;
+new_matrix_61[3][3] = 0;
+new_matrix_61[3][4] = 0;
+new_matrix_61[3][5] = 0;
+new_matrix_61[3][6] = 1;
+new_matrix_61[3][7] = 0;
+new_matrix_61[3][8] = 0;
+new_matrix_61[4][0] = 0;
+new_matrix_61[4][1] = 0;
+new_matrix_61[4][2] = 0;
+new_matrix_61[4][3] = 0;
+new_matrix_61[4][4] = 0;
+new_matrix_61[4][5] = 0;
+new_matrix_61[4][6] = 0;
+new_matrix_61[4][7] = 1;
+new_matrix_61[4][8] = 0;
+new_matrix_61[5][0] = 0;
+new_matrix_61[5][1] = 0;
+new_matrix_61[5][2] = 0;
+new_matrix_61[5][3] = 0;
+new_matrix_61[5][4] = 0;
+new_matrix_61[5][5] = 0;
+new_matrix_61[5][6] = 0;
+new_matrix_61[5][7] = 0;
+new_matrix_61[5][8] = 1;
+
+// begin new label set:
+int[] new_labelset_61 = new int[] {12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][5].push(node_type(new_labelset_61, new_matrix_61));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][5].push(new int[] {0, 1});
+// end new extension arc.
+
+// begin new staircase matrix:
+int rowdim_62 = 9;
+int coldim_62 = 6;
+real[][] new_matrix_62 = new real[coldim_62][rowdim_62];
+new_matrix_62[0][0] = 0;
+new_matrix_62[0][1] = 0;
+new_matrix_62[0][2] = 1;
+new_matrix_62[0][3] = 0;
+new_matrix_62[0][4] = 0;
+new_matrix_62[0][5] = 0;
+new_matrix_62[0][6] = 0;
+new_matrix_62[0][7] = 0;
+new_matrix_62[0][8] = 0;
+new_matrix_62[1][0] = 0;
+new_matrix_62[1][1] = 0;
+new_matrix_62[1][2] = 0;
+new_matrix_62[1][3] = 0;
+new_matrix_62[1][4] = 1;
+new_matrix_62[1][5] = 0;
+new_matrix_62[1][6] = 0;
+new_matrix_62[1][7] = 0;
+new_matrix_62[1][8] = 0;
+new_matrix_62[2][0] = 0;
+new_matrix_62[2][1] = 0;
+new_matrix_62[2][2] = 0;
+new_matrix_62[2][3] = 0;
+new_matrix_62[2][4] = 0;
+new_matrix_62[2][5] = 1;
+new_matrix_62[2][6] = 0;
+new_matrix_62[2][7] = 0;
+new_matrix_62[2][8] = 0;
+new_matrix_62[3][0] = 0;
+new_matrix_62[3][1] = 0;
+new_matrix_62[3][2] = 0;
+new_matrix_62[3][3] = 0;
+new_matrix_62[3][4] = 0;
+new_matrix_62[3][5] = 0;
+new_matrix_62[3][6] = 1;
+new_matrix_62[3][7] = 0;
+new_matrix_62[3][8] = 0;
+new_matrix_62[4][0] = 0;
+new_matrix_62[4][1] = 0;
+new_matrix_62[4][2] = 0;
+new_matrix_62[4][3] = 0;
+new_matrix_62[4][4] = 0;
+new_matrix_62[4][5] = 0;
+new_matrix_62[4][6] = 0;
+new_matrix_62[4][7] = 1;
+new_matrix_62[4][8] = 0;
+new_matrix_62[5][0] = 0;
+new_matrix_62[5][1] = 0;
+new_matrix_62[5][2] = 0;
+new_matrix_62[5][3] = 0;
+new_matrix_62[5][4] = 0;
+new_matrix_62[5][5] = 0;
+new_matrix_62[5][6] = 0;
+new_matrix_62[5][7] = 0;
+new_matrix_62[5][8] = 1;
+
+// begin new label set:
+int[] new_labelset_62 = new int[] {11,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][5].push(node_type(new_labelset_62, new_matrix_62));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][5].push(new int[] {0, 2});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][5].push(2);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_63 = 9;
+int coldim_63 = 6;
+real[][] new_matrix_63 = new real[coldim_63][rowdim_63];
+new_matrix_63[0][0] = 0;
+new_matrix_63[0][1] = 1;
+new_matrix_63[0][2] = 0;
+new_matrix_63[0][3] = 0;
+new_matrix_63[0][4] = 0;
+new_matrix_63[0][5] = 0;
+new_matrix_63[0][6] = 0;
+new_matrix_63[0][7] = 0;
+new_matrix_63[0][8] = 0;
+new_matrix_63[1][0] = 0;
+new_matrix_63[1][1] = 0;
+new_matrix_63[1][2] = 0;
+new_matrix_63[1][3] = 0;
+new_matrix_63[1][4] = 1;
+new_matrix_63[1][5] = 0;
+new_matrix_63[1][6] = 0;
+new_matrix_63[1][7] = 0;
+new_matrix_63[1][8] = 0;
+new_matrix_63[2][0] = 0;
+new_matrix_63[2][1] = 0;
+new_matrix_63[2][2] = 0;
+new_matrix_63[2][3] = 0;
+new_matrix_63[2][4] = 0;
+new_matrix_63[2][5] = 1;
+new_matrix_63[2][6] = 0;
+new_matrix_63[2][7] = 0;
+new_matrix_63[2][8] = 0;
+new_matrix_63[3][0] = 0;
+new_matrix_63[3][1] = 0;
+new_matrix_63[3][2] = 0;
+new_matrix_63[3][3] = 0;
+new_matrix_63[3][4] = 0;
+new_matrix_63[3][5] = 0;
+new_matrix_63[3][6] = 1;
+new_matrix_63[3][7] = 0;
+new_matrix_63[3][8] = 0;
+new_matrix_63[4][0] = 0;
+new_matrix_63[4][1] = 0;
+new_matrix_63[4][2] = 0;
+new_matrix_63[4][3] = 0;
+new_matrix_63[4][4] = 0;
+new_matrix_63[4][5] = 0;
+new_matrix_63[4][6] = 0;
+new_matrix_63[4][7] = 1;
+new_matrix_63[4][8] = 0;
+new_matrix_63[5][0] = 0;
+new_matrix_63[5][1] = 0;
+new_matrix_63[5][2] = 0;
+new_matrix_63[5][3] = 0;
+new_matrix_63[5][4] = 0;
+new_matrix_63[5][5] = 0;
+new_matrix_63[5][6] = 0;
+new_matrix_63[5][7] = 0;
+new_matrix_63[5][8] = 1;
+
+// begin new label set:
+int[] new_labelset_63 = new int[] {10,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][5].push(node_type(new_labelset_63, new_matrix_63));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][5].push(new int[] {0, 3});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][5].push(3);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_64 = 9;
+int coldim_64 = 6;
+real[][] new_matrix_64 = new real[coldim_64][rowdim_64];
+new_matrix_64[0][0] = 1;
+new_matrix_64[0][1] = 0;
+new_matrix_64[0][2] = 0;
+new_matrix_64[0][3] = 0;
+new_matrix_64[0][4] = 0;
+new_matrix_64[0][5] = 0;
+new_matrix_64[0][6] = 0;
+new_matrix_64[0][7] = 0;
+new_matrix_64[0][8] = 0;
+new_matrix_64[1][0] = 0;
+new_matrix_64[1][1] = 0;
+new_matrix_64[1][2] = 0;
+new_matrix_64[1][3] = 0;
+new_matrix_64[1][4] = 1;
+new_matrix_64[1][5] = 0;
+new_matrix_64[1][6] = 0;
+new_matrix_64[1][7] = 0;
+new_matrix_64[1][8] = 0;
+new_matrix_64[2][0] = 0;
+new_matrix_64[2][1] = 0;
+new_matrix_64[2][2] = 0;
+new_matrix_64[2][3] = 0;
+new_matrix_64[2][4] = 0;
+new_matrix_64[2][5] = 1;
+new_matrix_64[2][6] = 0;
+new_matrix_64[2][7] = 0;
+new_matrix_64[2][8] = 0;
+new_matrix_64[3][0] = 0;
+new_matrix_64[3][1] = 0;
+new_matrix_64[3][2] = 0;
+new_matrix_64[3][3] = 0;
+new_matrix_64[3][4] = 0;
+new_matrix_64[3][5] = 0;
+new_matrix_64[3][6] = 1;
+new_matrix_64[3][7] = 0;
+new_matrix_64[3][8] = 0;
+new_matrix_64[4][0] = 0;
+new_matrix_64[4][1] = 0;
+new_matrix_64[4][2] = 0;
+new_matrix_64[4][3] = 0;
+new_matrix_64[4][4] = 0;
+new_matrix_64[4][5] = 0;
+new_matrix_64[4][6] = 0;
+new_matrix_64[4][7] = 1;
+new_matrix_64[4][8] = 0;
+new_matrix_64[5][0] = 0;
+new_matrix_64[5][1] = 0;
+new_matrix_64[5][2] = 0;
+new_matrix_64[5][3] = 0;
+new_matrix_64[5][4] = 0;
+new_matrix_64[5][5] = 0;
+new_matrix_64[5][6] = 0;
+new_matrix_64[5][7] = 0;
+new_matrix_64[5][8] = 1;
+
+// begin new label set:
+int[] new_labelset_64 = new int[] {9,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][5].push(node_type(new_labelset_64, new_matrix_64));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][5].push(new int[] {0, 4});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][5].push(4);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_65 = 9;
+int coldim_65 = 6;
+real[][] new_matrix_65 = new real[coldim_65][rowdim_65];
+new_matrix_65[0][0] = 0;
+new_matrix_65[0][1] = 0;
+new_matrix_65[0][2] = 0;
+new_matrix_65[0][3] = 0;
+new_matrix_65[0][4] = 1;
+new_matrix_65[0][5] = 0;
+new_matrix_65[0][6] = 0;
+new_matrix_65[0][7] = 0;
+new_matrix_65[0][8] = 0;
+new_matrix_65[1][0] = 0;
+new_matrix_65[1][1] = 0;
+new_matrix_65[1][2] = 0;
+new_matrix_65[1][3] = 0;
+new_matrix_65[1][4] = 0;
+new_matrix_65[1][5] = 1;
+new_matrix_65[1][6] = 0;
+new_matrix_65[1][7] = 0;
+new_matrix_65[1][8] = 0;
+new_matrix_65[2][0] = 0;
+new_matrix_65[2][1] = 0;
+new_matrix_65[2][2] = 0;
+new_matrix_65[2][3] = 0;
+new_matrix_65[2][4] = 0;
+new_matrix_65[2][5] = 0;
+new_matrix_65[2][6] = 1;
+new_matrix_65[2][7] = 0;
+new_matrix_65[2][8] = 0;
+new_matrix_65[3][0] = 0;
+new_matrix_65[3][1] = 0;
+new_matrix_65[3][2] = 0;
+new_matrix_65[3][3] = 0;
+new_matrix_65[3][4] = 0;
+new_matrix_65[3][5] = 0;
+new_matrix_65[3][6] = 0;
+new_matrix_65[3][7] = 1;
+new_matrix_65[3][8] = 0;
+new_matrix_65[4][0] = 0;
+new_matrix_65[4][1] = 0;
+new_matrix_65[4][2] = 0;
+new_matrix_65[4][3] = 0;
+new_matrix_65[4][4] = 0;
+new_matrix_65[4][5] = 0;
+new_matrix_65[4][6] = 0;
+new_matrix_65[4][7] = 0;
+new_matrix_65[4][8] = 1;
+new_matrix_65[5][0] = 0;
+new_matrix_65[5][1] = 0;
+new_matrix_65[5][2] = 0;
+new_matrix_65[5][3] = 0;
+new_matrix_65[5][4] = 0;
+new_matrix_65[5][5] = 0;
+new_matrix_65[5][6] = 0;
+new_matrix_65[5][7] = 0;
+new_matrix_65[5][8] = 0;
+
+// begin new label set:
+int[] new_labelset_65 = new int[] {8,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][5].push(node_type(new_labelset_65, new_matrix_65));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][5].push(new int[] {0, 5});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][5].push(5);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_66 = 9;
+int coldim_66 = 7;
+real[][] new_matrix_66 = new real[coldim_66][rowdim_66];
+new_matrix_66[0][0] = 0;
+new_matrix_66[0][1] = 0;
+new_matrix_66[0][2] = 0;
+new_matrix_66[0][3] = 0;
+new_matrix_66[0][4] = 1;
+new_matrix_66[0][5] = 0;
+new_matrix_66[0][6] = 0;
+new_matrix_66[0][7] = 0;
+new_matrix_66[0][8] = 0;
+new_matrix_66[1][0] = 0;
+new_matrix_66[1][1] = 0;
+new_matrix_66[1][2] = 0;
+new_matrix_66[1][3] = 0;
+new_matrix_66[1][4] = 0;
+new_matrix_66[1][5] = 1;
+new_matrix_66[1][6] = 0;
+new_matrix_66[1][7] = 0;
+new_matrix_66[1][8] = 0;
+new_matrix_66[2][0] = 0;
+new_matrix_66[2][1] = 0;
+new_matrix_66[2][2] = 0;
+new_matrix_66[2][3] = 0;
+new_matrix_66[2][4] = 0;
+new_matrix_66[2][5] = 0;
+new_matrix_66[2][6] = 1;
+new_matrix_66[2][7] = 0;
+new_matrix_66[2][8] = 0;
+new_matrix_66[3][0] = 0;
+new_matrix_66[3][1] = 0;
+new_matrix_66[3][2] = 0;
+new_matrix_66[3][3] = 0;
+new_matrix_66[3][4] = 0;
+new_matrix_66[3][5] = 0;
+new_matrix_66[3][6] = 0;
+new_matrix_66[3][7] = 1;
+new_matrix_66[3][8] = 0;
+new_matrix_66[4][0] = 0;
+new_matrix_66[4][1] = 0;
+new_matrix_66[4][2] = 0;
+new_matrix_66[4][3] = 0;
+new_matrix_66[4][4] = 0;
+new_matrix_66[4][5] = 0;
+new_matrix_66[4][6] = 0;
+new_matrix_66[4][7] = 0;
+new_matrix_66[4][8] = 1;
+new_matrix_66[5][0] = 0;
+new_matrix_66[5][1] = 0;
+new_matrix_66[5][2] = 0;
+new_matrix_66[5][3] = 0;
+new_matrix_66[5][4] = 0;
+new_matrix_66[5][5] = 0;
+new_matrix_66[5][6] = 0;
+new_matrix_66[5][7] = 0;
+new_matrix_66[5][8] = 0;
+new_matrix_66[6][0] = 0;
+new_matrix_66[6][1] = 0;
+new_matrix_66[6][2] = 0;
+new_matrix_66[6][3] = 0;
+new_matrix_66[6][4] = 0;
+new_matrix_66[6][5] = 0;
+new_matrix_66[6][6] = 0;
+new_matrix_66[6][7] = 0;
+new_matrix_66[6][8] = 0;
+
+// begin new label set:
+int[] new_labelset_66 = new int[] {7,8,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][5].push(node_type(new_labelset_66, new_matrix_66));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][5].push(new int[] {5, 6});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][5].push(6);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_67 = 9;
+int coldim_67 = 8;
+real[][] new_matrix_67 = new real[coldim_67][rowdim_67];
+new_matrix_67[0][0] = 0;
+new_matrix_67[0][1] = 0;
+new_matrix_67[0][2] = 0;
+new_matrix_67[0][3] = 0;
+new_matrix_67[0][4] = 1;
+new_matrix_67[0][5] = 0;
+new_matrix_67[0][6] = 0;
+new_matrix_67[0][7] = 0;
+new_matrix_67[0][8] = 0;
+new_matrix_67[1][0] = 0;
+new_matrix_67[1][1] = 0;
+new_matrix_67[1][2] = 0;
+new_matrix_67[1][3] = 0;
+new_matrix_67[1][4] = 0;
+new_matrix_67[1][5] = 1;
+new_matrix_67[1][6] = 0;
+new_matrix_67[1][7] = 0;
+new_matrix_67[1][8] = 0;
+new_matrix_67[2][0] = 0;
+new_matrix_67[2][1] = 0;
+new_matrix_67[2][2] = 0;
+new_matrix_67[2][3] = 0;
+new_matrix_67[2][4] = 0;
+new_matrix_67[2][5] = 0;
+new_matrix_67[2][6] = 1;
+new_matrix_67[2][7] = 0;
+new_matrix_67[2][8] = 0;
+new_matrix_67[3][0] = 0;
+new_matrix_67[3][1] = 0;
+new_matrix_67[3][2] = 0;
+new_matrix_67[3][3] = 0;
+new_matrix_67[3][4] = 0;
+new_matrix_67[3][5] = 0;
+new_matrix_67[3][6] = 0;
+new_matrix_67[3][7] = 1;
+new_matrix_67[3][8] = 0;
+new_matrix_67[4][0] = 0;
+new_matrix_67[4][1] = 0;
+new_matrix_67[4][2] = 0;
+new_matrix_67[4][3] = 0;
+new_matrix_67[4][4] = 0;
+new_matrix_67[4][5] = 0;
+new_matrix_67[4][6] = 0;
+new_matrix_67[4][7] = 0;
+new_matrix_67[4][8] = 1;
+new_matrix_67[5][0] = 0;
+new_matrix_67[5][1] = 0;
+new_matrix_67[5][2] = 0;
+new_matrix_67[5][3] = 0;
+new_matrix_67[5][4] = 0;
+new_matrix_67[5][5] = 0;
+new_matrix_67[5][6] = 0;
+new_matrix_67[5][7] = 0;
+new_matrix_67[5][8] = 0;
+new_matrix_67[6][0] = 0;
+new_matrix_67[6][1] = 0;
+new_matrix_67[6][2] = 0;
+new_matrix_67[6][3] = 0;
+new_matrix_67[6][4] = 0;
+new_matrix_67[6][5] = 0;
+new_matrix_67[6][6] = 0;
+new_matrix_67[6][7] = 0;
+new_matrix_67[6][8] = 0;
+new_matrix_67[7][0] = 0;
+new_matrix_67[7][1] = 0;
+new_matrix_67[7][2] = 0;
+new_matrix_67[7][3] = 0;
+new_matrix_67[7][4] = 0;
+new_matrix_67[7][5] = 0;
+new_matrix_67[7][6] = 0;
+new_matrix_67[7][7] = 0;
+new_matrix_67[7][8] = 0;
+
+// begin new label set:
+int[] new_labelset_67 = new int[] {6,7,8,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][5].push(node_type(new_labelset_67, new_matrix_67));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][5].push(new int[] {6, 7});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][5].push(7);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_68 = 9;
+int coldim_68 = 9;
+real[][] new_matrix_68 = new real[coldim_68][rowdim_68];
+new_matrix_68[0][0] = 0;
+new_matrix_68[0][1] = 0;
+new_matrix_68[0][2] = 0;
+new_matrix_68[0][3] = 0;
+new_matrix_68[0][4] = 1;
+new_matrix_68[0][5] = 0;
+new_matrix_68[0][6] = 0;
+new_matrix_68[0][7] = 0;
+new_matrix_68[0][8] = 0;
+new_matrix_68[1][0] = 0;
+new_matrix_68[1][1] = 0;
+new_matrix_68[1][2] = 0;
+new_matrix_68[1][3] = 0;
+new_matrix_68[1][4] = 0;
+new_matrix_68[1][5] = 1;
+new_matrix_68[1][6] = 0;
+new_matrix_68[1][7] = 0;
+new_matrix_68[1][8] = 0;
+new_matrix_68[2][0] = 0;
+new_matrix_68[2][1] = 0;
+new_matrix_68[2][2] = 0;
+new_matrix_68[2][3] = 0;
+new_matrix_68[2][4] = 0;
+new_matrix_68[2][5] = 0;
+new_matrix_68[2][6] = 1;
+new_matrix_68[2][7] = 0;
+new_matrix_68[2][8] = 0;
+new_matrix_68[3][0] = 0;
+new_matrix_68[3][1] = 0;
+new_matrix_68[3][2] = 0;
+new_matrix_68[3][3] = 0;
+new_matrix_68[3][4] = 0;
+new_matrix_68[3][5] = 0;
+new_matrix_68[3][6] = 0;
+new_matrix_68[3][7] = 1;
+new_matrix_68[3][8] = 0;
+new_matrix_68[4][0] = 0;
+new_matrix_68[4][1] = 0;
+new_matrix_68[4][2] = 0;
+new_matrix_68[4][3] = 0;
+new_matrix_68[4][4] = 0;
+new_matrix_68[4][5] = 0;
+new_matrix_68[4][6] = 0;
+new_matrix_68[4][7] = 0;
+new_matrix_68[4][8] = 1;
+new_matrix_68[5][0] = 0;
+new_matrix_68[5][1] = 0;
+new_matrix_68[5][2] = 0;
+new_matrix_68[5][3] = 0;
+new_matrix_68[5][4] = 0;
+new_matrix_68[5][5] = 0;
+new_matrix_68[5][6] = 0;
+new_matrix_68[5][7] = 0;
+new_matrix_68[5][8] = 0;
+new_matrix_68[6][0] = 0;
+new_matrix_68[6][1] = 0;
+new_matrix_68[6][2] = 0;
+new_matrix_68[6][3] = 0;
+new_matrix_68[6][4] = 0;
+new_matrix_68[6][5] = 0;
+new_matrix_68[6][6] = 0;
+new_matrix_68[6][7] = 0;
+new_matrix_68[6][8] = 0;
+new_matrix_68[7][0] = 0;
+new_matrix_68[7][1] = 0;
+new_matrix_68[7][2] = 0;
+new_matrix_68[7][3] = 0;
+new_matrix_68[7][4] = 0;
+new_matrix_68[7][5] = 0;
+new_matrix_68[7][6] = 0;
+new_matrix_68[7][7] = 0;
+new_matrix_68[7][8] = 0;
+new_matrix_68[8][0] = 0;
+new_matrix_68[8][1] = 0;
+new_matrix_68[8][2] = 0;
+new_matrix_68[8][3] = 0;
+new_matrix_68[8][4] = 0;
+new_matrix_68[8][5] = 0;
+new_matrix_68[8][6] = 0;
+new_matrix_68[8][7] = 0;
+new_matrix_68[8][8] = 0;
+
+// begin new label set:
+int[] new_labelset_68 = new int[] {5,6,7,8,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][5].push(node_type(new_labelset_68, new_matrix_68));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][5].push(new int[] {7, 8});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][5].push(8);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_69 = 9;
+int coldim_69 = 10;
+real[][] new_matrix_69 = new real[coldim_69][rowdim_69];
+new_matrix_69[0][0] = 0;
+new_matrix_69[0][1] = 0;
+new_matrix_69[0][2] = 0;
+new_matrix_69[0][3] = 0;
+new_matrix_69[0][4] = 1;
+new_matrix_69[0][5] = 0;
+new_matrix_69[0][6] = 0;
+new_matrix_69[0][7] = 0;
+new_matrix_69[0][8] = 0;
+new_matrix_69[1][0] = 0;
+new_matrix_69[1][1] = 0;
+new_matrix_69[1][2] = 0;
+new_matrix_69[1][3] = 0;
+new_matrix_69[1][4] = 0;
+new_matrix_69[1][5] = 1;
+new_matrix_69[1][6] = 0;
+new_matrix_69[1][7] = 0;
+new_matrix_69[1][8] = 0;
+new_matrix_69[2][0] = 0;
+new_matrix_69[2][1] = 0;
+new_matrix_69[2][2] = 0;
+new_matrix_69[2][3] = 0;
+new_matrix_69[2][4] = 0;
+new_matrix_69[2][5] = 0;
+new_matrix_69[2][6] = 1;
+new_matrix_69[2][7] = 0;
+new_matrix_69[2][8] = 0;
+new_matrix_69[3][0] = 0;
+new_matrix_69[3][1] = 0;
+new_matrix_69[3][2] = 0;
+new_matrix_69[3][3] = 0;
+new_matrix_69[3][4] = 0;
+new_matrix_69[3][5] = 0;
+new_matrix_69[3][6] = 0;
+new_matrix_69[3][7] = 1;
+new_matrix_69[3][8] = 0;
+new_matrix_69[4][0] = 0;
+new_matrix_69[4][1] = 0;
+new_matrix_69[4][2] = 0;
+new_matrix_69[4][3] = 0;
+new_matrix_69[4][4] = 0;
+new_matrix_69[4][5] = 0;
+new_matrix_69[4][6] = 0;
+new_matrix_69[4][7] = 0;
+new_matrix_69[4][8] = 1;
+new_matrix_69[5][0] = 0;
+new_matrix_69[5][1] = 0;
+new_matrix_69[5][2] = 0;
+new_matrix_69[5][3] = 0;
+new_matrix_69[5][4] = 0;
+new_matrix_69[5][5] = 0;
+new_matrix_69[5][6] = 0;
+new_matrix_69[5][7] = 0;
+new_matrix_69[5][8] = 0;
+new_matrix_69[6][0] = 0;
+new_matrix_69[6][1] = 0;
+new_matrix_69[6][2] = 0;
+new_matrix_69[6][3] = 0;
+new_matrix_69[6][4] = 0;
+new_matrix_69[6][5] = 0;
+new_matrix_69[6][6] = 0;
+new_matrix_69[6][7] = 0;
+new_matrix_69[6][8] = 0;
+new_matrix_69[7][0] = 0;
+new_matrix_69[7][1] = 0;
+new_matrix_69[7][2] = 0;
+new_matrix_69[7][3] = 0;
+new_matrix_69[7][4] = 0;
+new_matrix_69[7][5] = 0;
+new_matrix_69[7][6] = 0;
+new_matrix_69[7][7] = 0;
+new_matrix_69[7][8] = 0;
+new_matrix_69[8][0] = 0;
+new_matrix_69[8][1] = 0;
+new_matrix_69[8][2] = 0;
+new_matrix_69[8][3] = 0;
+new_matrix_69[8][4] = 0;
+new_matrix_69[8][5] = 0;
+new_matrix_69[8][6] = 0;
+new_matrix_69[8][7] = 0;
+new_matrix_69[8][8] = 0;
+new_matrix_69[9][0] = 0;
+new_matrix_69[9][1] = 0;
+new_matrix_69[9][2] = 0;
+new_matrix_69[9][3] = 0;
+new_matrix_69[9][4] = 0;
+new_matrix_69[9][5] = 0;
+new_matrix_69[9][6] = 0;
+new_matrix_69[9][7] = 0;
+new_matrix_69[9][8] = 0;
+
+// begin new label set:
+int[] new_labelset_69 = new int[] {4,5,6,7,8,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][5].push(node_type(new_labelset_69, new_matrix_69));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][5].push(new int[] {8, 9});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][5].push(9);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_70 = 9;
+int coldim_70 = 11;
+real[][] new_matrix_70 = new real[coldim_70][rowdim_70];
+new_matrix_70[0][0] = 0;
+new_matrix_70[0][1] = 0;
+new_matrix_70[0][2] = 0;
+new_matrix_70[0][3] = 1;
+new_matrix_70[0][4] = 0;
+new_matrix_70[0][5] = 0;
+new_matrix_70[0][6] = 0;
+new_matrix_70[0][7] = 0;
+new_matrix_70[0][8] = 0;
+new_matrix_70[1][0] = 0;
+new_matrix_70[1][1] = 0;
+new_matrix_70[1][2] = 0;
+new_matrix_70[1][3] = 0;
+new_matrix_70[1][4] = 1;
+new_matrix_70[1][5] = 0;
+new_matrix_70[1][6] = 0;
+new_matrix_70[1][7] = 0;
+new_matrix_70[1][8] = 0;
+new_matrix_70[2][0] = 0;
+new_matrix_70[2][1] = 0;
+new_matrix_70[2][2] = 0;
+new_matrix_70[2][3] = 0;
+new_matrix_70[2][4] = 0;
+new_matrix_70[2][5] = 1;
+new_matrix_70[2][6] = 0;
+new_matrix_70[2][7] = 0;
+new_matrix_70[2][8] = 0;
+new_matrix_70[3][0] = 0;
+new_matrix_70[3][1] = 0;
+new_matrix_70[3][2] = 0;
+new_matrix_70[3][3] = 0;
+new_matrix_70[3][4] = 0;
+new_matrix_70[3][5] = 0;
+new_matrix_70[3][6] = 1;
+new_matrix_70[3][7] = 0;
+new_matrix_70[3][8] = 0;
+new_matrix_70[4][0] = 0;
+new_matrix_70[4][1] = 0;
+new_matrix_70[4][2] = 0;
+new_matrix_70[4][3] = 0;
+new_matrix_70[4][4] = 0;
+new_matrix_70[4][5] = 0;
+new_matrix_70[4][6] = 0;
+new_matrix_70[4][7] = 1;
+new_matrix_70[4][8] = 0;
+new_matrix_70[5][0] = 0;
+new_matrix_70[5][1] = 0;
+new_matrix_70[5][2] = 0;
+new_matrix_70[5][3] = 0;
+new_matrix_70[5][4] = 0;
+new_matrix_70[5][5] = 0;
+new_matrix_70[5][6] = 0;
+new_matrix_70[5][7] = 0;
+new_matrix_70[5][8] = 1;
+new_matrix_70[6][0] = 0;
+new_matrix_70[6][1] = 0;
+new_matrix_70[6][2] = 0;
+new_matrix_70[6][3] = 0;
+new_matrix_70[6][4] = 0;
+new_matrix_70[6][5] = 0;
+new_matrix_70[6][6] = 0;
+new_matrix_70[6][7] = 0;
+new_matrix_70[6][8] = 0;
+new_matrix_70[7][0] = 0;
+new_matrix_70[7][1] = 0;
+new_matrix_70[7][2] = 0;
+new_matrix_70[7][3] = 0;
+new_matrix_70[7][4] = 0;
+new_matrix_70[7][5] = 0;
+new_matrix_70[7][6] = 0;
+new_matrix_70[7][7] = 0;
+new_matrix_70[7][8] = 0;
+new_matrix_70[8][0] = 0;
+new_matrix_70[8][1] = 0;
+new_matrix_70[8][2] = 0;
+new_matrix_70[8][3] = 0;
+new_matrix_70[8][4] = 0;
+new_matrix_70[8][5] = 0;
+new_matrix_70[8][6] = 0;
+new_matrix_70[8][7] = 0;
+new_matrix_70[8][8] = 0;
+new_matrix_70[9][0] = 0;
+new_matrix_70[9][1] = 0;
+new_matrix_70[9][2] = 0;
+new_matrix_70[9][3] = 0;
+new_matrix_70[9][4] = 0;
+new_matrix_70[9][5] = 0;
+new_matrix_70[9][6] = 0;
+new_matrix_70[9][7] = 0;
+new_matrix_70[9][8] = 0;
+new_matrix_70[10][0] = 0;
+new_matrix_70[10][1] = 0;
+new_matrix_70[10][2] = 0;
+new_matrix_70[10][3] = 0;
+new_matrix_70[10][4] = 0;
+new_matrix_70[10][5] = 0;
+new_matrix_70[10][6] = 0;
+new_matrix_70[10][7] = 0;
+new_matrix_70[10][8] = 0;
+
+// begin new label set:
+int[] new_labelset_70 = new int[] {3,4,5,6,7,8,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][5].push(node_type(new_labelset_70, new_matrix_70));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][5].push(new int[] {9, 10});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][5].push(10);
+// end new earlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_71 = 9;
+int coldim_71 = 11;
+real[][] new_matrix_71 = new real[coldim_71][rowdim_71];
+new_matrix_71[0][0] = 0;
+new_matrix_71[0][1] = 0;
+new_matrix_71[0][2] = 1;
+new_matrix_71[0][3] = 0;
+new_matrix_71[0][4] = 0;
+new_matrix_71[0][5] = 0;
+new_matrix_71[0][6] = 0;
+new_matrix_71[0][7] = 0;
+new_matrix_71[0][8] = 0;
+new_matrix_71[1][0] = 0;
+new_matrix_71[1][1] = 0;
+new_matrix_71[1][2] = 0;
+new_matrix_71[1][3] = 0;
+new_matrix_71[1][4] = 1;
+new_matrix_71[1][5] = 0;
+new_matrix_71[1][6] = 0;
+new_matrix_71[1][7] = 0;
+new_matrix_71[1][8] = 0;
+new_matrix_71[2][0] = 0;
+new_matrix_71[2][1] = 0;
+new_matrix_71[2][2] = 0;
+new_matrix_71[2][3] = 0;
+new_matrix_71[2][4] = 0;
+new_matrix_71[2][5] = 1;
+new_matrix_71[2][6] = 0;
+new_matrix_71[2][7] = 0;
+new_matrix_71[2][8] = 0;
+new_matrix_71[3][0] = 0;
+new_matrix_71[3][1] = 0;
+new_matrix_71[3][2] = 0;
+new_matrix_71[3][3] = 0;
+new_matrix_71[3][4] = 0;
+new_matrix_71[3][5] = 0;
+new_matrix_71[3][6] = 1;
+new_matrix_71[3][7] = 0;
+new_matrix_71[3][8] = 0;
+new_matrix_71[4][0] = 0;
+new_matrix_71[4][1] = 0;
+new_matrix_71[4][2] = 0;
+new_matrix_71[4][3] = 0;
+new_matrix_71[4][4] = 0;
+new_matrix_71[4][5] = 0;
+new_matrix_71[4][6] = 0;
+new_matrix_71[4][7] = 1;
+new_matrix_71[4][8] = 0;
+new_matrix_71[5][0] = 0;
+new_matrix_71[5][1] = 0;
+new_matrix_71[5][2] = 0;
+new_matrix_71[5][3] = 0;
+new_matrix_71[5][4] = 0;
+new_matrix_71[5][5] = 0;
+new_matrix_71[5][6] = 0;
+new_matrix_71[5][7] = 0;
+new_matrix_71[5][8] = 1;
+new_matrix_71[6][0] = 0;
+new_matrix_71[6][1] = 0;
+new_matrix_71[6][2] = 0;
+new_matrix_71[6][3] = 0;
+new_matrix_71[6][4] = 0;
+new_matrix_71[6][5] = 0;
+new_matrix_71[6][6] = 0;
+new_matrix_71[6][7] = 0;
+new_matrix_71[6][8] = 0;
+new_matrix_71[7][0] = 0;
+new_matrix_71[7][1] = 0;
+new_matrix_71[7][2] = 0;
+new_matrix_71[7][3] = 0;
+new_matrix_71[7][4] = 0;
+new_matrix_71[7][5] = 0;
+new_matrix_71[7][6] = 0;
+new_matrix_71[7][7] = 0;
+new_matrix_71[7][8] = 0;
+new_matrix_71[8][0] = 0;
+new_matrix_71[8][1] = 0;
+new_matrix_71[8][2] = 0;
+new_matrix_71[8][3] = 0;
+new_matrix_71[8][4] = 0;
+new_matrix_71[8][5] = 0;
+new_matrix_71[8][6] = 0;
+new_matrix_71[8][7] = 0;
+new_matrix_71[8][8] = 0;
+new_matrix_71[9][0] = 0;
+new_matrix_71[9][1] = 0;
+new_matrix_71[9][2] = 0;
+new_matrix_71[9][3] = 0;
+new_matrix_71[9][4] = 0;
+new_matrix_71[9][5] = 0;
+new_matrix_71[9][6] = 0;
+new_matrix_71[9][7] = 0;
+new_matrix_71[9][8] = 0;
+new_matrix_71[10][0] = 0;
+new_matrix_71[10][1] = 0;
+new_matrix_71[10][2] = 0;
+new_matrix_71[10][3] = 0;
+new_matrix_71[10][4] = 0;
+new_matrix_71[10][5] = 0;
+new_matrix_71[10][6] = 0;
+new_matrix_71[10][7] = 0;
+new_matrix_71[10][8] = 0;
+
+// begin new label set:
+int[] new_labelset_71 = new int[] {2,4,5,6,7,8,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][5].push(node_type(new_labelset_71, new_matrix_71));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][5].push(new int[] {9, 11});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][5].push(11);
+// end new earlydeadend node.
+//////////////////////////////////////////////////////////////////////////////
+// new run for worker 0:
+//////////////////////////////////////////////////////////////////////////////
+tree_nodes[0].push(new node_type[]);
+tree_arcs[0].push(new int[][]);
+deadend_nodes[0].push(new int[]);
+earlydeadend_nodes[0].push(new int[]);
+veryearlydeadend_nodes[0].push(new int[]);
+missingvolume_nodes[0].push(new int[]);
+notnew_nodes[0].push(new int[]);
+solution_nodes[0].push(new int[]);
+//////////////////////////////////////////////////////////////////////////////
+// end new run for worker 0.
+//////////////////////////////////////////////////////////////////////////////
+
+// begin new staircase matrix:
+int rowdim_72 = 9;
+int coldim_72 = 6;
+real[][] new_matrix_72 = new real[coldim_72][rowdim_72];
+new_matrix_72[0][0] = 0;
+new_matrix_72[0][1] = 0;
+new_matrix_72[0][2] = 0;
+new_matrix_72[0][3] = 1;
+new_matrix_72[0][4] = 0;
+new_matrix_72[0][5] = 0;
+new_matrix_72[0][6] = 0;
+new_matrix_72[0][7] = 0;
+new_matrix_72[0][8] = 0;
+new_matrix_72[1][0] = 0;
+new_matrix_72[1][1] = 0;
+new_matrix_72[1][2] = 0;
+new_matrix_72[1][3] = 0;
+new_matrix_72[1][4] = 1;
+new_matrix_72[1][5] = 0;
+new_matrix_72[1][6] = 0;
+new_matrix_72[1][7] = 0;
+new_matrix_72[1][8] = 0;
+new_matrix_72[2][0] = 0;
+new_matrix_72[2][1] = 0;
+new_matrix_72[2][2] = 0;
+new_matrix_72[2][3] = 0;
+new_matrix_72[2][4] = 0;
+new_matrix_72[2][5] = 1;
+new_matrix_72[2][6] = 0;
+new_matrix_72[2][7] = 0;
+new_matrix_72[2][8] = 0;
+new_matrix_72[3][0] = 0;
+new_matrix_72[3][1] = 0;
+new_matrix_72[3][2] = 0;
+new_matrix_72[3][3] = 0;
+new_matrix_72[3][4] = 0;
+new_matrix_72[3][5] = 0;
+new_matrix_72[3][6] = 1;
+new_matrix_72[3][7] = 0;
+new_matrix_72[3][8] = 0;
+new_matrix_72[4][0] = 0;
+new_matrix_72[4][1] = 0;
+new_matrix_72[4][2] = 0;
+new_matrix_72[4][3] = 0;
+new_matrix_72[4][4] = 0;
+new_matrix_72[4][5] = 0;
+new_matrix_72[4][6] = 0;
+new_matrix_72[4][7] = 1;
+new_matrix_72[4][8] = 0;
+new_matrix_72[5][0] = 0;
+new_matrix_72[5][1] = 0;
+new_matrix_72[5][2] = 0;
+new_matrix_72[5][3] = 0;
+new_matrix_72[5][4] = 0;
+new_matrix_72[5][5] = 0;
+new_matrix_72[5][6] = 0;
+new_matrix_72[5][7] = 0;
+new_matrix_72[5][8] = 1;
+
+// begin new label set:
+int[] new_labelset_72 = new int[] {12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][6].push(node_type(new_labelset_72, new_matrix_72));
+// end new node.
+
+// begin new staircase matrix:
+int rowdim_73 = 9;
+int coldim_73 = 7;
+real[][] new_matrix_73 = new real[coldim_73][rowdim_73];
+new_matrix_73[0][0] = 0;
+new_matrix_73[0][1] = 0;
+new_matrix_73[0][2] = 1;
+new_matrix_73[0][3] = 0;
+new_matrix_73[0][4] = 0;
+new_matrix_73[0][5] = 0;
+new_matrix_73[0][6] = 0;
+new_matrix_73[0][7] = 0;
+new_matrix_73[0][8] = 0;
+new_matrix_73[1][0] = 0;
+new_matrix_73[1][1] = 0;
+new_matrix_73[1][2] = 0;
+new_matrix_73[1][3] = 1;
+new_matrix_73[1][4] = 0;
+new_matrix_73[1][5] = 0;
+new_matrix_73[1][6] = 0;
+new_matrix_73[1][7] = 0;
+new_matrix_73[1][8] = 0;
+new_matrix_73[2][0] = 0;
+new_matrix_73[2][1] = 0;
+new_matrix_73[2][2] = 0;
+new_matrix_73[2][3] = 0;
+new_matrix_73[2][4] = 1;
+new_matrix_73[2][5] = 0;
+new_matrix_73[2][6] = 0;
+new_matrix_73[2][7] = 0;
+new_matrix_73[2][8] = 0;
+new_matrix_73[3][0] = 0;
+new_matrix_73[3][1] = 0;
+new_matrix_73[3][2] = 0;
+new_matrix_73[3][3] = 0;
+new_matrix_73[3][4] = 0;
+new_matrix_73[3][5] = 1;
+new_matrix_73[3][6] = 0;
+new_matrix_73[3][7] = 0;
+new_matrix_73[3][8] = 0;
+new_matrix_73[4][0] = 0;
+new_matrix_73[4][1] = 0;
+new_matrix_73[4][2] = 0;
+new_matrix_73[4][3] = 0;
+new_matrix_73[4][4] = 0;
+new_matrix_73[4][5] = 0;
+new_matrix_73[4][6] = 1;
+new_matrix_73[4][7] = 0;
+new_matrix_73[4][8] = 0;
+new_matrix_73[5][0] = 0;
+new_matrix_73[5][1] = 0;
+new_matrix_73[5][2] = 0;
+new_matrix_73[5][3] = 0;
+new_matrix_73[5][4] = 0;
+new_matrix_73[5][5] = 0;
+new_matrix_73[5][6] = 0;
+new_matrix_73[5][7] = 1;
+new_matrix_73[5][8] = 0;
+new_matrix_73[6][0] = 0;
+new_matrix_73[6][1] = 0;
+new_matrix_73[6][2] = 0;
+new_matrix_73[6][3] = 0;
+new_matrix_73[6][4] = 0;
+new_matrix_73[6][5] = 0;
+new_matrix_73[6][6] = 0;
+new_matrix_73[6][7] = 0;
+new_matrix_73[6][8] = 1;
+
+// begin new label set:
+int[] new_labelset_73 = new int[] {11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][6].push(node_type(new_labelset_73, new_matrix_73));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][6].push(new int[] {0, 1});
+// end new extension arc.
+
+// begin new staircase matrix:
+int rowdim_74 = 9;
+int coldim_74 = 7;
+real[][] new_matrix_74 = new real[coldim_74][rowdim_74];
+new_matrix_74[0][0] = 0;
+new_matrix_74[0][1] = 1;
+new_matrix_74[0][2] = 0;
+new_matrix_74[0][3] = 0;
+new_matrix_74[0][4] = 0;
+new_matrix_74[0][5] = 0;
+new_matrix_74[0][6] = 0;
+new_matrix_74[0][7] = 0;
+new_matrix_74[0][8] = 0;
+new_matrix_74[1][0] = 0;
+new_matrix_74[1][1] = 0;
+new_matrix_74[1][2] = 0;
+new_matrix_74[1][3] = 1;
+new_matrix_74[1][4] = 0;
+new_matrix_74[1][5] = 0;
+new_matrix_74[1][6] = 0;
+new_matrix_74[1][7] = 0;
+new_matrix_74[1][8] = 0;
+new_matrix_74[2][0] = 0;
+new_matrix_74[2][1] = 0;
+new_matrix_74[2][2] = 0;
+new_matrix_74[2][3] = 0;
+new_matrix_74[2][4] = 1;
+new_matrix_74[2][5] = 0;
+new_matrix_74[2][6] = 0;
+new_matrix_74[2][7] = 0;
+new_matrix_74[2][8] = 0;
+new_matrix_74[3][0] = 0;
+new_matrix_74[3][1] = 0;
+new_matrix_74[3][2] = 0;
+new_matrix_74[3][3] = 0;
+new_matrix_74[3][4] = 0;
+new_matrix_74[3][5] = 1;
+new_matrix_74[3][6] = 0;
+new_matrix_74[3][7] = 0;
+new_matrix_74[3][8] = 0;
+new_matrix_74[4][0] = 0;
+new_matrix_74[4][1] = 0;
+new_matrix_74[4][2] = 0;
+new_matrix_74[4][3] = 0;
+new_matrix_74[4][4] = 0;
+new_matrix_74[4][5] = 0;
+new_matrix_74[4][6] = 1;
+new_matrix_74[4][7] = 0;
+new_matrix_74[4][8] = 0;
+new_matrix_74[5][0] = 0;
+new_matrix_74[5][1] = 0;
+new_matrix_74[5][2] = 0;
+new_matrix_74[5][3] = 0;
+new_matrix_74[5][4] = 0;
+new_matrix_74[5][5] = 0;
+new_matrix_74[5][6] = 0;
+new_matrix_74[5][7] = 1;
+new_matrix_74[5][8] = 0;
+new_matrix_74[6][0] = 0;
+new_matrix_74[6][1] = 0;
+new_matrix_74[6][2] = 0;
+new_matrix_74[6][3] = 0;
+new_matrix_74[6][4] = 0;
+new_matrix_74[6][5] = 0;
+new_matrix_74[6][6] = 0;
+new_matrix_74[6][7] = 0;
+new_matrix_74[6][8] = 1;
+
+// begin new label set:
+int[] new_labelset_74 = new int[] {10,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][6].push(node_type(new_labelset_74, new_matrix_74));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][6].push(new int[] {0, 2});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][6].push(2);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_75 = 9;
+int coldim_75 = 7;
+real[][] new_matrix_75 = new real[coldim_75][rowdim_75];
+new_matrix_75[0][0] = 1;
+new_matrix_75[0][1] = 0;
+new_matrix_75[0][2] = 0;
+new_matrix_75[0][3] = 0;
+new_matrix_75[0][4] = 0;
+new_matrix_75[0][5] = 0;
+new_matrix_75[0][6] = 0;
+new_matrix_75[0][7] = 0;
+new_matrix_75[0][8] = 0;
+new_matrix_75[1][0] = 0;
+new_matrix_75[1][1] = 0;
+new_matrix_75[1][2] = 0;
+new_matrix_75[1][3] = 1;
+new_matrix_75[1][4] = 0;
+new_matrix_75[1][5] = 0;
+new_matrix_75[1][6] = 0;
+new_matrix_75[1][7] = 0;
+new_matrix_75[1][8] = 0;
+new_matrix_75[2][0] = 0;
+new_matrix_75[2][1] = 0;
+new_matrix_75[2][2] = 0;
+new_matrix_75[2][3] = 0;
+new_matrix_75[2][4] = 1;
+new_matrix_75[2][5] = 0;
+new_matrix_75[2][6] = 0;
+new_matrix_75[2][7] = 0;
+new_matrix_75[2][8] = 0;
+new_matrix_75[3][0] = 0;
+new_matrix_75[3][1] = 0;
+new_matrix_75[3][2] = 0;
+new_matrix_75[3][3] = 0;
+new_matrix_75[3][4] = 0;
+new_matrix_75[3][5] = 1;
+new_matrix_75[3][6] = 0;
+new_matrix_75[3][7] = 0;
+new_matrix_75[3][8] = 0;
+new_matrix_75[4][0] = 0;
+new_matrix_75[4][1] = 0;
+new_matrix_75[4][2] = 0;
+new_matrix_75[4][3] = 0;
+new_matrix_75[4][4] = 0;
+new_matrix_75[4][5] = 0;
+new_matrix_75[4][6] = 1;
+new_matrix_75[4][7] = 0;
+new_matrix_75[4][8] = 0;
+new_matrix_75[5][0] = 0;
+new_matrix_75[5][1] = 0;
+new_matrix_75[5][2] = 0;
+new_matrix_75[5][3] = 0;
+new_matrix_75[5][4] = 0;
+new_matrix_75[5][5] = 0;
+new_matrix_75[5][6] = 0;
+new_matrix_75[5][7] = 1;
+new_matrix_75[5][8] = 0;
+new_matrix_75[6][0] = 0;
+new_matrix_75[6][1] = 0;
+new_matrix_75[6][2] = 0;
+new_matrix_75[6][3] = 0;
+new_matrix_75[6][4] = 0;
+new_matrix_75[6][5] = 0;
+new_matrix_75[6][6] = 0;
+new_matrix_75[6][7] = 0;
+new_matrix_75[6][8] = 1;
+
+// begin new label set:
+int[] new_labelset_75 = new int[] {9,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][6].push(node_type(new_labelset_75, new_matrix_75));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][6].push(new int[] {0, 3});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][6].push(3);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_76 = 9;
+int coldim_76 = 7;
+real[][] new_matrix_76 = new real[coldim_76][rowdim_76];
+new_matrix_76[0][0] = 0;
+new_matrix_76[0][1] = 0;
+new_matrix_76[0][2] = 0;
+new_matrix_76[0][3] = 1;
+new_matrix_76[0][4] = 0;
+new_matrix_76[0][5] = 0;
+new_matrix_76[0][6] = 0;
+new_matrix_76[0][7] = 0;
+new_matrix_76[0][8] = 0;
+new_matrix_76[1][0] = 0;
+new_matrix_76[1][1] = 0;
+new_matrix_76[1][2] = 0;
+new_matrix_76[1][3] = 0;
+new_matrix_76[1][4] = 1;
+new_matrix_76[1][5] = 0;
+new_matrix_76[1][6] = 0;
+new_matrix_76[1][7] = 0;
+new_matrix_76[1][8] = 0;
+new_matrix_76[2][0] = 0;
+new_matrix_76[2][1] = 0;
+new_matrix_76[2][2] = 0;
+new_matrix_76[2][3] = 0;
+new_matrix_76[2][4] = 0;
+new_matrix_76[2][5] = 1;
+new_matrix_76[2][6] = 0;
+new_matrix_76[2][7] = 0;
+new_matrix_76[2][8] = 0;
+new_matrix_76[3][0] = 0;
+new_matrix_76[3][1] = 0;
+new_matrix_76[3][2] = 0;
+new_matrix_76[3][3] = 0;
+new_matrix_76[3][4] = 0;
+new_matrix_76[3][5] = 0;
+new_matrix_76[3][6] = 1;
+new_matrix_76[3][7] = 0;
+new_matrix_76[3][8] = 0;
+new_matrix_76[4][0] = 0;
+new_matrix_76[4][1] = 0;
+new_matrix_76[4][2] = 0;
+new_matrix_76[4][3] = 0;
+new_matrix_76[4][4] = 0;
+new_matrix_76[4][5] = 0;
+new_matrix_76[4][6] = 0;
+new_matrix_76[4][7] = 1;
+new_matrix_76[4][8] = 0;
+new_matrix_76[5][0] = 0;
+new_matrix_76[5][1] = 0;
+new_matrix_76[5][2] = 0;
+new_matrix_76[5][3] = 0;
+new_matrix_76[5][4] = 0;
+new_matrix_76[5][5] = 0;
+new_matrix_76[5][6] = 0;
+new_matrix_76[5][7] = 0;
+new_matrix_76[5][8] = 1;
+new_matrix_76[6][0] = 0;
+new_matrix_76[6][1] = 0;
+new_matrix_76[6][2] = 0;
+new_matrix_76[6][3] = 0;
+new_matrix_76[6][4] = 0;
+new_matrix_76[6][5] = 0;
+new_matrix_76[6][6] = 0;
+new_matrix_76[6][7] = 0;
+new_matrix_76[6][8] = 0;
+
+// begin new label set:
+int[] new_labelset_76 = new int[] {8,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][6].push(node_type(new_labelset_76, new_matrix_76));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][6].push(new int[] {0, 4});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][6].push(4);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_77 = 9;
+int coldim_77 = 8;
+real[][] new_matrix_77 = new real[coldim_77][rowdim_77];
+new_matrix_77[0][0] = 0;
+new_matrix_77[0][1] = 0;
+new_matrix_77[0][2] = 0;
+new_matrix_77[0][3] = 1;
+new_matrix_77[0][4] = 0;
+new_matrix_77[0][5] = 0;
+new_matrix_77[0][6] = 0;
+new_matrix_77[0][7] = 0;
+new_matrix_77[0][8] = 0;
+new_matrix_77[1][0] = 0;
+new_matrix_77[1][1] = 0;
+new_matrix_77[1][2] = 0;
+new_matrix_77[1][3] = 0;
+new_matrix_77[1][4] = 1;
+new_matrix_77[1][5] = 0;
+new_matrix_77[1][6] = 0;
+new_matrix_77[1][7] = 0;
+new_matrix_77[1][8] = 0;
+new_matrix_77[2][0] = 0;
+new_matrix_77[2][1] = 0;
+new_matrix_77[2][2] = 0;
+new_matrix_77[2][3] = 0;
+new_matrix_77[2][4] = 0;
+new_matrix_77[2][5] = 1;
+new_matrix_77[2][6] = 0;
+new_matrix_77[2][7] = 0;
+new_matrix_77[2][8] = 0;
+new_matrix_77[3][0] = 0;
+new_matrix_77[3][1] = 0;
+new_matrix_77[3][2] = 0;
+new_matrix_77[3][3] = 0;
+new_matrix_77[3][4] = 0;
+new_matrix_77[3][5] = 0;
+new_matrix_77[3][6] = 1;
+new_matrix_77[3][7] = 0;
+new_matrix_77[3][8] = 0;
+new_matrix_77[4][0] = 0;
+new_matrix_77[4][1] = 0;
+new_matrix_77[4][2] = 0;
+new_matrix_77[4][3] = 0;
+new_matrix_77[4][4] = 0;
+new_matrix_77[4][5] = 0;
+new_matrix_77[4][6] = 0;
+new_matrix_77[4][7] = 1;
+new_matrix_77[4][8] = 0;
+new_matrix_77[5][0] = 0;
+new_matrix_77[5][1] = 0;
+new_matrix_77[5][2] = 0;
+new_matrix_77[5][3] = 0;
+new_matrix_77[5][4] = 0;
+new_matrix_77[5][5] = 0;
+new_matrix_77[5][6] = 0;
+new_matrix_77[5][7] = 0;
+new_matrix_77[5][8] = 1;
+new_matrix_77[6][0] = 0;
+new_matrix_77[6][1] = 0;
+new_matrix_77[6][2] = 0;
+new_matrix_77[6][3] = 0;
+new_matrix_77[6][4] = 0;
+new_matrix_77[6][5] = 0;
+new_matrix_77[6][6] = 0;
+new_matrix_77[6][7] = 0;
+new_matrix_77[6][8] = 0;
+new_matrix_77[7][0] = 0;
+new_matrix_77[7][1] = 0;
+new_matrix_77[7][2] = 0;
+new_matrix_77[7][3] = 0;
+new_matrix_77[7][4] = 0;
+new_matrix_77[7][5] = 0;
+new_matrix_77[7][6] = 0;
+new_matrix_77[7][7] = 0;
+new_matrix_77[7][8] = 0;
+
+// begin new label set:
+int[] new_labelset_77 = new int[] {7,8,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][6].push(node_type(new_labelset_77, new_matrix_77));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][6].push(new int[] {4, 5});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][6].push(5);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_78 = 9;
+int coldim_78 = 9;
+real[][] new_matrix_78 = new real[coldim_78][rowdim_78];
+new_matrix_78[0][0] = 0;
+new_matrix_78[0][1] = 0;
+new_matrix_78[0][2] = 0;
+new_matrix_78[0][3] = 1;
+new_matrix_78[0][4] = 0;
+new_matrix_78[0][5] = 0;
+new_matrix_78[0][6] = 0;
+new_matrix_78[0][7] = 0;
+new_matrix_78[0][8] = 0;
+new_matrix_78[1][0] = 0;
+new_matrix_78[1][1] = 0;
+new_matrix_78[1][2] = 0;
+new_matrix_78[1][3] = 0;
+new_matrix_78[1][4] = 1;
+new_matrix_78[1][5] = 0;
+new_matrix_78[1][6] = 0;
+new_matrix_78[1][7] = 0;
+new_matrix_78[1][8] = 0;
+new_matrix_78[2][0] = 0;
+new_matrix_78[2][1] = 0;
+new_matrix_78[2][2] = 0;
+new_matrix_78[2][3] = 0;
+new_matrix_78[2][4] = 0;
+new_matrix_78[2][5] = 1;
+new_matrix_78[2][6] = 0;
+new_matrix_78[2][7] = 0;
+new_matrix_78[2][8] = 0;
+new_matrix_78[3][0] = 0;
+new_matrix_78[3][1] = 0;
+new_matrix_78[3][2] = 0;
+new_matrix_78[3][3] = 0;
+new_matrix_78[3][4] = 0;
+new_matrix_78[3][5] = 0;
+new_matrix_78[3][6] = 1;
+new_matrix_78[3][7] = 0;
+new_matrix_78[3][8] = 0;
+new_matrix_78[4][0] = 0;
+new_matrix_78[4][1] = 0;
+new_matrix_78[4][2] = 0;
+new_matrix_78[4][3] = 0;
+new_matrix_78[4][4] = 0;
+new_matrix_78[4][5] = 0;
+new_matrix_78[4][6] = 0;
+new_matrix_78[4][7] = 1;
+new_matrix_78[4][8] = 0;
+new_matrix_78[5][0] = 0;
+new_matrix_78[5][1] = 0;
+new_matrix_78[5][2] = 0;
+new_matrix_78[5][3] = 0;
+new_matrix_78[5][4] = 0;
+new_matrix_78[5][5] = 0;
+new_matrix_78[5][6] = 0;
+new_matrix_78[5][7] = 0;
+new_matrix_78[5][8] = 1;
+new_matrix_78[6][0] = 0;
+new_matrix_78[6][1] = 0;
+new_matrix_78[6][2] = 0;
+new_matrix_78[6][3] = 0;
+new_matrix_78[6][4] = 0;
+new_matrix_78[6][5] = 0;
+new_matrix_78[6][6] = 0;
+new_matrix_78[6][7] = 0;
+new_matrix_78[6][8] = 0;
+new_matrix_78[7][0] = 0;
+new_matrix_78[7][1] = 0;
+new_matrix_78[7][2] = 0;
+new_matrix_78[7][3] = 0;
+new_matrix_78[7][4] = 0;
+new_matrix_78[7][5] = 0;
+new_matrix_78[7][6] = 0;
+new_matrix_78[7][7] = 0;
+new_matrix_78[7][8] = 0;
+new_matrix_78[8][0] = 0;
+new_matrix_78[8][1] = 0;
+new_matrix_78[8][2] = 0;
+new_matrix_78[8][3] = 0;
+new_matrix_78[8][4] = 0;
+new_matrix_78[8][5] = 0;
+new_matrix_78[8][6] = 0;
+new_matrix_78[8][7] = 0;
+new_matrix_78[8][8] = 0;
+
+// begin new label set:
+int[] new_labelset_78 = new int[] {6,7,8,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][6].push(node_type(new_labelset_78, new_matrix_78));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][6].push(new int[] {5, 6});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][6].push(6);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_79 = 9;
+int coldim_79 = 10;
+real[][] new_matrix_79 = new real[coldim_79][rowdim_79];
+new_matrix_79[0][0] = 0;
+new_matrix_79[0][1] = 0;
+new_matrix_79[0][2] = 0;
+new_matrix_79[0][3] = 1;
+new_matrix_79[0][4] = 0;
+new_matrix_79[0][5] = 0;
+new_matrix_79[0][6] = 0;
+new_matrix_79[0][7] = 0;
+new_matrix_79[0][8] = 0;
+new_matrix_79[1][0] = 0;
+new_matrix_79[1][1] = 0;
+new_matrix_79[1][2] = 0;
+new_matrix_79[1][3] = 0;
+new_matrix_79[1][4] = 1;
+new_matrix_79[1][5] = 0;
+new_matrix_79[1][6] = 0;
+new_matrix_79[1][7] = 0;
+new_matrix_79[1][8] = 0;
+new_matrix_79[2][0] = 0;
+new_matrix_79[2][1] = 0;
+new_matrix_79[2][2] = 0;
+new_matrix_79[2][3] = 0;
+new_matrix_79[2][4] = 0;
+new_matrix_79[2][5] = 1;
+new_matrix_79[2][6] = 0;
+new_matrix_79[2][7] = 0;
+new_matrix_79[2][8] = 0;
+new_matrix_79[3][0] = 0;
+new_matrix_79[3][1] = 0;
+new_matrix_79[3][2] = 0;
+new_matrix_79[3][3] = 0;
+new_matrix_79[3][4] = 0;
+new_matrix_79[3][5] = 0;
+new_matrix_79[3][6] = 1;
+new_matrix_79[3][7] = 0;
+new_matrix_79[3][8] = 0;
+new_matrix_79[4][0] = 0;
+new_matrix_79[4][1] = 0;
+new_matrix_79[4][2] = 0;
+new_matrix_79[4][3] = 0;
+new_matrix_79[4][4] = 0;
+new_matrix_79[4][5] = 0;
+new_matrix_79[4][6] = 0;
+new_matrix_79[4][7] = 1;
+new_matrix_79[4][8] = 0;
+new_matrix_79[5][0] = 0;
+new_matrix_79[5][1] = 0;
+new_matrix_79[5][2] = 0;
+new_matrix_79[5][3] = 0;
+new_matrix_79[5][4] = 0;
+new_matrix_79[5][5] = 0;
+new_matrix_79[5][6] = 0;
+new_matrix_79[5][7] = 0;
+new_matrix_79[5][8] = 1;
+new_matrix_79[6][0] = 0;
+new_matrix_79[6][1] = 0;
+new_matrix_79[6][2] = 0;
+new_matrix_79[6][3] = 0;
+new_matrix_79[6][4] = 0;
+new_matrix_79[6][5] = 0;
+new_matrix_79[6][6] = 0;
+new_matrix_79[6][7] = 0;
+new_matrix_79[6][8] = 0;
+new_matrix_79[7][0] = 0;
+new_matrix_79[7][1] = 0;
+new_matrix_79[7][2] = 0;
+new_matrix_79[7][3] = 0;
+new_matrix_79[7][4] = 0;
+new_matrix_79[7][5] = 0;
+new_matrix_79[7][6] = 0;
+new_matrix_79[7][7] = 0;
+new_matrix_79[7][8] = 0;
+new_matrix_79[8][0] = 0;
+new_matrix_79[8][1] = 0;
+new_matrix_79[8][2] = 0;
+new_matrix_79[8][3] = 0;
+new_matrix_79[8][4] = 0;
+new_matrix_79[8][5] = 0;
+new_matrix_79[8][6] = 0;
+new_matrix_79[8][7] = 0;
+new_matrix_79[8][8] = 0;
+new_matrix_79[9][0] = 0;
+new_matrix_79[9][1] = 0;
+new_matrix_79[9][2] = 0;
+new_matrix_79[9][3] = 0;
+new_matrix_79[9][4] = 0;
+new_matrix_79[9][5] = 0;
+new_matrix_79[9][6] = 0;
+new_matrix_79[9][7] = 0;
+new_matrix_79[9][8] = 0;
+
+// begin new label set:
+int[] new_labelset_79 = new int[] {5,6,7,8,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][6].push(node_type(new_labelset_79, new_matrix_79));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][6].push(new int[] {6, 7});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][6].push(7);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_80 = 9;
+int coldim_80 = 11;
+real[][] new_matrix_80 = new real[coldim_80][rowdim_80];
+new_matrix_80[0][0] = 0;
+new_matrix_80[0][1] = 0;
+new_matrix_80[0][2] = 0;
+new_matrix_80[0][3] = 1;
+new_matrix_80[0][4] = 0;
+new_matrix_80[0][5] = 0;
+new_matrix_80[0][6] = 0;
+new_matrix_80[0][7] = 0;
+new_matrix_80[0][8] = 0;
+new_matrix_80[1][0] = 0;
+new_matrix_80[1][1] = 0;
+new_matrix_80[1][2] = 0;
+new_matrix_80[1][3] = 0;
+new_matrix_80[1][4] = 1;
+new_matrix_80[1][5] = 0;
+new_matrix_80[1][6] = 0;
+new_matrix_80[1][7] = 0;
+new_matrix_80[1][8] = 0;
+new_matrix_80[2][0] = 0;
+new_matrix_80[2][1] = 0;
+new_matrix_80[2][2] = 0;
+new_matrix_80[2][3] = 0;
+new_matrix_80[2][4] = 0;
+new_matrix_80[2][5] = 1;
+new_matrix_80[2][6] = 0;
+new_matrix_80[2][7] = 0;
+new_matrix_80[2][8] = 0;
+new_matrix_80[3][0] = 0;
+new_matrix_80[3][1] = 0;
+new_matrix_80[3][2] = 0;
+new_matrix_80[3][3] = 0;
+new_matrix_80[3][4] = 0;
+new_matrix_80[3][5] = 0;
+new_matrix_80[3][6] = 1;
+new_matrix_80[3][7] = 0;
+new_matrix_80[3][8] = 0;
+new_matrix_80[4][0] = 0;
+new_matrix_80[4][1] = 0;
+new_matrix_80[4][2] = 0;
+new_matrix_80[4][3] = 0;
+new_matrix_80[4][4] = 0;
+new_matrix_80[4][5] = 0;
+new_matrix_80[4][6] = 0;
+new_matrix_80[4][7] = 1;
+new_matrix_80[4][8] = 0;
+new_matrix_80[5][0] = 0;
+new_matrix_80[5][1] = 0;
+new_matrix_80[5][2] = 0;
+new_matrix_80[5][3] = 0;
+new_matrix_80[5][4] = 0;
+new_matrix_80[5][5] = 0;
+new_matrix_80[5][6] = 0;
+new_matrix_80[5][7] = 0;
+new_matrix_80[5][8] = 1;
+new_matrix_80[6][0] = 0;
+new_matrix_80[6][1] = 0;
+new_matrix_80[6][2] = 0;
+new_matrix_80[6][3] = 0;
+new_matrix_80[6][4] = 0;
+new_matrix_80[6][5] = 0;
+new_matrix_80[6][6] = 0;
+new_matrix_80[6][7] = 0;
+new_matrix_80[6][8] = 0;
+new_matrix_80[7][0] = 0;
+new_matrix_80[7][1] = 0;
+new_matrix_80[7][2] = 0;
+new_matrix_80[7][3] = 0;
+new_matrix_80[7][4] = 0;
+new_matrix_80[7][5] = 0;
+new_matrix_80[7][6] = 0;
+new_matrix_80[7][7] = 0;
+new_matrix_80[7][8] = 0;
+new_matrix_80[8][0] = 0;
+new_matrix_80[8][1] = 0;
+new_matrix_80[8][2] = 0;
+new_matrix_80[8][3] = 0;
+new_matrix_80[8][4] = 0;
+new_matrix_80[8][5] = 0;
+new_matrix_80[8][6] = 0;
+new_matrix_80[8][7] = 0;
+new_matrix_80[8][8] = 0;
+new_matrix_80[9][0] = 0;
+new_matrix_80[9][1] = 0;
+new_matrix_80[9][2] = 0;
+new_matrix_80[9][3] = 0;
+new_matrix_80[9][4] = 0;
+new_matrix_80[9][5] = 0;
+new_matrix_80[9][6] = 0;
+new_matrix_80[9][7] = 0;
+new_matrix_80[9][8] = 0;
+new_matrix_80[10][0] = 0;
+new_matrix_80[10][1] = 0;
+new_matrix_80[10][2] = 0;
+new_matrix_80[10][3] = 0;
+new_matrix_80[10][4] = 0;
+new_matrix_80[10][5] = 0;
+new_matrix_80[10][6] = 0;
+new_matrix_80[10][7] = 0;
+new_matrix_80[10][8] = 0;
+
+// begin new label set:
+int[] new_labelset_80 = new int[] {4,5,6,7,8,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][6].push(node_type(new_labelset_80, new_matrix_80));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][6].push(new int[] {7, 8});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][6].push(8);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_81 = 9;
+int coldim_81 = 12;
+real[][] new_matrix_81 = new real[coldim_81][rowdim_81];
+new_matrix_81[0][0] = 0;
+new_matrix_81[0][1] = 0;
+new_matrix_81[0][2] = 0;
+new_matrix_81[0][3] = 1;
+new_matrix_81[0][4] = 0;
+new_matrix_81[0][5] = 0;
+new_matrix_81[0][6] = 0;
+new_matrix_81[0][7] = 0;
+new_matrix_81[0][8] = 0;
+new_matrix_81[1][0] = 0;
+new_matrix_81[1][1] = 0;
+new_matrix_81[1][2] = 0;
+new_matrix_81[1][3] = 0;
+new_matrix_81[1][4] = 1;
+new_matrix_81[1][5] = 0;
+new_matrix_81[1][6] = 0;
+new_matrix_81[1][7] = 0;
+new_matrix_81[1][8] = 0;
+new_matrix_81[2][0] = 0;
+new_matrix_81[2][1] = 0;
+new_matrix_81[2][2] = 0;
+new_matrix_81[2][3] = 0;
+new_matrix_81[2][4] = 0;
+new_matrix_81[2][5] = 1;
+new_matrix_81[2][6] = 0;
+new_matrix_81[2][7] = 0;
+new_matrix_81[2][8] = 0;
+new_matrix_81[3][0] = 0;
+new_matrix_81[3][1] = 0;
+new_matrix_81[3][2] = 0;
+new_matrix_81[3][3] = 0;
+new_matrix_81[3][4] = 0;
+new_matrix_81[3][5] = 0;
+new_matrix_81[3][6] = 1;
+new_matrix_81[3][7] = 0;
+new_matrix_81[3][8] = 0;
+new_matrix_81[4][0] = 0;
+new_matrix_81[4][1] = 0;
+new_matrix_81[4][2] = 0;
+new_matrix_81[4][3] = 0;
+new_matrix_81[4][4] = 0;
+new_matrix_81[4][5] = 0;
+new_matrix_81[4][6] = 0;
+new_matrix_81[4][7] = 1;
+new_matrix_81[4][8] = 0;
+new_matrix_81[5][0] = 0;
+new_matrix_81[5][1] = 0;
+new_matrix_81[5][2] = 0;
+new_matrix_81[5][3] = 0;
+new_matrix_81[5][4] = 0;
+new_matrix_81[5][5] = 0;
+new_matrix_81[5][6] = 0;
+new_matrix_81[5][7] = 0;
+new_matrix_81[5][8] = 1;
+new_matrix_81[6][0] = 0;
+new_matrix_81[6][1] = 0;
+new_matrix_81[6][2] = 0;
+new_matrix_81[6][3] = 0;
+new_matrix_81[6][4] = 0;
+new_matrix_81[6][5] = 0;
+new_matrix_81[6][6] = 0;
+new_matrix_81[6][7] = 0;
+new_matrix_81[6][8] = 0;
+new_matrix_81[7][0] = 0;
+new_matrix_81[7][1] = 0;
+new_matrix_81[7][2] = 0;
+new_matrix_81[7][3] = 0;
+new_matrix_81[7][4] = 0;
+new_matrix_81[7][5] = 0;
+new_matrix_81[7][6] = 0;
+new_matrix_81[7][7] = 0;
+new_matrix_81[7][8] = 0;
+new_matrix_81[8][0] = 0;
+new_matrix_81[8][1] = 0;
+new_matrix_81[8][2] = 0;
+new_matrix_81[8][3] = 0;
+new_matrix_81[8][4] = 0;
+new_matrix_81[8][5] = 0;
+new_matrix_81[8][6] = 0;
+new_matrix_81[8][7] = 0;
+new_matrix_81[8][8] = 0;
+new_matrix_81[9][0] = 0;
+new_matrix_81[9][1] = 0;
+new_matrix_81[9][2] = 0;
+new_matrix_81[9][3] = 0;
+new_matrix_81[9][4] = 0;
+new_matrix_81[9][5] = 0;
+new_matrix_81[9][6] = 0;
+new_matrix_81[9][7] = 0;
+new_matrix_81[9][8] = 0;
+new_matrix_81[10][0] = 0;
+new_matrix_81[10][1] = 0;
+new_matrix_81[10][2] = 0;
+new_matrix_81[10][3] = 0;
+new_matrix_81[10][4] = 0;
+new_matrix_81[10][5] = 0;
+new_matrix_81[10][6] = 0;
+new_matrix_81[10][7] = 0;
+new_matrix_81[10][8] = 0;
+new_matrix_81[11][0] = 0;
+new_matrix_81[11][1] = 0;
+new_matrix_81[11][2] = 0;
+new_matrix_81[11][3] = 0;
+new_matrix_81[11][4] = 0;
+new_matrix_81[11][5] = 0;
+new_matrix_81[11][6] = 0;
+new_matrix_81[11][7] = 0;
+new_matrix_81[11][8] = 0;
+
+// begin new label set:
+int[] new_labelset_81 = new int[] {3,4,5,6,7,8,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][6].push(node_type(new_labelset_81, new_matrix_81));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][6].push(new int[] {8, 9});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][6].push(9);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_82 = 9;
+int coldim_82 = 13;
+real[][] new_matrix_82 = new real[coldim_82][rowdim_82];
+new_matrix_82[0][0] = 0;
+new_matrix_82[0][1] = 0;
+new_matrix_82[0][2] = 1;
+new_matrix_82[0][3] = 0;
+new_matrix_82[0][4] = 0;
+new_matrix_82[0][5] = 0;
+new_matrix_82[0][6] = 0;
+new_matrix_82[0][7] = 0;
+new_matrix_82[0][8] = 0;
+new_matrix_82[1][0] = 0;
+new_matrix_82[1][1] = 0;
+new_matrix_82[1][2] = 0;
+new_matrix_82[1][3] = 1;
+new_matrix_82[1][4] = 0;
+new_matrix_82[1][5] = 0;
+new_matrix_82[1][6] = 0;
+new_matrix_82[1][7] = 0;
+new_matrix_82[1][8] = 0;
+new_matrix_82[2][0] = 0;
+new_matrix_82[2][1] = 0;
+new_matrix_82[2][2] = 0;
+new_matrix_82[2][3] = 0;
+new_matrix_82[2][4] = 1;
+new_matrix_82[2][5] = 0;
+new_matrix_82[2][6] = 0;
+new_matrix_82[2][7] = 0;
+new_matrix_82[2][8] = 0;
+new_matrix_82[3][0] = 0;
+new_matrix_82[3][1] = 0;
+new_matrix_82[3][2] = 0;
+new_matrix_82[3][3] = 0;
+new_matrix_82[3][4] = 0;
+new_matrix_82[3][5] = 1;
+new_matrix_82[3][6] = 0;
+new_matrix_82[3][7] = 0;
+new_matrix_82[3][8] = 0;
+new_matrix_82[4][0] = 0;
+new_matrix_82[4][1] = 0;
+new_matrix_82[4][2] = 0;
+new_matrix_82[4][3] = 0;
+new_matrix_82[4][4] = 0;
+new_matrix_82[4][5] = 0;
+new_matrix_82[4][6] = 1;
+new_matrix_82[4][7] = 0;
+new_matrix_82[4][8] = 0;
+new_matrix_82[5][0] = 0;
+new_matrix_82[5][1] = 0;
+new_matrix_82[5][2] = 0;
+new_matrix_82[5][3] = 0;
+new_matrix_82[5][4] = 0;
+new_matrix_82[5][5] = 0;
+new_matrix_82[5][6] = 0;
+new_matrix_82[5][7] = 1;
+new_matrix_82[5][8] = 0;
+new_matrix_82[6][0] = 0;
+new_matrix_82[6][1] = 0;
+new_matrix_82[6][2] = 0;
+new_matrix_82[6][3] = 0;
+new_matrix_82[6][4] = 0;
+new_matrix_82[6][5] = 0;
+new_matrix_82[6][6] = 0;
+new_matrix_82[6][7] = 0;
+new_matrix_82[6][8] = 1;
+new_matrix_82[7][0] = 0;
+new_matrix_82[7][1] = 0;
+new_matrix_82[7][2] = 0;
+new_matrix_82[7][3] = 0;
+new_matrix_82[7][4] = 0;
+new_matrix_82[7][5] = 0;
+new_matrix_82[7][6] = 0;
+new_matrix_82[7][7] = 0;
+new_matrix_82[7][8] = 0;
+new_matrix_82[8][0] = 0;
+new_matrix_82[8][1] = 0;
+new_matrix_82[8][2] = 0;
+new_matrix_82[8][3] = 0;
+new_matrix_82[8][4] = 0;
+new_matrix_82[8][5] = 0;
+new_matrix_82[8][6] = 0;
+new_matrix_82[8][7] = 0;
+new_matrix_82[8][8] = 0;
+new_matrix_82[9][0] = 0;
+new_matrix_82[9][1] = 0;
+new_matrix_82[9][2] = 0;
+new_matrix_82[9][3] = 0;
+new_matrix_82[9][4] = 0;
+new_matrix_82[9][5] = 0;
+new_matrix_82[9][6] = 0;
+new_matrix_82[9][7] = 0;
+new_matrix_82[9][8] = 0;
+new_matrix_82[10][0] = 0;
+new_matrix_82[10][1] = 0;
+new_matrix_82[10][2] = 0;
+new_matrix_82[10][3] = 0;
+new_matrix_82[10][4] = 0;
+new_matrix_82[10][5] = 0;
+new_matrix_82[10][6] = 0;
+new_matrix_82[10][7] = 0;
+new_matrix_82[10][8] = 0;
+new_matrix_82[11][0] = 0;
+new_matrix_82[11][1] = 0;
+new_matrix_82[11][2] = 0;
+new_matrix_82[11][3] = 0;
+new_matrix_82[11][4] = 0;
+new_matrix_82[11][5] = 0;
+new_matrix_82[11][6] = 0;
+new_matrix_82[11][7] = 0;
+new_matrix_82[11][8] = 0;
+new_matrix_82[12][0] = 0;
+new_matrix_82[12][1] = 0;
+new_matrix_82[12][2] = 0;
+new_matrix_82[12][3] = 0;
+new_matrix_82[12][4] = 0;
+new_matrix_82[12][5] = 0;
+new_matrix_82[12][6] = 0;
+new_matrix_82[12][7] = 0;
+new_matrix_82[12][8] = 0;
+
+// begin new label set:
+int[] new_labelset_82 = new int[] {2,3,4,5,6,7,8,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][6].push(node_type(new_labelset_82, new_matrix_82));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][6].push(new int[] {9, 10});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][6].push(10);
+// end new earlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_83 = 9;
+int coldim_83 = 13;
+real[][] new_matrix_83 = new real[coldim_83][rowdim_83];
+new_matrix_83[0][0] = 0;
+new_matrix_83[0][1] = 1;
+new_matrix_83[0][2] = 0;
+new_matrix_83[0][3] = 0;
+new_matrix_83[0][4] = 0;
+new_matrix_83[0][5] = 0;
+new_matrix_83[0][6] = 0;
+new_matrix_83[0][7] = 0;
+new_matrix_83[0][8] = 0;
+new_matrix_83[1][0] = 0;
+new_matrix_83[1][1] = 0;
+new_matrix_83[1][2] = 0;
+new_matrix_83[1][3] = 1;
+new_matrix_83[1][4] = 0;
+new_matrix_83[1][5] = 0;
+new_matrix_83[1][6] = 0;
+new_matrix_83[1][7] = 0;
+new_matrix_83[1][8] = 0;
+new_matrix_83[2][0] = 0;
+new_matrix_83[2][1] = 0;
+new_matrix_83[2][2] = 0;
+new_matrix_83[2][3] = 0;
+new_matrix_83[2][4] = 1;
+new_matrix_83[2][5] = 0;
+new_matrix_83[2][6] = 0;
+new_matrix_83[2][7] = 0;
+new_matrix_83[2][8] = 0;
+new_matrix_83[3][0] = 0;
+new_matrix_83[3][1] = 0;
+new_matrix_83[3][2] = 0;
+new_matrix_83[3][3] = 0;
+new_matrix_83[3][4] = 0;
+new_matrix_83[3][5] = 1;
+new_matrix_83[3][6] = 0;
+new_matrix_83[3][7] = 0;
+new_matrix_83[3][8] = 0;
+new_matrix_83[4][0] = 0;
+new_matrix_83[4][1] = 0;
+new_matrix_83[4][2] = 0;
+new_matrix_83[4][3] = 0;
+new_matrix_83[4][4] = 0;
+new_matrix_83[4][5] = 0;
+new_matrix_83[4][6] = 1;
+new_matrix_83[4][7] = 0;
+new_matrix_83[4][8] = 0;
+new_matrix_83[5][0] = 0;
+new_matrix_83[5][1] = 0;
+new_matrix_83[5][2] = 0;
+new_matrix_83[5][3] = 0;
+new_matrix_83[5][4] = 0;
+new_matrix_83[5][5] = 0;
+new_matrix_83[5][6] = 0;
+new_matrix_83[5][7] = 1;
+new_matrix_83[5][8] = 0;
+new_matrix_83[6][0] = 0;
+new_matrix_83[6][1] = 0;
+new_matrix_83[6][2] = 0;
+new_matrix_83[6][3] = 0;
+new_matrix_83[6][4] = 0;
+new_matrix_83[6][5] = 0;
+new_matrix_83[6][6] = 0;
+new_matrix_83[6][7] = 0;
+new_matrix_83[6][8] = 1;
+new_matrix_83[7][0] = 0;
+new_matrix_83[7][1] = 0;
+new_matrix_83[7][2] = 0;
+new_matrix_83[7][3] = 0;
+new_matrix_83[7][4] = 0;
+new_matrix_83[7][5] = 0;
+new_matrix_83[7][6] = 0;
+new_matrix_83[7][7] = 0;
+new_matrix_83[7][8] = 0;
+new_matrix_83[8][0] = 0;
+new_matrix_83[8][1] = 0;
+new_matrix_83[8][2] = 0;
+new_matrix_83[8][3] = 0;
+new_matrix_83[8][4] = 0;
+new_matrix_83[8][5] = 0;
+new_matrix_83[8][6] = 0;
+new_matrix_83[8][7] = 0;
+new_matrix_83[8][8] = 0;
+new_matrix_83[9][0] = 0;
+new_matrix_83[9][1] = 0;
+new_matrix_83[9][2] = 0;
+new_matrix_83[9][3] = 0;
+new_matrix_83[9][4] = 0;
+new_matrix_83[9][5] = 0;
+new_matrix_83[9][6] = 0;
+new_matrix_83[9][7] = 0;
+new_matrix_83[9][8] = 0;
+new_matrix_83[10][0] = 0;
+new_matrix_83[10][1] = 0;
+new_matrix_83[10][2] = 0;
+new_matrix_83[10][3] = 0;
+new_matrix_83[10][4] = 0;
+new_matrix_83[10][5] = 0;
+new_matrix_83[10][6] = 0;
+new_matrix_83[10][7] = 0;
+new_matrix_83[10][8] = 0;
+new_matrix_83[11][0] = 0;
+new_matrix_83[11][1] = 0;
+new_matrix_83[11][2] = 0;
+new_matrix_83[11][3] = 0;
+new_matrix_83[11][4] = 0;
+new_matrix_83[11][5] = 0;
+new_matrix_83[11][6] = 0;
+new_matrix_83[11][7] = 0;
+new_matrix_83[11][8] = 0;
+new_matrix_83[12][0] = 0;
+new_matrix_83[12][1] = 0;
+new_matrix_83[12][2] = 0;
+new_matrix_83[12][3] = 0;
+new_matrix_83[12][4] = 0;
+new_matrix_83[12][5] = 0;
+new_matrix_83[12][6] = 0;
+new_matrix_83[12][7] = 0;
+new_matrix_83[12][8] = 0;
+
+// begin new label set:
+int[] new_labelset_83 = new int[] {1,3,4,5,6,7,8,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][6].push(node_type(new_labelset_83, new_matrix_83));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][6].push(new int[] {9, 11});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][6].push(11);
+// end new earlydeadend node.
+//////////////////////////////////////////////////////////////////////////////
+// new run for worker 0:
+//////////////////////////////////////////////////////////////////////////////
+tree_nodes[0].push(new node_type[]);
+tree_arcs[0].push(new int[][]);
+deadend_nodes[0].push(new int[]);
+earlydeadend_nodes[0].push(new int[]);
+veryearlydeadend_nodes[0].push(new int[]);
+missingvolume_nodes[0].push(new int[]);
+notnew_nodes[0].push(new int[]);
+solution_nodes[0].push(new int[]);
+//////////////////////////////////////////////////////////////////////////////
+// end new run for worker 0.
+//////////////////////////////////////////////////////////////////////////////
+
+// begin new staircase matrix:
+int rowdim_84 = 9;
+int coldim_84 = 7;
+real[][] new_matrix_84 = new real[coldim_84][rowdim_84];
+new_matrix_84[0][0] = 0;
+new_matrix_84[0][1] = 0;
+new_matrix_84[0][2] = 1;
+new_matrix_84[0][3] = 0;
+new_matrix_84[0][4] = 0;
+new_matrix_84[0][5] = 0;
+new_matrix_84[0][6] = 0;
+new_matrix_84[0][7] = 0;
+new_matrix_84[0][8] = 0;
+new_matrix_84[1][0] = 0;
+new_matrix_84[1][1] = 0;
+new_matrix_84[1][2] = 0;
+new_matrix_84[1][3] = 1;
+new_matrix_84[1][4] = 0;
+new_matrix_84[1][5] = 0;
+new_matrix_84[1][6] = 0;
+new_matrix_84[1][7] = 0;
+new_matrix_84[1][8] = 0;
+new_matrix_84[2][0] = 0;
+new_matrix_84[2][1] = 0;
+new_matrix_84[2][2] = 0;
+new_matrix_84[2][3] = 0;
+new_matrix_84[2][4] = 1;
+new_matrix_84[2][5] = 0;
+new_matrix_84[2][6] = 0;
+new_matrix_84[2][7] = 0;
+new_matrix_84[2][8] = 0;
+new_matrix_84[3][0] = 0;
+new_matrix_84[3][1] = 0;
+new_matrix_84[3][2] = 0;
+new_matrix_84[3][3] = 0;
+new_matrix_84[3][4] = 0;
+new_matrix_84[3][5] = 1;
+new_matrix_84[3][6] = 0;
+new_matrix_84[3][7] = 0;
+new_matrix_84[3][8] = 0;
+new_matrix_84[4][0] = 0;
+new_matrix_84[4][1] = 0;
+new_matrix_84[4][2] = 0;
+new_matrix_84[4][3] = 0;
+new_matrix_84[4][4] = 0;
+new_matrix_84[4][5] = 0;
+new_matrix_84[4][6] = 1;
+new_matrix_84[4][7] = 0;
+new_matrix_84[4][8] = 0;
+new_matrix_84[5][0] = 0;
+new_matrix_84[5][1] = 0;
+new_matrix_84[5][2] = 0;
+new_matrix_84[5][3] = 0;
+new_matrix_84[5][4] = 0;
+new_matrix_84[5][5] = 0;
+new_matrix_84[5][6] = 0;
+new_matrix_84[5][7] = 1;
+new_matrix_84[5][8] = 0;
+new_matrix_84[6][0] = 0;
+new_matrix_84[6][1] = 0;
+new_matrix_84[6][2] = 0;
+new_matrix_84[6][3] = 0;
+new_matrix_84[6][4] = 0;
+new_matrix_84[6][5] = 0;
+new_matrix_84[6][6] = 0;
+new_matrix_84[6][7] = 0;
+new_matrix_84[6][8] = 1;
+
+// begin new label set:
+int[] new_labelset_84 = new int[] {11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][7].push(node_type(new_labelset_84, new_matrix_84));
+// end new node.
+
+// begin new staircase matrix:
+int rowdim_85 = 9;
+int coldim_85 = 8;
+real[][] new_matrix_85 = new real[coldim_85][rowdim_85];
+new_matrix_85[0][0] = 0;
+new_matrix_85[0][1] = 1;
+new_matrix_85[0][2] = 0;
+new_matrix_85[0][3] = 0;
+new_matrix_85[0][4] = 0;
+new_matrix_85[0][5] = 0;
+new_matrix_85[0][6] = 0;
+new_matrix_85[0][7] = 0;
+new_matrix_85[0][8] = 0;
+new_matrix_85[1][0] = 0;
+new_matrix_85[1][1] = 0;
+new_matrix_85[1][2] = 1;
+new_matrix_85[1][3] = 0;
+new_matrix_85[1][4] = 0;
+new_matrix_85[1][5] = 0;
+new_matrix_85[1][6] = 0;
+new_matrix_85[1][7] = 0;
+new_matrix_85[1][8] = 0;
+new_matrix_85[2][0] = 0;
+new_matrix_85[2][1] = 0;
+new_matrix_85[2][2] = 0;
+new_matrix_85[2][3] = 1;
+new_matrix_85[2][4] = 0;
+new_matrix_85[2][5] = 0;
+new_matrix_85[2][6] = 0;
+new_matrix_85[2][7] = 0;
+new_matrix_85[2][8] = 0;
+new_matrix_85[3][0] = 0;
+new_matrix_85[3][1] = 0;
+new_matrix_85[3][2] = 0;
+new_matrix_85[3][3] = 0;
+new_matrix_85[3][4] = 1;
+new_matrix_85[3][5] = 0;
+new_matrix_85[3][6] = 0;
+new_matrix_85[3][7] = 0;
+new_matrix_85[3][8] = 0;
+new_matrix_85[4][0] = 0;
+new_matrix_85[4][1] = 0;
+new_matrix_85[4][2] = 0;
+new_matrix_85[4][3] = 0;
+new_matrix_85[4][4] = 0;
+new_matrix_85[4][5] = 1;
+new_matrix_85[4][6] = 0;
+new_matrix_85[4][7] = 0;
+new_matrix_85[4][8] = 0;
+new_matrix_85[5][0] = 0;
+new_matrix_85[5][1] = 0;
+new_matrix_85[5][2] = 0;
+new_matrix_85[5][3] = 0;
+new_matrix_85[5][4] = 0;
+new_matrix_85[5][5] = 0;
+new_matrix_85[5][6] = 1;
+new_matrix_85[5][7] = 0;
+new_matrix_85[5][8] = 0;
+new_matrix_85[6][0] = 0;
+new_matrix_85[6][1] = 0;
+new_matrix_85[6][2] = 0;
+new_matrix_85[6][3] = 0;
+new_matrix_85[6][4] = 0;
+new_matrix_85[6][5] = 0;
+new_matrix_85[6][6] = 0;
+new_matrix_85[6][7] = 1;
+new_matrix_85[6][8] = 0;
+new_matrix_85[7][0] = 0;
+new_matrix_85[7][1] = 0;
+new_matrix_85[7][2] = 0;
+new_matrix_85[7][3] = 0;
+new_matrix_85[7][4] = 0;
+new_matrix_85[7][5] = 0;
+new_matrix_85[7][6] = 0;
+new_matrix_85[7][7] = 0;
+new_matrix_85[7][8] = 1;
+
+// begin new label set:
+int[] new_labelset_85 = new int[] {10,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][7].push(node_type(new_labelset_85, new_matrix_85));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][7].push(new int[] {0, 1});
+// end new extension arc.
+
+// begin new staircase matrix:
+int rowdim_86 = 9;
+int coldim_86 = 8;
+real[][] new_matrix_86 = new real[coldim_86][rowdim_86];
+new_matrix_86[0][0] = 1;
+new_matrix_86[0][1] = 0;
+new_matrix_86[0][2] = 0;
+new_matrix_86[0][3] = 0;
+new_matrix_86[0][4] = 0;
+new_matrix_86[0][5] = 0;
+new_matrix_86[0][6] = 0;
+new_matrix_86[0][7] = 0;
+new_matrix_86[0][8] = 0;
+new_matrix_86[1][0] = 0;
+new_matrix_86[1][1] = 0;
+new_matrix_86[1][2] = 1;
+new_matrix_86[1][3] = 0;
+new_matrix_86[1][4] = 0;
+new_matrix_86[1][5] = 0;
+new_matrix_86[1][6] = 0;
+new_matrix_86[1][7] = 0;
+new_matrix_86[1][8] = 0;
+new_matrix_86[2][0] = 0;
+new_matrix_86[2][1] = 0;
+new_matrix_86[2][2] = 0;
+new_matrix_86[2][3] = 1;
+new_matrix_86[2][4] = 0;
+new_matrix_86[2][5] = 0;
+new_matrix_86[2][6] = 0;
+new_matrix_86[2][7] = 0;
+new_matrix_86[2][8] = 0;
+new_matrix_86[3][0] = 0;
+new_matrix_86[3][1] = 0;
+new_matrix_86[3][2] = 0;
+new_matrix_86[3][3] = 0;
+new_matrix_86[3][4] = 1;
+new_matrix_86[3][5] = 0;
+new_matrix_86[3][6] = 0;
+new_matrix_86[3][7] = 0;
+new_matrix_86[3][8] = 0;
+new_matrix_86[4][0] = 0;
+new_matrix_86[4][1] = 0;
+new_matrix_86[4][2] = 0;
+new_matrix_86[4][3] = 0;
+new_matrix_86[4][4] = 0;
+new_matrix_86[4][5] = 1;
+new_matrix_86[4][6] = 0;
+new_matrix_86[4][7] = 0;
+new_matrix_86[4][8] = 0;
+new_matrix_86[5][0] = 0;
+new_matrix_86[5][1] = 0;
+new_matrix_86[5][2] = 0;
+new_matrix_86[5][3] = 0;
+new_matrix_86[5][4] = 0;
+new_matrix_86[5][5] = 0;
+new_matrix_86[5][6] = 1;
+new_matrix_86[5][7] = 0;
+new_matrix_86[5][8] = 0;
+new_matrix_86[6][0] = 0;
+new_matrix_86[6][1] = 0;
+new_matrix_86[6][2] = 0;
+new_matrix_86[6][3] = 0;
+new_matrix_86[6][4] = 0;
+new_matrix_86[6][5] = 0;
+new_matrix_86[6][6] = 0;
+new_matrix_86[6][7] = 1;
+new_matrix_86[6][8] = 0;
+new_matrix_86[7][0] = 0;
+new_matrix_86[7][1] = 0;
+new_matrix_86[7][2] = 0;
+new_matrix_86[7][3] = 0;
+new_matrix_86[7][4] = 0;
+new_matrix_86[7][5] = 0;
+new_matrix_86[7][6] = 0;
+new_matrix_86[7][7] = 0;
+new_matrix_86[7][8] = 1;
+
+// begin new label set:
+int[] new_labelset_86 = new int[] {9,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][7].push(node_type(new_labelset_86, new_matrix_86));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][7].push(new int[] {0, 2});
+// end new extension arc.
+
+// begin new not-new node:
+notnew_nodes[0][7].push(2);
+// end new not-new node.
+
+// begin new staircase matrix:
+int rowdim_87 = 9;
+int coldim_87 = 8;
+real[][] new_matrix_87 = new real[coldim_87][rowdim_87];
+new_matrix_87[0][0] = 0;
+new_matrix_87[0][1] = 0;
+new_matrix_87[0][2] = 1;
+new_matrix_87[0][3] = 0;
+new_matrix_87[0][4] = 0;
+new_matrix_87[0][5] = 0;
+new_matrix_87[0][6] = 0;
+new_matrix_87[0][7] = 0;
+new_matrix_87[0][8] = 0;
+new_matrix_87[1][0] = 0;
+new_matrix_87[1][1] = 0;
+new_matrix_87[1][2] = 0;
+new_matrix_87[1][3] = 1;
+new_matrix_87[1][4] = 0;
+new_matrix_87[1][5] = 0;
+new_matrix_87[1][6] = 0;
+new_matrix_87[1][7] = 0;
+new_matrix_87[1][8] = 0;
+new_matrix_87[2][0] = 0;
+new_matrix_87[2][1] = 0;
+new_matrix_87[2][2] = 0;
+new_matrix_87[2][3] = 0;
+new_matrix_87[2][4] = 1;
+new_matrix_87[2][5] = 0;
+new_matrix_87[2][6] = 0;
+new_matrix_87[2][7] = 0;
+new_matrix_87[2][8] = 0;
+new_matrix_87[3][0] = 0;
+new_matrix_87[3][1] = 0;
+new_matrix_87[3][2] = 0;
+new_matrix_87[3][3] = 0;
+new_matrix_87[3][4] = 0;
+new_matrix_87[3][5] = 1;
+new_matrix_87[3][6] = 0;
+new_matrix_87[3][7] = 0;
+new_matrix_87[3][8] = 0;
+new_matrix_87[4][0] = 0;
+new_matrix_87[4][1] = 0;
+new_matrix_87[4][2] = 0;
+new_matrix_87[4][3] = 0;
+new_matrix_87[4][4] = 0;
+new_matrix_87[4][5] = 0;
+new_matrix_87[4][6] = 1;
+new_matrix_87[4][7] = 0;
+new_matrix_87[4][8] = 0;
+new_matrix_87[5][0] = 0;
+new_matrix_87[5][1] = 0;
+new_matrix_87[5][2] = 0;
+new_matrix_87[5][3] = 0;
+new_matrix_87[5][4] = 0;
+new_matrix_87[5][5] = 0;
+new_matrix_87[5][6] = 0;
+new_matrix_87[5][7] = 1;
+new_matrix_87[5][8] = 0;
+new_matrix_87[6][0] = 0;
+new_matrix_87[6][1] = 0;
+new_matrix_87[6][2] = 0;
+new_matrix_87[6][3] = 0;
+new_matrix_87[6][4] = 0;
+new_matrix_87[6][5] = 0;
+new_matrix_87[6][6] = 0;
+new_matrix_87[6][7] = 0;
+new_matrix_87[6][8] = 1;
+new_matrix_87[7][0] = 0;
+new_matrix_87[7][1] = 0;
+new_matrix_87[7][2] = 0;
+new_matrix_87[7][3] = 0;
+new_matrix_87[7][4] = 0;
+new_matrix_87[7][5] = 0;
+new_matrix_87[7][6] = 0;
+new_matrix_87[7][7] = 0;
+new_matrix_87[7][8] = 0;
+
+// begin new label set:
+int[] new_labelset_87 = new int[] {8,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][7].push(node_type(new_labelset_87, new_matrix_87));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][7].push(new int[] {0, 3});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][7].push(3);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_88 = 9;
+int coldim_88 = 9;
+real[][] new_matrix_88 = new real[coldim_88][rowdim_88];
+new_matrix_88[0][0] = 0;
+new_matrix_88[0][1] = 0;
+new_matrix_88[0][2] = 1;
+new_matrix_88[0][3] = 0;
+new_matrix_88[0][4] = 0;
+new_matrix_88[0][5] = 0;
+new_matrix_88[0][6] = 0;
+new_matrix_88[0][7] = 0;
+new_matrix_88[0][8] = 0;
+new_matrix_88[1][0] = 0;
+new_matrix_88[1][1] = 0;
+new_matrix_88[1][2] = 0;
+new_matrix_88[1][3] = 1;
+new_matrix_88[1][4] = 0;
+new_matrix_88[1][5] = 0;
+new_matrix_88[1][6] = 0;
+new_matrix_88[1][7] = 0;
+new_matrix_88[1][8] = 0;
+new_matrix_88[2][0] = 0;
+new_matrix_88[2][1] = 0;
+new_matrix_88[2][2] = 0;
+new_matrix_88[2][3] = 0;
+new_matrix_88[2][4] = 1;
+new_matrix_88[2][5] = 0;
+new_matrix_88[2][6] = 0;
+new_matrix_88[2][7] = 0;
+new_matrix_88[2][8] = 0;
+new_matrix_88[3][0] = 0;
+new_matrix_88[3][1] = 0;
+new_matrix_88[3][2] = 0;
+new_matrix_88[3][3] = 0;
+new_matrix_88[3][4] = 0;
+new_matrix_88[3][5] = 1;
+new_matrix_88[3][6] = 0;
+new_matrix_88[3][7] = 0;
+new_matrix_88[3][8] = 0;
+new_matrix_88[4][0] = 0;
+new_matrix_88[4][1] = 0;
+new_matrix_88[4][2] = 0;
+new_matrix_88[4][3] = 0;
+new_matrix_88[4][4] = 0;
+new_matrix_88[4][5] = 0;
+new_matrix_88[4][6] = 1;
+new_matrix_88[4][7] = 0;
+new_matrix_88[4][8] = 0;
+new_matrix_88[5][0] = 0;
+new_matrix_88[5][1] = 0;
+new_matrix_88[5][2] = 0;
+new_matrix_88[5][3] = 0;
+new_matrix_88[5][4] = 0;
+new_matrix_88[5][5] = 0;
+new_matrix_88[5][6] = 0;
+new_matrix_88[5][7] = 1;
+new_matrix_88[5][8] = 0;
+new_matrix_88[6][0] = 0;
+new_matrix_88[6][1] = 0;
+new_matrix_88[6][2] = 0;
+new_matrix_88[6][3] = 0;
+new_matrix_88[6][4] = 0;
+new_matrix_88[6][5] = 0;
+new_matrix_88[6][6] = 0;
+new_matrix_88[6][7] = 0;
+new_matrix_88[6][8] = 1;
+new_matrix_88[7][0] = 0;
+new_matrix_88[7][1] = 0;
+new_matrix_88[7][2] = 0;
+new_matrix_88[7][3] = 0;
+new_matrix_88[7][4] = 0;
+new_matrix_88[7][5] = 0;
+new_matrix_88[7][6] = 0;
+new_matrix_88[7][7] = 0;
+new_matrix_88[7][8] = 0;
+new_matrix_88[8][0] = 0;
+new_matrix_88[8][1] = 0;
+new_matrix_88[8][2] = 0;
+new_matrix_88[8][3] = 0;
+new_matrix_88[8][4] = 0;
+new_matrix_88[8][5] = 0;
+new_matrix_88[8][6] = 0;
+new_matrix_88[8][7] = 0;
+new_matrix_88[8][8] = 0;
+
+// begin new label set:
+int[] new_labelset_88 = new int[] {7,8,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][7].push(node_type(new_labelset_88, new_matrix_88));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][7].push(new int[] {3, 4});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][7].push(4);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_89 = 9;
+int coldim_89 = 10;
+real[][] new_matrix_89 = new real[coldim_89][rowdim_89];
+new_matrix_89[0][0] = 0;
+new_matrix_89[0][1] = 0;
+new_matrix_89[0][2] = 1;
+new_matrix_89[0][3] = 0;
+new_matrix_89[0][4] = 0;
+new_matrix_89[0][5] = 0;
+new_matrix_89[0][6] = 0;
+new_matrix_89[0][7] = 0;
+new_matrix_89[0][8] = 0;
+new_matrix_89[1][0] = 0;
+new_matrix_89[1][1] = 0;
+new_matrix_89[1][2] = 0;
+new_matrix_89[1][3] = 1;
+new_matrix_89[1][4] = 0;
+new_matrix_89[1][5] = 0;
+new_matrix_89[1][6] = 0;
+new_matrix_89[1][7] = 0;
+new_matrix_89[1][8] = 0;
+new_matrix_89[2][0] = 0;
+new_matrix_89[2][1] = 0;
+new_matrix_89[2][2] = 0;
+new_matrix_89[2][3] = 0;
+new_matrix_89[2][4] = 1;
+new_matrix_89[2][5] = 0;
+new_matrix_89[2][6] = 0;
+new_matrix_89[2][7] = 0;
+new_matrix_89[2][8] = 0;
+new_matrix_89[3][0] = 0;
+new_matrix_89[3][1] = 0;
+new_matrix_89[3][2] = 0;
+new_matrix_89[3][3] = 0;
+new_matrix_89[3][4] = 0;
+new_matrix_89[3][5] = 1;
+new_matrix_89[3][6] = 0;
+new_matrix_89[3][7] = 0;
+new_matrix_89[3][8] = 0;
+new_matrix_89[4][0] = 0;
+new_matrix_89[4][1] = 0;
+new_matrix_89[4][2] = 0;
+new_matrix_89[4][3] = 0;
+new_matrix_89[4][4] = 0;
+new_matrix_89[4][5] = 0;
+new_matrix_89[4][6] = 1;
+new_matrix_89[4][7] = 0;
+new_matrix_89[4][8] = 0;
+new_matrix_89[5][0] = 0;
+new_matrix_89[5][1] = 0;
+new_matrix_89[5][2] = 0;
+new_matrix_89[5][3] = 0;
+new_matrix_89[5][4] = 0;
+new_matrix_89[5][5] = 0;
+new_matrix_89[5][6] = 0;
+new_matrix_89[5][7] = 1;
+new_matrix_89[5][8] = 0;
+new_matrix_89[6][0] = 0;
+new_matrix_89[6][1] = 0;
+new_matrix_89[6][2] = 0;
+new_matrix_89[6][3] = 0;
+new_matrix_89[6][4] = 0;
+new_matrix_89[6][5] = 0;
+new_matrix_89[6][6] = 0;
+new_matrix_89[6][7] = 0;
+new_matrix_89[6][8] = 1;
+new_matrix_89[7][0] = 0;
+new_matrix_89[7][1] = 0;
+new_matrix_89[7][2] = 0;
+new_matrix_89[7][3] = 0;
+new_matrix_89[7][4] = 0;
+new_matrix_89[7][5] = 0;
+new_matrix_89[7][6] = 0;
+new_matrix_89[7][7] = 0;
+new_matrix_89[7][8] = 0;
+new_matrix_89[8][0] = 0;
+new_matrix_89[8][1] = 0;
+new_matrix_89[8][2] = 0;
+new_matrix_89[8][3] = 0;
+new_matrix_89[8][4] = 0;
+new_matrix_89[8][5] = 0;
+new_matrix_89[8][6] = 0;
+new_matrix_89[8][7] = 0;
+new_matrix_89[8][8] = 0;
+new_matrix_89[9][0] = 0;
+new_matrix_89[9][1] = 0;
+new_matrix_89[9][2] = 0;
+new_matrix_89[9][3] = 0;
+new_matrix_89[9][4] = 0;
+new_matrix_89[9][5] = 0;
+new_matrix_89[9][6] = 0;
+new_matrix_89[9][7] = 0;
+new_matrix_89[9][8] = 0;
+
+// begin new label set:
+int[] new_labelset_89 = new int[] {6,7,8,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][7].push(node_type(new_labelset_89, new_matrix_89));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][7].push(new int[] {4, 5});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][7].push(5);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_90 = 9;
+int coldim_90 = 11;
+real[][] new_matrix_90 = new real[coldim_90][rowdim_90];
+new_matrix_90[0][0] = 0;
+new_matrix_90[0][1] = 0;
+new_matrix_90[0][2] = 1;
+new_matrix_90[0][3] = 0;
+new_matrix_90[0][4] = 0;
+new_matrix_90[0][5] = 0;
+new_matrix_90[0][6] = 0;
+new_matrix_90[0][7] = 0;
+new_matrix_90[0][8] = 0;
+new_matrix_90[1][0] = 0;
+new_matrix_90[1][1] = 0;
+new_matrix_90[1][2] = 0;
+new_matrix_90[1][3] = 1;
+new_matrix_90[1][4] = 0;
+new_matrix_90[1][5] = 0;
+new_matrix_90[1][6] = 0;
+new_matrix_90[1][7] = 0;
+new_matrix_90[1][8] = 0;
+new_matrix_90[2][0] = 0;
+new_matrix_90[2][1] = 0;
+new_matrix_90[2][2] = 0;
+new_matrix_90[2][3] = 0;
+new_matrix_90[2][4] = 1;
+new_matrix_90[2][5] = 0;
+new_matrix_90[2][6] = 0;
+new_matrix_90[2][7] = 0;
+new_matrix_90[2][8] = 0;
+new_matrix_90[3][0] = 0;
+new_matrix_90[3][1] = 0;
+new_matrix_90[3][2] = 0;
+new_matrix_90[3][3] = 0;
+new_matrix_90[3][4] = 0;
+new_matrix_90[3][5] = 1;
+new_matrix_90[3][6] = 0;
+new_matrix_90[3][7] = 0;
+new_matrix_90[3][8] = 0;
+new_matrix_90[4][0] = 0;
+new_matrix_90[4][1] = 0;
+new_matrix_90[4][2] = 0;
+new_matrix_90[4][3] = 0;
+new_matrix_90[4][4] = 0;
+new_matrix_90[4][5] = 0;
+new_matrix_90[4][6] = 1;
+new_matrix_90[4][7] = 0;
+new_matrix_90[4][8] = 0;
+new_matrix_90[5][0] = 0;
+new_matrix_90[5][1] = 0;
+new_matrix_90[5][2] = 0;
+new_matrix_90[5][3] = 0;
+new_matrix_90[5][4] = 0;
+new_matrix_90[5][5] = 0;
+new_matrix_90[5][6] = 0;
+new_matrix_90[5][7] = 1;
+new_matrix_90[5][8] = 0;
+new_matrix_90[6][0] = 0;
+new_matrix_90[6][1] = 0;
+new_matrix_90[6][2] = 0;
+new_matrix_90[6][3] = 0;
+new_matrix_90[6][4] = 0;
+new_matrix_90[6][5] = 0;
+new_matrix_90[6][6] = 0;
+new_matrix_90[6][7] = 0;
+new_matrix_90[6][8] = 1;
+new_matrix_90[7][0] = 0;
+new_matrix_90[7][1] = 0;
+new_matrix_90[7][2] = 0;
+new_matrix_90[7][3] = 0;
+new_matrix_90[7][4] = 0;
+new_matrix_90[7][5] = 0;
+new_matrix_90[7][6] = 0;
+new_matrix_90[7][7] = 0;
+new_matrix_90[7][8] = 0;
+new_matrix_90[8][0] = 0;
+new_matrix_90[8][1] = 0;
+new_matrix_90[8][2] = 0;
+new_matrix_90[8][3] = 0;
+new_matrix_90[8][4] = 0;
+new_matrix_90[8][5] = 0;
+new_matrix_90[8][6] = 0;
+new_matrix_90[8][7] = 0;
+new_matrix_90[8][8] = 0;
+new_matrix_90[9][0] = 0;
+new_matrix_90[9][1] = 0;
+new_matrix_90[9][2] = 0;
+new_matrix_90[9][3] = 0;
+new_matrix_90[9][4] = 0;
+new_matrix_90[9][5] = 0;
+new_matrix_90[9][6] = 0;
+new_matrix_90[9][7] = 0;
+new_matrix_90[9][8] = 0;
+new_matrix_90[10][0] = 0;
+new_matrix_90[10][1] = 0;
+new_matrix_90[10][2] = 0;
+new_matrix_90[10][3] = 0;
+new_matrix_90[10][4] = 0;
+new_matrix_90[10][5] = 0;
+new_matrix_90[10][6] = 0;
+new_matrix_90[10][7] = 0;
+new_matrix_90[10][8] = 0;
+
+// begin new label set:
+int[] new_labelset_90 = new int[] {5,6,7,8,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][7].push(node_type(new_labelset_90, new_matrix_90));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][7].push(new int[] {5, 6});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][7].push(6);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_91 = 9;
+int coldim_91 = 12;
+real[][] new_matrix_91 = new real[coldim_91][rowdim_91];
+new_matrix_91[0][0] = 0;
+new_matrix_91[0][1] = 0;
+new_matrix_91[0][2] = 1;
+new_matrix_91[0][3] = 0;
+new_matrix_91[0][4] = 0;
+new_matrix_91[0][5] = 0;
+new_matrix_91[0][6] = 0;
+new_matrix_91[0][7] = 0;
+new_matrix_91[0][8] = 0;
+new_matrix_91[1][0] = 0;
+new_matrix_91[1][1] = 0;
+new_matrix_91[1][2] = 0;
+new_matrix_91[1][3] = 1;
+new_matrix_91[1][4] = 0;
+new_matrix_91[1][5] = 0;
+new_matrix_91[1][6] = 0;
+new_matrix_91[1][7] = 0;
+new_matrix_91[1][8] = 0;
+new_matrix_91[2][0] = 0;
+new_matrix_91[2][1] = 0;
+new_matrix_91[2][2] = 0;
+new_matrix_91[2][3] = 0;
+new_matrix_91[2][4] = 1;
+new_matrix_91[2][5] = 0;
+new_matrix_91[2][6] = 0;
+new_matrix_91[2][7] = 0;
+new_matrix_91[2][8] = 0;
+new_matrix_91[3][0] = 0;
+new_matrix_91[3][1] = 0;
+new_matrix_91[3][2] = 0;
+new_matrix_91[3][3] = 0;
+new_matrix_91[3][4] = 0;
+new_matrix_91[3][5] = 1;
+new_matrix_91[3][6] = 0;
+new_matrix_91[3][7] = 0;
+new_matrix_91[3][8] = 0;
+new_matrix_91[4][0] = 0;
+new_matrix_91[4][1] = 0;
+new_matrix_91[4][2] = 0;
+new_matrix_91[4][3] = 0;
+new_matrix_91[4][4] = 0;
+new_matrix_91[4][5] = 0;
+new_matrix_91[4][6] = 1;
+new_matrix_91[4][7] = 0;
+new_matrix_91[4][8] = 0;
+new_matrix_91[5][0] = 0;
+new_matrix_91[5][1] = 0;
+new_matrix_91[5][2] = 0;
+new_matrix_91[5][3] = 0;
+new_matrix_91[5][4] = 0;
+new_matrix_91[5][5] = 0;
+new_matrix_91[5][6] = 0;
+new_matrix_91[5][7] = 1;
+new_matrix_91[5][8] = 0;
+new_matrix_91[6][0] = 0;
+new_matrix_91[6][1] = 0;
+new_matrix_91[6][2] = 0;
+new_matrix_91[6][3] = 0;
+new_matrix_91[6][4] = 0;
+new_matrix_91[6][5] = 0;
+new_matrix_91[6][6] = 0;
+new_matrix_91[6][7] = 0;
+new_matrix_91[6][8] = 1;
+new_matrix_91[7][0] = 0;
+new_matrix_91[7][1] = 0;
+new_matrix_91[7][2] = 0;
+new_matrix_91[7][3] = 0;
+new_matrix_91[7][4] = 0;
+new_matrix_91[7][5] = 0;
+new_matrix_91[7][6] = 0;
+new_matrix_91[7][7] = 0;
+new_matrix_91[7][8] = 0;
+new_matrix_91[8][0] = 0;
+new_matrix_91[8][1] = 0;
+new_matrix_91[8][2] = 0;
+new_matrix_91[8][3] = 0;
+new_matrix_91[8][4] = 0;
+new_matrix_91[8][5] = 0;
+new_matrix_91[8][6] = 0;
+new_matrix_91[8][7] = 0;
+new_matrix_91[8][8] = 0;
+new_matrix_91[9][0] = 0;
+new_matrix_91[9][1] = 0;
+new_matrix_91[9][2] = 0;
+new_matrix_91[9][3] = 0;
+new_matrix_91[9][4] = 0;
+new_matrix_91[9][5] = 0;
+new_matrix_91[9][6] = 0;
+new_matrix_91[9][7] = 0;
+new_matrix_91[9][8] = 0;
+new_matrix_91[10][0] = 0;
+new_matrix_91[10][1] = 0;
+new_matrix_91[10][2] = 0;
+new_matrix_91[10][3] = 0;
+new_matrix_91[10][4] = 0;
+new_matrix_91[10][5] = 0;
+new_matrix_91[10][6] = 0;
+new_matrix_91[10][7] = 0;
+new_matrix_91[10][8] = 0;
+new_matrix_91[11][0] = 0;
+new_matrix_91[11][1] = 0;
+new_matrix_91[11][2] = 0;
+new_matrix_91[11][3] = 0;
+new_matrix_91[11][4] = 0;
+new_matrix_91[11][5] = 0;
+new_matrix_91[11][6] = 0;
+new_matrix_91[11][7] = 0;
+new_matrix_91[11][8] = 0;
+
+// begin new label set:
+int[] new_labelset_91 = new int[] {4,5,6,7,8,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][7].push(node_type(new_labelset_91, new_matrix_91));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][7].push(new int[] {6, 7});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][7].push(7);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_92 = 9;
+int coldim_92 = 13;
+real[][] new_matrix_92 = new real[coldim_92][rowdim_92];
+new_matrix_92[0][0] = 0;
+new_matrix_92[0][1] = 0;
+new_matrix_92[0][2] = 1;
+new_matrix_92[0][3] = 0;
+new_matrix_92[0][4] = 0;
+new_matrix_92[0][5] = 0;
+new_matrix_92[0][6] = 0;
+new_matrix_92[0][7] = 0;
+new_matrix_92[0][8] = 0;
+new_matrix_92[1][0] = 0;
+new_matrix_92[1][1] = 0;
+new_matrix_92[1][2] = 0;
+new_matrix_92[1][3] = 1;
+new_matrix_92[1][4] = 0;
+new_matrix_92[1][5] = 0;
+new_matrix_92[1][6] = 0;
+new_matrix_92[1][7] = 0;
+new_matrix_92[1][8] = 0;
+new_matrix_92[2][0] = 0;
+new_matrix_92[2][1] = 0;
+new_matrix_92[2][2] = 0;
+new_matrix_92[2][3] = 0;
+new_matrix_92[2][4] = 1;
+new_matrix_92[2][5] = 0;
+new_matrix_92[2][6] = 0;
+new_matrix_92[2][7] = 0;
+new_matrix_92[2][8] = 0;
+new_matrix_92[3][0] = 0;
+new_matrix_92[3][1] = 0;
+new_matrix_92[3][2] = 0;
+new_matrix_92[3][3] = 0;
+new_matrix_92[3][4] = 0;
+new_matrix_92[3][5] = 1;
+new_matrix_92[3][6] = 0;
+new_matrix_92[3][7] = 0;
+new_matrix_92[3][8] = 0;
+new_matrix_92[4][0] = 0;
+new_matrix_92[4][1] = 0;
+new_matrix_92[4][2] = 0;
+new_matrix_92[4][3] = 0;
+new_matrix_92[4][4] = 0;
+new_matrix_92[4][5] = 0;
+new_matrix_92[4][6] = 1;
+new_matrix_92[4][7] = 0;
+new_matrix_92[4][8] = 0;
+new_matrix_92[5][0] = 0;
+new_matrix_92[5][1] = 0;
+new_matrix_92[5][2] = 0;
+new_matrix_92[5][3] = 0;
+new_matrix_92[5][4] = 0;
+new_matrix_92[5][5] = 0;
+new_matrix_92[5][6] = 0;
+new_matrix_92[5][7] = 1;
+new_matrix_92[5][8] = 0;
+new_matrix_92[6][0] = 0;
+new_matrix_92[6][1] = 0;
+new_matrix_92[6][2] = 0;
+new_matrix_92[6][3] = 0;
+new_matrix_92[6][4] = 0;
+new_matrix_92[6][5] = 0;
+new_matrix_92[6][6] = 0;
+new_matrix_92[6][7] = 0;
+new_matrix_92[6][8] = 1;
+new_matrix_92[7][0] = 0;
+new_matrix_92[7][1] = 0;
+new_matrix_92[7][2] = 0;
+new_matrix_92[7][3] = 0;
+new_matrix_92[7][4] = 0;
+new_matrix_92[7][5] = 0;
+new_matrix_92[7][6] = 0;
+new_matrix_92[7][7] = 0;
+new_matrix_92[7][8] = 0;
+new_matrix_92[8][0] = 0;
+new_matrix_92[8][1] = 0;
+new_matrix_92[8][2] = 0;
+new_matrix_92[8][3] = 0;
+new_matrix_92[8][4] = 0;
+new_matrix_92[8][5] = 0;
+new_matrix_92[8][6] = 0;
+new_matrix_92[8][7] = 0;
+new_matrix_92[8][8] = 0;
+new_matrix_92[9][0] = 0;
+new_matrix_92[9][1] = 0;
+new_matrix_92[9][2] = 0;
+new_matrix_92[9][3] = 0;
+new_matrix_92[9][4] = 0;
+new_matrix_92[9][5] = 0;
+new_matrix_92[9][6] = 0;
+new_matrix_92[9][7] = 0;
+new_matrix_92[9][8] = 0;
+new_matrix_92[10][0] = 0;
+new_matrix_92[10][1] = 0;
+new_matrix_92[10][2] = 0;
+new_matrix_92[10][3] = 0;
+new_matrix_92[10][4] = 0;
+new_matrix_92[10][5] = 0;
+new_matrix_92[10][6] = 0;
+new_matrix_92[10][7] = 0;
+new_matrix_92[10][8] = 0;
+new_matrix_92[11][0] = 0;
+new_matrix_92[11][1] = 0;
+new_matrix_92[11][2] = 0;
+new_matrix_92[11][3] = 0;
+new_matrix_92[11][4] = 0;
+new_matrix_92[11][5] = 0;
+new_matrix_92[11][6] = 0;
+new_matrix_92[11][7] = 0;
+new_matrix_92[11][8] = 0;
+new_matrix_92[12][0] = 0;
+new_matrix_92[12][1] = 0;
+new_matrix_92[12][2] = 0;
+new_matrix_92[12][3] = 0;
+new_matrix_92[12][4] = 0;
+new_matrix_92[12][5] = 0;
+new_matrix_92[12][6] = 0;
+new_matrix_92[12][7] = 0;
+new_matrix_92[12][8] = 0;
+
+// begin new label set:
+int[] new_labelset_92 = new int[] {3,4,5,6,7,8,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][7].push(node_type(new_labelset_92, new_matrix_92));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][7].push(new int[] {7, 8});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][7].push(8);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_93 = 9;
+int coldim_93 = 14;
+real[][] new_matrix_93 = new real[coldim_93][rowdim_93];
+new_matrix_93[0][0] = 0;
+new_matrix_93[0][1] = 0;
+new_matrix_93[0][2] = 1;
+new_matrix_93[0][3] = 0;
+new_matrix_93[0][4] = 0;
+new_matrix_93[0][5] = 0;
+new_matrix_93[0][6] = 0;
+new_matrix_93[0][7] = 0;
+new_matrix_93[0][8] = 0;
+new_matrix_93[1][0] = 0;
+new_matrix_93[1][1] = 0;
+new_matrix_93[1][2] = 0;
+new_matrix_93[1][3] = 1;
+new_matrix_93[1][4] = 0;
+new_matrix_93[1][5] = 0;
+new_matrix_93[1][6] = 0;
+new_matrix_93[1][7] = 0;
+new_matrix_93[1][8] = 0;
+new_matrix_93[2][0] = 0;
+new_matrix_93[2][1] = 0;
+new_matrix_93[2][2] = 0;
+new_matrix_93[2][3] = 0;
+new_matrix_93[2][4] = 1;
+new_matrix_93[2][5] = 0;
+new_matrix_93[2][6] = 0;
+new_matrix_93[2][7] = 0;
+new_matrix_93[2][8] = 0;
+new_matrix_93[3][0] = 0;
+new_matrix_93[3][1] = 0;
+new_matrix_93[3][2] = 0;
+new_matrix_93[3][3] = 0;
+new_matrix_93[3][4] = 0;
+new_matrix_93[3][5] = 1;
+new_matrix_93[3][6] = 0;
+new_matrix_93[3][7] = 0;
+new_matrix_93[3][8] = 0;
+new_matrix_93[4][0] = 0;
+new_matrix_93[4][1] = 0;
+new_matrix_93[4][2] = 0;
+new_matrix_93[4][3] = 0;
+new_matrix_93[4][4] = 0;
+new_matrix_93[4][5] = 0;
+new_matrix_93[4][6] = 1;
+new_matrix_93[4][7] = 0;
+new_matrix_93[4][8] = 0;
+new_matrix_93[5][0] = 0;
+new_matrix_93[5][1] = 0;
+new_matrix_93[5][2] = 0;
+new_matrix_93[5][3] = 0;
+new_matrix_93[5][4] = 0;
+new_matrix_93[5][5] = 0;
+new_matrix_93[5][6] = 0;
+new_matrix_93[5][7] = 1;
+new_matrix_93[5][8] = 0;
+new_matrix_93[6][0] = 0;
+new_matrix_93[6][1] = 0;
+new_matrix_93[6][2] = 0;
+new_matrix_93[6][3] = 0;
+new_matrix_93[6][4] = 0;
+new_matrix_93[6][5] = 0;
+new_matrix_93[6][6] = 0;
+new_matrix_93[6][7] = 0;
+new_matrix_93[6][8] = 1;
+new_matrix_93[7][0] = 0;
+new_matrix_93[7][1] = 0;
+new_matrix_93[7][2] = 0;
+new_matrix_93[7][3] = 0;
+new_matrix_93[7][4] = 0;
+new_matrix_93[7][5] = 0;
+new_matrix_93[7][6] = 0;
+new_matrix_93[7][7] = 0;
+new_matrix_93[7][8] = 0;
+new_matrix_93[8][0] = 0;
+new_matrix_93[8][1] = 0;
+new_matrix_93[8][2] = 0;
+new_matrix_93[8][3] = 0;
+new_matrix_93[8][4] = 0;
+new_matrix_93[8][5] = 0;
+new_matrix_93[8][6] = 0;
+new_matrix_93[8][7] = 0;
+new_matrix_93[8][8] = 0;
+new_matrix_93[9][0] = 0;
+new_matrix_93[9][1] = 0;
+new_matrix_93[9][2] = 0;
+new_matrix_93[9][3] = 0;
+new_matrix_93[9][4] = 0;
+new_matrix_93[9][5] = 0;
+new_matrix_93[9][6] = 0;
+new_matrix_93[9][7] = 0;
+new_matrix_93[9][8] = 0;
+new_matrix_93[10][0] = 0;
+new_matrix_93[10][1] = 0;
+new_matrix_93[10][2] = 0;
+new_matrix_93[10][3] = 0;
+new_matrix_93[10][4] = 0;
+new_matrix_93[10][5] = 0;
+new_matrix_93[10][6] = 0;
+new_matrix_93[10][7] = 0;
+new_matrix_93[10][8] = 0;
+new_matrix_93[11][0] = 0;
+new_matrix_93[11][1] = 0;
+new_matrix_93[11][2] = 0;
+new_matrix_93[11][3] = 0;
+new_matrix_93[11][4] = 0;
+new_matrix_93[11][5] = 0;
+new_matrix_93[11][6] = 0;
+new_matrix_93[11][7] = 0;
+new_matrix_93[11][8] = 0;
+new_matrix_93[12][0] = 0;
+new_matrix_93[12][1] = 0;
+new_matrix_93[12][2] = 0;
+new_matrix_93[12][3] = 0;
+new_matrix_93[12][4] = 0;
+new_matrix_93[12][5] = 0;
+new_matrix_93[12][6] = 0;
+new_matrix_93[12][7] = 0;
+new_matrix_93[12][8] = 0;
+new_matrix_93[13][0] = 0;
+new_matrix_93[13][1] = 0;
+new_matrix_93[13][2] = 0;
+new_matrix_93[13][3] = 0;
+new_matrix_93[13][4] = 0;
+new_matrix_93[13][5] = 0;
+new_matrix_93[13][6] = 0;
+new_matrix_93[13][7] = 0;
+new_matrix_93[13][8] = 0;
+
+// begin new label set:
+int[] new_labelset_93 = new int[] {2,3,4,5,6,7,8,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][7].push(node_type(new_labelset_93, new_matrix_93));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][7].push(new int[] {8, 9});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][7].push(9);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_94 = 9;
+int coldim_94 = 15;
+real[][] new_matrix_94 = new real[coldim_94][rowdim_94];
+new_matrix_94[0][0] = 0;
+new_matrix_94[0][1] = 1;
+new_matrix_94[0][2] = 0;
+new_matrix_94[0][3] = 0;
+new_matrix_94[0][4] = 0;
+new_matrix_94[0][5] = 0;
+new_matrix_94[0][6] = 0;
+new_matrix_94[0][7] = 0;
+new_matrix_94[0][8] = 0;
+new_matrix_94[1][0] = 0;
+new_matrix_94[1][1] = 0;
+new_matrix_94[1][2] = 1;
+new_matrix_94[1][3] = 0;
+new_matrix_94[1][4] = 0;
+new_matrix_94[1][5] = 0;
+new_matrix_94[1][6] = 0;
+new_matrix_94[1][7] = 0;
+new_matrix_94[1][8] = 0;
+new_matrix_94[2][0] = 0;
+new_matrix_94[2][1] = 0;
+new_matrix_94[2][2] = 0;
+new_matrix_94[2][3] = 1;
+new_matrix_94[2][4] = 0;
+new_matrix_94[2][5] = 0;
+new_matrix_94[2][6] = 0;
+new_matrix_94[2][7] = 0;
+new_matrix_94[2][8] = 0;
+new_matrix_94[3][0] = 0;
+new_matrix_94[3][1] = 0;
+new_matrix_94[3][2] = 0;
+new_matrix_94[3][3] = 0;
+new_matrix_94[3][4] = 1;
+new_matrix_94[3][5] = 0;
+new_matrix_94[3][6] = 0;
+new_matrix_94[3][7] = 0;
+new_matrix_94[3][8] = 0;
+new_matrix_94[4][0] = 0;
+new_matrix_94[4][1] = 0;
+new_matrix_94[4][2] = 0;
+new_matrix_94[4][3] = 0;
+new_matrix_94[4][4] = 0;
+new_matrix_94[4][5] = 1;
+new_matrix_94[4][6] = 0;
+new_matrix_94[4][7] = 0;
+new_matrix_94[4][8] = 0;
+new_matrix_94[5][0] = 0;
+new_matrix_94[5][1] = 0;
+new_matrix_94[5][2] = 0;
+new_matrix_94[5][3] = 0;
+new_matrix_94[5][4] = 0;
+new_matrix_94[5][5] = 0;
+new_matrix_94[5][6] = 1;
+new_matrix_94[5][7] = 0;
+new_matrix_94[5][8] = 0;
+new_matrix_94[6][0] = 0;
+new_matrix_94[6][1] = 0;
+new_matrix_94[6][2] = 0;
+new_matrix_94[6][3] = 0;
+new_matrix_94[6][4] = 0;
+new_matrix_94[6][5] = 0;
+new_matrix_94[6][6] = 0;
+new_matrix_94[6][7] = 1;
+new_matrix_94[6][8] = 0;
+new_matrix_94[7][0] = 0;
+new_matrix_94[7][1] = 0;
+new_matrix_94[7][2] = 0;
+new_matrix_94[7][3] = 0;
+new_matrix_94[7][4] = 0;
+new_matrix_94[7][5] = 0;
+new_matrix_94[7][6] = 0;
+new_matrix_94[7][7] = 0;
+new_matrix_94[7][8] = 1;
+new_matrix_94[8][0] = 0;
+new_matrix_94[8][1] = 0;
+new_matrix_94[8][2] = 0;
+new_matrix_94[8][3] = 0;
+new_matrix_94[8][4] = 0;
+new_matrix_94[8][5] = 0;
+new_matrix_94[8][6] = 0;
+new_matrix_94[8][7] = 0;
+new_matrix_94[8][8] = 0;
+new_matrix_94[9][0] = 0;
+new_matrix_94[9][1] = 0;
+new_matrix_94[9][2] = 0;
+new_matrix_94[9][3] = 0;
+new_matrix_94[9][4] = 0;
+new_matrix_94[9][5] = 0;
+new_matrix_94[9][6] = 0;
+new_matrix_94[9][7] = 0;
+new_matrix_94[9][8] = 0;
+new_matrix_94[10][0] = 0;
+new_matrix_94[10][1] = 0;
+new_matrix_94[10][2] = 0;
+new_matrix_94[10][3] = 0;
+new_matrix_94[10][4] = 0;
+new_matrix_94[10][5] = 0;
+new_matrix_94[10][6] = 0;
+new_matrix_94[10][7] = 0;
+new_matrix_94[10][8] = 0;
+new_matrix_94[11][0] = 0;
+new_matrix_94[11][1] = 0;
+new_matrix_94[11][2] = 0;
+new_matrix_94[11][3] = 0;
+new_matrix_94[11][4] = 0;
+new_matrix_94[11][5] = 0;
+new_matrix_94[11][6] = 0;
+new_matrix_94[11][7] = 0;
+new_matrix_94[11][8] = 0;
+new_matrix_94[12][0] = 0;
+new_matrix_94[12][1] = 0;
+new_matrix_94[12][2] = 0;
+new_matrix_94[12][3] = 0;
+new_matrix_94[12][4] = 0;
+new_matrix_94[12][5] = 0;
+new_matrix_94[12][6] = 0;
+new_matrix_94[12][7] = 0;
+new_matrix_94[12][8] = 0;
+new_matrix_94[13][0] = 0;
+new_matrix_94[13][1] = 0;
+new_matrix_94[13][2] = 0;
+new_matrix_94[13][3] = 0;
+new_matrix_94[13][4] = 0;
+new_matrix_94[13][5] = 0;
+new_matrix_94[13][6] = 0;
+new_matrix_94[13][7] = 0;
+new_matrix_94[13][8] = 0;
+new_matrix_94[14][0] = 0;
+new_matrix_94[14][1] = 0;
+new_matrix_94[14][2] = 0;
+new_matrix_94[14][3] = 0;
+new_matrix_94[14][4] = 0;
+new_matrix_94[14][5] = 0;
+new_matrix_94[14][6] = 0;
+new_matrix_94[14][7] = 0;
+new_matrix_94[14][8] = 0;
+
+// begin new label set:
+int[] new_labelset_94 = new int[] {1,2,3,4,5,6,7,8,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][7].push(node_type(new_labelset_94, new_matrix_94));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][7].push(new int[] {9, 10});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][7].push(10);
+// end new earlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_95 = 9;
+int coldim_95 = 15;
+real[][] new_matrix_95 = new real[coldim_95][rowdim_95];
+new_matrix_95[0][0] = 1;
+new_matrix_95[0][1] = 0;
+new_matrix_95[0][2] = 0;
+new_matrix_95[0][3] = 0;
+new_matrix_95[0][4] = 0;
+new_matrix_95[0][5] = 0;
+new_matrix_95[0][6] = 0;
+new_matrix_95[0][7] = 0;
+new_matrix_95[0][8] = 0;
+new_matrix_95[1][0] = 0;
+new_matrix_95[1][1] = 0;
+new_matrix_95[1][2] = 1;
+new_matrix_95[1][3] = 0;
+new_matrix_95[1][4] = 0;
+new_matrix_95[1][5] = 0;
+new_matrix_95[1][6] = 0;
+new_matrix_95[1][7] = 0;
+new_matrix_95[1][8] = 0;
+new_matrix_95[2][0] = 0;
+new_matrix_95[2][1] = 0;
+new_matrix_95[2][2] = 0;
+new_matrix_95[2][3] = 1;
+new_matrix_95[2][4] = 0;
+new_matrix_95[2][5] = 0;
+new_matrix_95[2][6] = 0;
+new_matrix_95[2][7] = 0;
+new_matrix_95[2][8] = 0;
+new_matrix_95[3][0] = 0;
+new_matrix_95[3][1] = 0;
+new_matrix_95[3][2] = 0;
+new_matrix_95[3][3] = 0;
+new_matrix_95[3][4] = 1;
+new_matrix_95[3][5] = 0;
+new_matrix_95[3][6] = 0;
+new_matrix_95[3][7] = 0;
+new_matrix_95[3][8] = 0;
+new_matrix_95[4][0] = 0;
+new_matrix_95[4][1] = 0;
+new_matrix_95[4][2] = 0;
+new_matrix_95[4][3] = 0;
+new_matrix_95[4][4] = 0;
+new_matrix_95[4][5] = 1;
+new_matrix_95[4][6] = 0;
+new_matrix_95[4][7] = 0;
+new_matrix_95[4][8] = 0;
+new_matrix_95[5][0] = 0;
+new_matrix_95[5][1] = 0;
+new_matrix_95[5][2] = 0;
+new_matrix_95[5][3] = 0;
+new_matrix_95[5][4] = 0;
+new_matrix_95[5][5] = 0;
+new_matrix_95[5][6] = 1;
+new_matrix_95[5][7] = 0;
+new_matrix_95[5][8] = 0;
+new_matrix_95[6][0] = 0;
+new_matrix_95[6][1] = 0;
+new_matrix_95[6][2] = 0;
+new_matrix_95[6][3] = 0;
+new_matrix_95[6][4] = 0;
+new_matrix_95[6][5] = 0;
+new_matrix_95[6][6] = 0;
+new_matrix_95[6][7] = 1;
+new_matrix_95[6][8] = 0;
+new_matrix_95[7][0] = 0;
+new_matrix_95[7][1] = 0;
+new_matrix_95[7][2] = 0;
+new_matrix_95[7][3] = 0;
+new_matrix_95[7][4] = 0;
+new_matrix_95[7][5] = 0;
+new_matrix_95[7][6] = 0;
+new_matrix_95[7][7] = 0;
+new_matrix_95[7][8] = 1;
+new_matrix_95[8][0] = 0;
+new_matrix_95[8][1] = 0;
+new_matrix_95[8][2] = 0;
+new_matrix_95[8][3] = 0;
+new_matrix_95[8][4] = 0;
+new_matrix_95[8][5] = 0;
+new_matrix_95[8][6] = 0;
+new_matrix_95[8][7] = 0;
+new_matrix_95[8][8] = 0;
+new_matrix_95[9][0] = 0;
+new_matrix_95[9][1] = 0;
+new_matrix_95[9][2] = 0;
+new_matrix_95[9][3] = 0;
+new_matrix_95[9][4] = 0;
+new_matrix_95[9][5] = 0;
+new_matrix_95[9][6] = 0;
+new_matrix_95[9][7] = 0;
+new_matrix_95[9][8] = 0;
+new_matrix_95[10][0] = 0;
+new_matrix_95[10][1] = 0;
+new_matrix_95[10][2] = 0;
+new_matrix_95[10][3] = 0;
+new_matrix_95[10][4] = 0;
+new_matrix_95[10][5] = 0;
+new_matrix_95[10][6] = 0;
+new_matrix_95[10][7] = 0;
+new_matrix_95[10][8] = 0;
+new_matrix_95[11][0] = 0;
+new_matrix_95[11][1] = 0;
+new_matrix_95[11][2] = 0;
+new_matrix_95[11][3] = 0;
+new_matrix_95[11][4] = 0;
+new_matrix_95[11][5] = 0;
+new_matrix_95[11][6] = 0;
+new_matrix_95[11][7] = 0;
+new_matrix_95[11][8] = 0;
+new_matrix_95[12][0] = 0;
+new_matrix_95[12][1] = 0;
+new_matrix_95[12][2] = 0;
+new_matrix_95[12][3] = 0;
+new_matrix_95[12][4] = 0;
+new_matrix_95[12][5] = 0;
+new_matrix_95[12][6] = 0;
+new_matrix_95[12][7] = 0;
+new_matrix_95[12][8] = 0;
+new_matrix_95[13][0] = 0;
+new_matrix_95[13][1] = 0;
+new_matrix_95[13][2] = 0;
+new_matrix_95[13][3] = 0;
+new_matrix_95[13][4] = 0;
+new_matrix_95[13][5] = 0;
+new_matrix_95[13][6] = 0;
+new_matrix_95[13][7] = 0;
+new_matrix_95[13][8] = 0;
+new_matrix_95[14][0] = 0;
+new_matrix_95[14][1] = 0;
+new_matrix_95[14][2] = 0;
+new_matrix_95[14][3] = 0;
+new_matrix_95[14][4] = 0;
+new_matrix_95[14][5] = 0;
+new_matrix_95[14][6] = 0;
+new_matrix_95[14][7] = 0;
+new_matrix_95[14][8] = 0;
+
+// begin new label set:
+int[] new_labelset_95 = new int[] {0,2,3,4,5,6,7,8,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][7].push(node_type(new_labelset_95, new_matrix_95));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][7].push(new int[] {9, 11});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][7].push(11);
+// end new earlydeadend node.
+//////////////////////////////////////////////////////////////////////////////
+// new run for worker 0:
+//////////////////////////////////////////////////////////////////////////////
+tree_nodes[0].push(new node_type[]);
+tree_arcs[0].push(new int[][]);
+deadend_nodes[0].push(new int[]);
+earlydeadend_nodes[0].push(new int[]);
+veryearlydeadend_nodes[0].push(new int[]);
+missingvolume_nodes[0].push(new int[]);
+notnew_nodes[0].push(new int[]);
+solution_nodes[0].push(new int[]);
+//////////////////////////////////////////////////////////////////////////////
+// end new run for worker 0.
+//////////////////////////////////////////////////////////////////////////////
+
+// begin new staircase matrix:
+int rowdim_96 = 9;
+int coldim_96 = 8;
+real[][] new_matrix_96 = new real[coldim_96][rowdim_96];
+new_matrix_96[0][0] = 0;
+new_matrix_96[0][1] = 1;
+new_matrix_96[0][2] = 0;
+new_matrix_96[0][3] = 0;
+new_matrix_96[0][4] = 0;
+new_matrix_96[0][5] = 0;
+new_matrix_96[0][6] = 0;
+new_matrix_96[0][7] = 0;
+new_matrix_96[0][8] = 0;
+new_matrix_96[1][0] = 0;
+new_matrix_96[1][1] = 0;
+new_matrix_96[1][2] = 1;
+new_matrix_96[1][3] = 0;
+new_matrix_96[1][4] = 0;
+new_matrix_96[1][5] = 0;
+new_matrix_96[1][6] = 0;
+new_matrix_96[1][7] = 0;
+new_matrix_96[1][8] = 0;
+new_matrix_96[2][0] = 0;
+new_matrix_96[2][1] = 0;
+new_matrix_96[2][2] = 0;
+new_matrix_96[2][3] = 1;
+new_matrix_96[2][4] = 0;
+new_matrix_96[2][5] = 0;
+new_matrix_96[2][6] = 0;
+new_matrix_96[2][7] = 0;
+new_matrix_96[2][8] = 0;
+new_matrix_96[3][0] = 0;
+new_matrix_96[3][1] = 0;
+new_matrix_96[3][2] = 0;
+new_matrix_96[3][3] = 0;
+new_matrix_96[3][4] = 1;
+new_matrix_96[3][5] = 0;
+new_matrix_96[3][6] = 0;
+new_matrix_96[3][7] = 0;
+new_matrix_96[3][8] = 0;
+new_matrix_96[4][0] = 0;
+new_matrix_96[4][1] = 0;
+new_matrix_96[4][2] = 0;
+new_matrix_96[4][3] = 0;
+new_matrix_96[4][4] = 0;
+new_matrix_96[4][5] = 1;
+new_matrix_96[4][6] = 0;
+new_matrix_96[4][7] = 0;
+new_matrix_96[4][8] = 0;
+new_matrix_96[5][0] = 0;
+new_matrix_96[5][1] = 0;
+new_matrix_96[5][2] = 0;
+new_matrix_96[5][3] = 0;
+new_matrix_96[5][4] = 0;
+new_matrix_96[5][5] = 0;
+new_matrix_96[5][6] = 1;
+new_matrix_96[5][7] = 0;
+new_matrix_96[5][8] = 0;
+new_matrix_96[6][0] = 0;
+new_matrix_96[6][1] = 0;
+new_matrix_96[6][2] = 0;
+new_matrix_96[6][3] = 0;
+new_matrix_96[6][4] = 0;
+new_matrix_96[6][5] = 0;
+new_matrix_96[6][6] = 0;
+new_matrix_96[6][7] = 1;
+new_matrix_96[6][8] = 0;
+new_matrix_96[7][0] = 0;
+new_matrix_96[7][1] = 0;
+new_matrix_96[7][2] = 0;
+new_matrix_96[7][3] = 0;
+new_matrix_96[7][4] = 0;
+new_matrix_96[7][5] = 0;
+new_matrix_96[7][6] = 0;
+new_matrix_96[7][7] = 0;
+new_matrix_96[7][8] = 1;
+
+// begin new label set:
+int[] new_labelset_96 = new int[] {10,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][8].push(node_type(new_labelset_96, new_matrix_96));
+// end new node.
+
+// begin new staircase matrix:
+int rowdim_97 = 9;
+int coldim_97 = 9;
+real[][] new_matrix_97 = new real[coldim_97][rowdim_97];
+new_matrix_97[0][0] = 1;
+new_matrix_97[0][1] = 0;
+new_matrix_97[0][2] = 0;
+new_matrix_97[0][3] = 0;
+new_matrix_97[0][4] = 0;
+new_matrix_97[0][5] = 0;
+new_matrix_97[0][6] = 0;
+new_matrix_97[0][7] = 0;
+new_matrix_97[0][8] = 0;
+new_matrix_97[1][0] = 0;
+new_matrix_97[1][1] = 1;
+new_matrix_97[1][2] = 0;
+new_matrix_97[1][3] = 0;
+new_matrix_97[1][4] = 0;
+new_matrix_97[1][5] = 0;
+new_matrix_97[1][6] = 0;
+new_matrix_97[1][7] = 0;
+new_matrix_97[1][8] = 0;
+new_matrix_97[2][0] = 0;
+new_matrix_97[2][1] = 0;
+new_matrix_97[2][2] = 1;
+new_matrix_97[2][3] = 0;
+new_matrix_97[2][4] = 0;
+new_matrix_97[2][5] = 0;
+new_matrix_97[2][6] = 0;
+new_matrix_97[2][7] = 0;
+new_matrix_97[2][8] = 0;
+new_matrix_97[3][0] = 0;
+new_matrix_97[3][1] = 0;
+new_matrix_97[3][2] = 0;
+new_matrix_97[3][3] = 1;
+new_matrix_97[3][4] = 0;
+new_matrix_97[3][5] = 0;
+new_matrix_97[3][6] = 0;
+new_matrix_97[3][7] = 0;
+new_matrix_97[3][8] = 0;
+new_matrix_97[4][0] = 0;
+new_matrix_97[4][1] = 0;
+new_matrix_97[4][2] = 0;
+new_matrix_97[4][3] = 0;
+new_matrix_97[4][4] = 1;
+new_matrix_97[4][5] = 0;
+new_matrix_97[4][6] = 0;
+new_matrix_97[4][7] = 0;
+new_matrix_97[4][8] = 0;
+new_matrix_97[5][0] = 0;
+new_matrix_97[5][1] = 0;
+new_matrix_97[5][2] = 0;
+new_matrix_97[5][3] = 0;
+new_matrix_97[5][4] = 0;
+new_matrix_97[5][5] = 1;
+new_matrix_97[5][6] = 0;
+new_matrix_97[5][7] = 0;
+new_matrix_97[5][8] = 0;
+new_matrix_97[6][0] = 0;
+new_matrix_97[6][1] = 0;
+new_matrix_97[6][2] = 0;
+new_matrix_97[6][3] = 0;
+new_matrix_97[6][4] = 0;
+new_matrix_97[6][5] = 0;
+new_matrix_97[6][6] = 1;
+new_matrix_97[6][7] = 0;
+new_matrix_97[6][8] = 0;
+new_matrix_97[7][0] = 0;
+new_matrix_97[7][1] = 0;
+new_matrix_97[7][2] = 0;
+new_matrix_97[7][3] = 0;
+new_matrix_97[7][4] = 0;
+new_matrix_97[7][5] = 0;
+new_matrix_97[7][6] = 0;
+new_matrix_97[7][7] = 1;
+new_matrix_97[7][8] = 0;
+new_matrix_97[8][0] = 0;
+new_matrix_97[8][1] = 0;
+new_matrix_97[8][2] = 0;
+new_matrix_97[8][3] = 0;
+new_matrix_97[8][4] = 0;
+new_matrix_97[8][5] = 0;
+new_matrix_97[8][6] = 0;
+new_matrix_97[8][7] = 0;
+new_matrix_97[8][8] = 1;
+
+// begin new label set:
+int[] new_labelset_97 = new int[] {9,10,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][8].push(node_type(new_labelset_97, new_matrix_97));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][8].push(new int[] {0, 1});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][8].push(1);
+// end new earlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_98 = 9;
+int coldim_98 = 9;
+real[][] new_matrix_98 = new real[coldim_98][rowdim_98];
+new_matrix_98[0][0] = 0;
+new_matrix_98[0][1] = 1;
+new_matrix_98[0][2] = 0;
+new_matrix_98[0][3] = 0;
+new_matrix_98[0][4] = 0;
+new_matrix_98[0][5] = 0;
+new_matrix_98[0][6] = 0;
+new_matrix_98[0][7] = 0;
+new_matrix_98[0][8] = 0;
+new_matrix_98[1][0] = 0;
+new_matrix_98[1][1] = 0;
+new_matrix_98[1][2] = 1;
+new_matrix_98[1][3] = 0;
+new_matrix_98[1][4] = 0;
+new_matrix_98[1][5] = 0;
+new_matrix_98[1][6] = 0;
+new_matrix_98[1][7] = 0;
+new_matrix_98[1][8] = 0;
+new_matrix_98[2][0] = 0;
+new_matrix_98[2][1] = 0;
+new_matrix_98[2][2] = 0;
+new_matrix_98[2][3] = 1;
+new_matrix_98[2][4] = 0;
+new_matrix_98[2][5] = 0;
+new_matrix_98[2][6] = 0;
+new_matrix_98[2][7] = 0;
+new_matrix_98[2][8] = 0;
+new_matrix_98[3][0] = 0;
+new_matrix_98[3][1] = 0;
+new_matrix_98[3][2] = 0;
+new_matrix_98[3][3] = 0;
+new_matrix_98[3][4] = 1;
+new_matrix_98[3][5] = 0;
+new_matrix_98[3][6] = 0;
+new_matrix_98[3][7] = 0;
+new_matrix_98[3][8] = 0;
+new_matrix_98[4][0] = 0;
+new_matrix_98[4][1] = 0;
+new_matrix_98[4][2] = 0;
+new_matrix_98[4][3] = 0;
+new_matrix_98[4][4] = 0;
+new_matrix_98[4][5] = 1;
+new_matrix_98[4][6] = 0;
+new_matrix_98[4][7] = 0;
+new_matrix_98[4][8] = 0;
+new_matrix_98[5][0] = 0;
+new_matrix_98[5][1] = 0;
+new_matrix_98[5][2] = 0;
+new_matrix_98[5][3] = 0;
+new_matrix_98[5][4] = 0;
+new_matrix_98[5][5] = 0;
+new_matrix_98[5][6] = 1;
+new_matrix_98[5][7] = 0;
+new_matrix_98[5][8] = 0;
+new_matrix_98[6][0] = 0;
+new_matrix_98[6][1] = 0;
+new_matrix_98[6][2] = 0;
+new_matrix_98[6][3] = 0;
+new_matrix_98[6][4] = 0;
+new_matrix_98[6][5] = 0;
+new_matrix_98[6][6] = 0;
+new_matrix_98[6][7] = 1;
+new_matrix_98[6][8] = 0;
+new_matrix_98[7][0] = 0;
+new_matrix_98[7][1] = 0;
+new_matrix_98[7][2] = 0;
+new_matrix_98[7][3] = 0;
+new_matrix_98[7][4] = 0;
+new_matrix_98[7][5] = 0;
+new_matrix_98[7][6] = 0;
+new_matrix_98[7][7] = 0;
+new_matrix_98[7][8] = 1;
+new_matrix_98[8][0] = 0;
+new_matrix_98[8][1] = 0;
+new_matrix_98[8][2] = 0;
+new_matrix_98[8][3] = 0;
+new_matrix_98[8][4] = 0;
+new_matrix_98[8][5] = 0;
+new_matrix_98[8][6] = 0;
+new_matrix_98[8][7] = 0;
+new_matrix_98[8][8] = 0;
+
+// begin new label set:
+int[] new_labelset_98 = new int[] {8,10,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][8].push(node_type(new_labelset_98, new_matrix_98));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][8].push(new int[] {0, 2});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][8].push(2);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_99 = 9;
+int coldim_99 = 10;
+real[][] new_matrix_99 = new real[coldim_99][rowdim_99];
+new_matrix_99[0][0] = 0;
+new_matrix_99[0][1] = 1;
+new_matrix_99[0][2] = 0;
+new_matrix_99[0][3] = 0;
+new_matrix_99[0][4] = 0;
+new_matrix_99[0][5] = 0;
+new_matrix_99[0][6] = 0;
+new_matrix_99[0][7] = 0;
+new_matrix_99[0][8] = 0;
+new_matrix_99[1][0] = 0;
+new_matrix_99[1][1] = 0;
+new_matrix_99[1][2] = 1;
+new_matrix_99[1][3] = 0;
+new_matrix_99[1][4] = 0;
+new_matrix_99[1][5] = 0;
+new_matrix_99[1][6] = 0;
+new_matrix_99[1][7] = 0;
+new_matrix_99[1][8] = 0;
+new_matrix_99[2][0] = 0;
+new_matrix_99[2][1] = 0;
+new_matrix_99[2][2] = 0;
+new_matrix_99[2][3] = 1;
+new_matrix_99[2][4] = 0;
+new_matrix_99[2][5] = 0;
+new_matrix_99[2][6] = 0;
+new_matrix_99[2][7] = 0;
+new_matrix_99[2][8] = 0;
+new_matrix_99[3][0] = 0;
+new_matrix_99[3][1] = 0;
+new_matrix_99[3][2] = 0;
+new_matrix_99[3][3] = 0;
+new_matrix_99[3][4] = 1;
+new_matrix_99[3][5] = 0;
+new_matrix_99[3][6] = 0;
+new_matrix_99[3][7] = 0;
+new_matrix_99[3][8] = 0;
+new_matrix_99[4][0] = 0;
+new_matrix_99[4][1] = 0;
+new_matrix_99[4][2] = 0;
+new_matrix_99[4][3] = 0;
+new_matrix_99[4][4] = 0;
+new_matrix_99[4][5] = 1;
+new_matrix_99[4][6] = 0;
+new_matrix_99[4][7] = 0;
+new_matrix_99[4][8] = 0;
+new_matrix_99[5][0] = 0;
+new_matrix_99[5][1] = 0;
+new_matrix_99[5][2] = 0;
+new_matrix_99[5][3] = 0;
+new_matrix_99[5][4] = 0;
+new_matrix_99[5][5] = 0;
+new_matrix_99[5][6] = 1;
+new_matrix_99[5][7] = 0;
+new_matrix_99[5][8] = 0;
+new_matrix_99[6][0] = 0;
+new_matrix_99[6][1] = 0;
+new_matrix_99[6][2] = 0;
+new_matrix_99[6][3] = 0;
+new_matrix_99[6][4] = 0;
+new_matrix_99[6][5] = 0;
+new_matrix_99[6][6] = 0;
+new_matrix_99[6][7] = 1;
+new_matrix_99[6][8] = 0;
+new_matrix_99[7][0] = 0;
+new_matrix_99[7][1] = 0;
+new_matrix_99[7][2] = 0;
+new_matrix_99[7][3] = 0;
+new_matrix_99[7][4] = 0;
+new_matrix_99[7][5] = 0;
+new_matrix_99[7][6] = 0;
+new_matrix_99[7][7] = 0;
+new_matrix_99[7][8] = 1;
+new_matrix_99[8][0] = 0;
+new_matrix_99[8][1] = 0;
+new_matrix_99[8][2] = 0;
+new_matrix_99[8][3] = 0;
+new_matrix_99[8][4] = 0;
+new_matrix_99[8][5] = 0;
+new_matrix_99[8][6] = 0;
+new_matrix_99[8][7] = 0;
+new_matrix_99[8][8] = 0;
+new_matrix_99[9][0] = 0;
+new_matrix_99[9][1] = 0;
+new_matrix_99[9][2] = 0;
+new_matrix_99[9][3] = 0;
+new_matrix_99[9][4] = 0;
+new_matrix_99[9][5] = 0;
+new_matrix_99[9][6] = 0;
+new_matrix_99[9][7] = 0;
+new_matrix_99[9][8] = 0;
+
+// begin new label set:
+int[] new_labelset_99 = new int[] {7,8,10,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][8].push(node_type(new_labelset_99, new_matrix_99));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][8].push(new int[] {2, 3});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][8].push(3);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_100 = 9;
+int coldim_100 = 11;
+real[][] new_matrix_100 = new real[coldim_100][rowdim_100];
+new_matrix_100[0][0] = 0;
+new_matrix_100[0][1] = 1;
+new_matrix_100[0][2] = 0;
+new_matrix_100[0][3] = 0;
+new_matrix_100[0][4] = 0;
+new_matrix_100[0][5] = 0;
+new_matrix_100[0][6] = 0;
+new_matrix_100[0][7] = 0;
+new_matrix_100[0][8] = 0;
+new_matrix_100[1][0] = 0;
+new_matrix_100[1][1] = 0;
+new_matrix_100[1][2] = 1;
+new_matrix_100[1][3] = 0;
+new_matrix_100[1][4] = 0;
+new_matrix_100[1][5] = 0;
+new_matrix_100[1][6] = 0;
+new_matrix_100[1][7] = 0;
+new_matrix_100[1][8] = 0;
+new_matrix_100[2][0] = 0;
+new_matrix_100[2][1] = 0;
+new_matrix_100[2][2] = 0;
+new_matrix_100[2][3] = 1;
+new_matrix_100[2][4] = 0;
+new_matrix_100[2][5] = 0;
+new_matrix_100[2][6] = 0;
+new_matrix_100[2][7] = 0;
+new_matrix_100[2][8] = 0;
+new_matrix_100[3][0] = 0;
+new_matrix_100[3][1] = 0;
+new_matrix_100[3][2] = 0;
+new_matrix_100[3][3] = 0;
+new_matrix_100[3][4] = 1;
+new_matrix_100[3][5] = 0;
+new_matrix_100[3][6] = 0;
+new_matrix_100[3][7] = 0;
+new_matrix_100[3][8] = 0;
+new_matrix_100[4][0] = 0;
+new_matrix_100[4][1] = 0;
+new_matrix_100[4][2] = 0;
+new_matrix_100[4][3] = 0;
+new_matrix_100[4][4] = 0;
+new_matrix_100[4][5] = 1;
+new_matrix_100[4][6] = 0;
+new_matrix_100[4][7] = 0;
+new_matrix_100[4][8] = 0;
+new_matrix_100[5][0] = 0;
+new_matrix_100[5][1] = 0;
+new_matrix_100[5][2] = 0;
+new_matrix_100[5][3] = 0;
+new_matrix_100[5][4] = 0;
+new_matrix_100[5][5] = 0;
+new_matrix_100[5][6] = 1;
+new_matrix_100[5][7] = 0;
+new_matrix_100[5][8] = 0;
+new_matrix_100[6][0] = 0;
+new_matrix_100[6][1] = 0;
+new_matrix_100[6][2] = 0;
+new_matrix_100[6][3] = 0;
+new_matrix_100[6][4] = 0;
+new_matrix_100[6][5] = 0;
+new_matrix_100[6][6] = 0;
+new_matrix_100[6][7] = 1;
+new_matrix_100[6][8] = 0;
+new_matrix_100[7][0] = 0;
+new_matrix_100[7][1] = 0;
+new_matrix_100[7][2] = 0;
+new_matrix_100[7][3] = 0;
+new_matrix_100[7][4] = 0;
+new_matrix_100[7][5] = 0;
+new_matrix_100[7][6] = 0;
+new_matrix_100[7][7] = 0;
+new_matrix_100[7][8] = 1;
+new_matrix_100[8][0] = 0;
+new_matrix_100[8][1] = 0;
+new_matrix_100[8][2] = 0;
+new_matrix_100[8][3] = 0;
+new_matrix_100[8][4] = 0;
+new_matrix_100[8][5] = 0;
+new_matrix_100[8][6] = 0;
+new_matrix_100[8][7] = 0;
+new_matrix_100[8][8] = 0;
+new_matrix_100[9][0] = 0;
+new_matrix_100[9][1] = 0;
+new_matrix_100[9][2] = 0;
+new_matrix_100[9][3] = 0;
+new_matrix_100[9][4] = 0;
+new_matrix_100[9][5] = 0;
+new_matrix_100[9][6] = 0;
+new_matrix_100[9][7] = 0;
+new_matrix_100[9][8] = 0;
+new_matrix_100[10][0] = 0;
+new_matrix_100[10][1] = 0;
+new_matrix_100[10][2] = 0;
+new_matrix_100[10][3] = 0;
+new_matrix_100[10][4] = 0;
+new_matrix_100[10][5] = 0;
+new_matrix_100[10][6] = 0;
+new_matrix_100[10][7] = 0;
+new_matrix_100[10][8] = 0;
+
+// begin new label set:
+int[] new_labelset_100 = new int[] {6,7,8,10,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][8].push(node_type(new_labelset_100, new_matrix_100));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][8].push(new int[] {3, 4});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][8].push(4);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_101 = 9;
+int coldim_101 = 12;
+real[][] new_matrix_101 = new real[coldim_101][rowdim_101];
+new_matrix_101[0][0] = 0;
+new_matrix_101[0][1] = 1;
+new_matrix_101[0][2] = 0;
+new_matrix_101[0][3] = 0;
+new_matrix_101[0][4] = 0;
+new_matrix_101[0][5] = 0;
+new_matrix_101[0][6] = 0;
+new_matrix_101[0][7] = 0;
+new_matrix_101[0][8] = 0;
+new_matrix_101[1][0] = 0;
+new_matrix_101[1][1] = 0;
+new_matrix_101[1][2] = 1;
+new_matrix_101[1][3] = 0;
+new_matrix_101[1][4] = 0;
+new_matrix_101[1][5] = 0;
+new_matrix_101[1][6] = 0;
+new_matrix_101[1][7] = 0;
+new_matrix_101[1][8] = 0;
+new_matrix_101[2][0] = 0;
+new_matrix_101[2][1] = 0;
+new_matrix_101[2][2] = 0;
+new_matrix_101[2][3] = 1;
+new_matrix_101[2][4] = 0;
+new_matrix_101[2][5] = 0;
+new_matrix_101[2][6] = 0;
+new_matrix_101[2][7] = 0;
+new_matrix_101[2][8] = 0;
+new_matrix_101[3][0] = 0;
+new_matrix_101[3][1] = 0;
+new_matrix_101[3][2] = 0;
+new_matrix_101[3][3] = 0;
+new_matrix_101[3][4] = 1;
+new_matrix_101[3][5] = 0;
+new_matrix_101[3][6] = 0;
+new_matrix_101[3][7] = 0;
+new_matrix_101[3][8] = 0;
+new_matrix_101[4][0] = 0;
+new_matrix_101[4][1] = 0;
+new_matrix_101[4][2] = 0;
+new_matrix_101[4][3] = 0;
+new_matrix_101[4][4] = 0;
+new_matrix_101[4][5] = 1;
+new_matrix_101[4][6] = 0;
+new_matrix_101[4][7] = 0;
+new_matrix_101[4][8] = 0;
+new_matrix_101[5][0] = 0;
+new_matrix_101[5][1] = 0;
+new_matrix_101[5][2] = 0;
+new_matrix_101[5][3] = 0;
+new_matrix_101[5][4] = 0;
+new_matrix_101[5][5] = 0;
+new_matrix_101[5][6] = 1;
+new_matrix_101[5][7] = 0;
+new_matrix_101[5][8] = 0;
+new_matrix_101[6][0] = 0;
+new_matrix_101[6][1] = 0;
+new_matrix_101[6][2] = 0;
+new_matrix_101[6][3] = 0;
+new_matrix_101[6][4] = 0;
+new_matrix_101[6][5] = 0;
+new_matrix_101[6][6] = 0;
+new_matrix_101[6][7] = 1;
+new_matrix_101[6][8] = 0;
+new_matrix_101[7][0] = 0;
+new_matrix_101[7][1] = 0;
+new_matrix_101[7][2] = 0;
+new_matrix_101[7][3] = 0;
+new_matrix_101[7][4] = 0;
+new_matrix_101[7][5] = 0;
+new_matrix_101[7][6] = 0;
+new_matrix_101[7][7] = 0;
+new_matrix_101[7][8] = 1;
+new_matrix_101[8][0] = 0;
+new_matrix_101[8][1] = 0;
+new_matrix_101[8][2] = 0;
+new_matrix_101[8][3] = 0;
+new_matrix_101[8][4] = 0;
+new_matrix_101[8][5] = 0;
+new_matrix_101[8][6] = 0;
+new_matrix_101[8][7] = 0;
+new_matrix_101[8][8] = 0;
+new_matrix_101[9][0] = 0;
+new_matrix_101[9][1] = 0;
+new_matrix_101[9][2] = 0;
+new_matrix_101[9][3] = 0;
+new_matrix_101[9][4] = 0;
+new_matrix_101[9][5] = 0;
+new_matrix_101[9][6] = 0;
+new_matrix_101[9][7] = 0;
+new_matrix_101[9][8] = 0;
+new_matrix_101[10][0] = 0;
+new_matrix_101[10][1] = 0;
+new_matrix_101[10][2] = 0;
+new_matrix_101[10][3] = 0;
+new_matrix_101[10][4] = 0;
+new_matrix_101[10][5] = 0;
+new_matrix_101[10][6] = 0;
+new_matrix_101[10][7] = 0;
+new_matrix_101[10][8] = 0;
+new_matrix_101[11][0] = 0;
+new_matrix_101[11][1] = 0;
+new_matrix_101[11][2] = 0;
+new_matrix_101[11][3] = 0;
+new_matrix_101[11][4] = 0;
+new_matrix_101[11][5] = 0;
+new_matrix_101[11][6] = 0;
+new_matrix_101[11][7] = 0;
+new_matrix_101[11][8] = 0;
+
+// begin new label set:
+int[] new_labelset_101 = new int[] {5,6,7,8,10,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][8].push(node_type(new_labelset_101, new_matrix_101));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][8].push(new int[] {4, 5});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][8].push(5);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_102 = 9;
+int coldim_102 = 13;
+real[][] new_matrix_102 = new real[coldim_102][rowdim_102];
+new_matrix_102[0][0] = 0;
+new_matrix_102[0][1] = 1;
+new_matrix_102[0][2] = 0;
+new_matrix_102[0][3] = 0;
+new_matrix_102[0][4] = 0;
+new_matrix_102[0][5] = 0;
+new_matrix_102[0][6] = 0;
+new_matrix_102[0][7] = 0;
+new_matrix_102[0][8] = 0;
+new_matrix_102[1][0] = 0;
+new_matrix_102[1][1] = 0;
+new_matrix_102[1][2] = 1;
+new_matrix_102[1][3] = 0;
+new_matrix_102[1][4] = 0;
+new_matrix_102[1][5] = 0;
+new_matrix_102[1][6] = 0;
+new_matrix_102[1][7] = 0;
+new_matrix_102[1][8] = 0;
+new_matrix_102[2][0] = 0;
+new_matrix_102[2][1] = 0;
+new_matrix_102[2][2] = 0;
+new_matrix_102[2][3] = 1;
+new_matrix_102[2][4] = 0;
+new_matrix_102[2][5] = 0;
+new_matrix_102[2][6] = 0;
+new_matrix_102[2][7] = 0;
+new_matrix_102[2][8] = 0;
+new_matrix_102[3][0] = 0;
+new_matrix_102[3][1] = 0;
+new_matrix_102[3][2] = 0;
+new_matrix_102[3][3] = 0;
+new_matrix_102[3][4] = 1;
+new_matrix_102[3][5] = 0;
+new_matrix_102[3][6] = 0;
+new_matrix_102[3][7] = 0;
+new_matrix_102[3][8] = 0;
+new_matrix_102[4][0] = 0;
+new_matrix_102[4][1] = 0;
+new_matrix_102[4][2] = 0;
+new_matrix_102[4][3] = 0;
+new_matrix_102[4][4] = 0;
+new_matrix_102[4][5] = 1;
+new_matrix_102[4][6] = 0;
+new_matrix_102[4][7] = 0;
+new_matrix_102[4][8] = 0;
+new_matrix_102[5][0] = 0;
+new_matrix_102[5][1] = 0;
+new_matrix_102[5][2] = 0;
+new_matrix_102[5][3] = 0;
+new_matrix_102[5][4] = 0;
+new_matrix_102[5][5] = 0;
+new_matrix_102[5][6] = 1;
+new_matrix_102[5][7] = 0;
+new_matrix_102[5][8] = 0;
+new_matrix_102[6][0] = 0;
+new_matrix_102[6][1] = 0;
+new_matrix_102[6][2] = 0;
+new_matrix_102[6][3] = 0;
+new_matrix_102[6][4] = 0;
+new_matrix_102[6][5] = 0;
+new_matrix_102[6][6] = 0;
+new_matrix_102[6][7] = 1;
+new_matrix_102[6][8] = 0;
+new_matrix_102[7][0] = 0;
+new_matrix_102[7][1] = 0;
+new_matrix_102[7][2] = 0;
+new_matrix_102[7][3] = 0;
+new_matrix_102[7][4] = 0;
+new_matrix_102[7][5] = 0;
+new_matrix_102[7][6] = 0;
+new_matrix_102[7][7] = 0;
+new_matrix_102[7][8] = 1;
+new_matrix_102[8][0] = 0;
+new_matrix_102[8][1] = 0;
+new_matrix_102[8][2] = 0;
+new_matrix_102[8][3] = 0;
+new_matrix_102[8][4] = 0;
+new_matrix_102[8][5] = 0;
+new_matrix_102[8][6] = 0;
+new_matrix_102[8][7] = 0;
+new_matrix_102[8][8] = 0;
+new_matrix_102[9][0] = 0;
+new_matrix_102[9][1] = 0;
+new_matrix_102[9][2] = 0;
+new_matrix_102[9][3] = 0;
+new_matrix_102[9][4] = 0;
+new_matrix_102[9][5] = 0;
+new_matrix_102[9][6] = 0;
+new_matrix_102[9][7] = 0;
+new_matrix_102[9][8] = 0;
+new_matrix_102[10][0] = 0;
+new_matrix_102[10][1] = 0;
+new_matrix_102[10][2] = 0;
+new_matrix_102[10][3] = 0;
+new_matrix_102[10][4] = 0;
+new_matrix_102[10][5] = 0;
+new_matrix_102[10][6] = 0;
+new_matrix_102[10][7] = 0;
+new_matrix_102[10][8] = 0;
+new_matrix_102[11][0] = 0;
+new_matrix_102[11][1] = 0;
+new_matrix_102[11][2] = 0;
+new_matrix_102[11][3] = 0;
+new_matrix_102[11][4] = 0;
+new_matrix_102[11][5] = 0;
+new_matrix_102[11][6] = 0;
+new_matrix_102[11][7] = 0;
+new_matrix_102[11][8] = 0;
+new_matrix_102[12][0] = 0;
+new_matrix_102[12][1] = 0;
+new_matrix_102[12][2] = 0;
+new_matrix_102[12][3] = 0;
+new_matrix_102[12][4] = 0;
+new_matrix_102[12][5] = 0;
+new_matrix_102[12][6] = 0;
+new_matrix_102[12][7] = 0;
+new_matrix_102[12][8] = 0;
+
+// begin new label set:
+int[] new_labelset_102 = new int[] {4,5,6,7,8,10,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][8].push(node_type(new_labelset_102, new_matrix_102));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][8].push(new int[] {5, 6});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][8].push(6);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_103 = 9;
+int coldim_103 = 14;
+real[][] new_matrix_103 = new real[coldim_103][rowdim_103];
+new_matrix_103[0][0] = 0;
+new_matrix_103[0][1] = 1;
+new_matrix_103[0][2] = 0;
+new_matrix_103[0][3] = 0;
+new_matrix_103[0][4] = 0;
+new_matrix_103[0][5] = 0;
+new_matrix_103[0][6] = 0;
+new_matrix_103[0][7] = 0;
+new_matrix_103[0][8] = 0;
+new_matrix_103[1][0] = 0;
+new_matrix_103[1][1] = 0;
+new_matrix_103[1][2] = 1;
+new_matrix_103[1][3] = 0;
+new_matrix_103[1][4] = 0;
+new_matrix_103[1][5] = 0;
+new_matrix_103[1][6] = 0;
+new_matrix_103[1][7] = 0;
+new_matrix_103[1][8] = 0;
+new_matrix_103[2][0] = 0;
+new_matrix_103[2][1] = 0;
+new_matrix_103[2][2] = 0;
+new_matrix_103[2][3] = 1;
+new_matrix_103[2][4] = 0;
+new_matrix_103[2][5] = 0;
+new_matrix_103[2][6] = 0;
+new_matrix_103[2][7] = 0;
+new_matrix_103[2][8] = 0;
+new_matrix_103[3][0] = 0;
+new_matrix_103[3][1] = 0;
+new_matrix_103[3][2] = 0;
+new_matrix_103[3][3] = 0;
+new_matrix_103[3][4] = 1;
+new_matrix_103[3][5] = 0;
+new_matrix_103[3][6] = 0;
+new_matrix_103[3][7] = 0;
+new_matrix_103[3][8] = 0;
+new_matrix_103[4][0] = 0;
+new_matrix_103[4][1] = 0;
+new_matrix_103[4][2] = 0;
+new_matrix_103[4][3] = 0;
+new_matrix_103[4][4] = 0;
+new_matrix_103[4][5] = 1;
+new_matrix_103[4][6] = 0;
+new_matrix_103[4][7] = 0;
+new_matrix_103[4][8] = 0;
+new_matrix_103[5][0] = 0;
+new_matrix_103[5][1] = 0;
+new_matrix_103[5][2] = 0;
+new_matrix_103[5][3] = 0;
+new_matrix_103[5][4] = 0;
+new_matrix_103[5][5] = 0;
+new_matrix_103[5][6] = 1;
+new_matrix_103[5][7] = 0;
+new_matrix_103[5][8] = 0;
+new_matrix_103[6][0] = 0;
+new_matrix_103[6][1] = 0;
+new_matrix_103[6][2] = 0;
+new_matrix_103[6][3] = 0;
+new_matrix_103[6][4] = 0;
+new_matrix_103[6][5] = 0;
+new_matrix_103[6][6] = 0;
+new_matrix_103[6][7] = 1;
+new_matrix_103[6][8] = 0;
+new_matrix_103[7][0] = 0;
+new_matrix_103[7][1] = 0;
+new_matrix_103[7][2] = 0;
+new_matrix_103[7][3] = 0;
+new_matrix_103[7][4] = 0;
+new_matrix_103[7][5] = 0;
+new_matrix_103[7][6] = 0;
+new_matrix_103[7][7] = 0;
+new_matrix_103[7][8] = 1;
+new_matrix_103[8][0] = 0;
+new_matrix_103[8][1] = 0;
+new_matrix_103[8][2] = 0;
+new_matrix_103[8][3] = 0;
+new_matrix_103[8][4] = 0;
+new_matrix_103[8][5] = 0;
+new_matrix_103[8][6] = 0;
+new_matrix_103[8][7] = 0;
+new_matrix_103[8][8] = 0;
+new_matrix_103[9][0] = 0;
+new_matrix_103[9][1] = 0;
+new_matrix_103[9][2] = 0;
+new_matrix_103[9][3] = 0;
+new_matrix_103[9][4] = 0;
+new_matrix_103[9][5] = 0;
+new_matrix_103[9][6] = 0;
+new_matrix_103[9][7] = 0;
+new_matrix_103[9][8] = 0;
+new_matrix_103[10][0] = 0;
+new_matrix_103[10][1] = 0;
+new_matrix_103[10][2] = 0;
+new_matrix_103[10][3] = 0;
+new_matrix_103[10][4] = 0;
+new_matrix_103[10][5] = 0;
+new_matrix_103[10][6] = 0;
+new_matrix_103[10][7] = 0;
+new_matrix_103[10][8] = 0;
+new_matrix_103[11][0] = 0;
+new_matrix_103[11][1] = 0;
+new_matrix_103[11][2] = 0;
+new_matrix_103[11][3] = 0;
+new_matrix_103[11][4] = 0;
+new_matrix_103[11][5] = 0;
+new_matrix_103[11][6] = 0;
+new_matrix_103[11][7] = 0;
+new_matrix_103[11][8] = 0;
+new_matrix_103[12][0] = 0;
+new_matrix_103[12][1] = 0;
+new_matrix_103[12][2] = 0;
+new_matrix_103[12][3] = 0;
+new_matrix_103[12][4] = 0;
+new_matrix_103[12][5] = 0;
+new_matrix_103[12][6] = 0;
+new_matrix_103[12][7] = 0;
+new_matrix_103[12][8] = 0;
+new_matrix_103[13][0] = 0;
+new_matrix_103[13][1] = 0;
+new_matrix_103[13][2] = 0;
+new_matrix_103[13][3] = 0;
+new_matrix_103[13][4] = 0;
+new_matrix_103[13][5] = 0;
+new_matrix_103[13][6] = 0;
+new_matrix_103[13][7] = 0;
+new_matrix_103[13][8] = 0;
+
+// begin new label set:
+int[] new_labelset_103 = new int[] {3,4,5,6,7,8,10,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][8].push(node_type(new_labelset_103, new_matrix_103));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][8].push(new int[] {6, 7});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][8].push(7);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_104 = 9;
+int coldim_104 = 15;
+real[][] new_matrix_104 = new real[coldim_104][rowdim_104];
+new_matrix_104[0][0] = 0;
+new_matrix_104[0][1] = 1;
+new_matrix_104[0][2] = 0;
+new_matrix_104[0][3] = 0;
+new_matrix_104[0][4] = 0;
+new_matrix_104[0][5] = 0;
+new_matrix_104[0][6] = 0;
+new_matrix_104[0][7] = 0;
+new_matrix_104[0][8] = 0;
+new_matrix_104[1][0] = 0;
+new_matrix_104[1][1] = 0;
+new_matrix_104[1][2] = 1;
+new_matrix_104[1][3] = 0;
+new_matrix_104[1][4] = 0;
+new_matrix_104[1][5] = 0;
+new_matrix_104[1][6] = 0;
+new_matrix_104[1][7] = 0;
+new_matrix_104[1][8] = 0;
+new_matrix_104[2][0] = 0;
+new_matrix_104[2][1] = 0;
+new_matrix_104[2][2] = 0;
+new_matrix_104[2][3] = 1;
+new_matrix_104[2][4] = 0;
+new_matrix_104[2][5] = 0;
+new_matrix_104[2][6] = 0;
+new_matrix_104[2][7] = 0;
+new_matrix_104[2][8] = 0;
+new_matrix_104[3][0] = 0;
+new_matrix_104[3][1] = 0;
+new_matrix_104[3][2] = 0;
+new_matrix_104[3][3] = 0;
+new_matrix_104[3][4] = 1;
+new_matrix_104[3][5] = 0;
+new_matrix_104[3][6] = 0;
+new_matrix_104[3][7] = 0;
+new_matrix_104[3][8] = 0;
+new_matrix_104[4][0] = 0;
+new_matrix_104[4][1] = 0;
+new_matrix_104[4][2] = 0;
+new_matrix_104[4][3] = 0;
+new_matrix_104[4][4] = 0;
+new_matrix_104[4][5] = 1;
+new_matrix_104[4][6] = 0;
+new_matrix_104[4][7] = 0;
+new_matrix_104[4][8] = 0;
+new_matrix_104[5][0] = 0;
+new_matrix_104[5][1] = 0;
+new_matrix_104[5][2] = 0;
+new_matrix_104[5][3] = 0;
+new_matrix_104[5][4] = 0;
+new_matrix_104[5][5] = 0;
+new_matrix_104[5][6] = 1;
+new_matrix_104[5][7] = 0;
+new_matrix_104[5][8] = 0;
+new_matrix_104[6][0] = 0;
+new_matrix_104[6][1] = 0;
+new_matrix_104[6][2] = 0;
+new_matrix_104[6][3] = 0;
+new_matrix_104[6][4] = 0;
+new_matrix_104[6][5] = 0;
+new_matrix_104[6][6] = 0;
+new_matrix_104[6][7] = 1;
+new_matrix_104[6][8] = 0;
+new_matrix_104[7][0] = 0;
+new_matrix_104[7][1] = 0;
+new_matrix_104[7][2] = 0;
+new_matrix_104[7][3] = 0;
+new_matrix_104[7][4] = 0;
+new_matrix_104[7][5] = 0;
+new_matrix_104[7][6] = 0;
+new_matrix_104[7][7] = 0;
+new_matrix_104[7][8] = 1;
+new_matrix_104[8][0] = 0;
+new_matrix_104[8][1] = 0;
+new_matrix_104[8][2] = 0;
+new_matrix_104[8][3] = 0;
+new_matrix_104[8][4] = 0;
+new_matrix_104[8][5] = 0;
+new_matrix_104[8][6] = 0;
+new_matrix_104[8][7] = 0;
+new_matrix_104[8][8] = 0;
+new_matrix_104[9][0] = 0;
+new_matrix_104[9][1] = 0;
+new_matrix_104[9][2] = 0;
+new_matrix_104[9][3] = 0;
+new_matrix_104[9][4] = 0;
+new_matrix_104[9][5] = 0;
+new_matrix_104[9][6] = 0;
+new_matrix_104[9][7] = 0;
+new_matrix_104[9][8] = 0;
+new_matrix_104[10][0] = 0;
+new_matrix_104[10][1] = 0;
+new_matrix_104[10][2] = 0;
+new_matrix_104[10][3] = 0;
+new_matrix_104[10][4] = 0;
+new_matrix_104[10][5] = 0;
+new_matrix_104[10][6] = 0;
+new_matrix_104[10][7] = 0;
+new_matrix_104[10][8] = 0;
+new_matrix_104[11][0] = 0;
+new_matrix_104[11][1] = 0;
+new_matrix_104[11][2] = 0;
+new_matrix_104[11][3] = 0;
+new_matrix_104[11][4] = 0;
+new_matrix_104[11][5] = 0;
+new_matrix_104[11][6] = 0;
+new_matrix_104[11][7] = 0;
+new_matrix_104[11][8] = 0;
+new_matrix_104[12][0] = 0;
+new_matrix_104[12][1] = 0;
+new_matrix_104[12][2] = 0;
+new_matrix_104[12][3] = 0;
+new_matrix_104[12][4] = 0;
+new_matrix_104[12][5] = 0;
+new_matrix_104[12][6] = 0;
+new_matrix_104[12][7] = 0;
+new_matrix_104[12][8] = 0;
+new_matrix_104[13][0] = 0;
+new_matrix_104[13][1] = 0;
+new_matrix_104[13][2] = 0;
+new_matrix_104[13][3] = 0;
+new_matrix_104[13][4] = 0;
+new_matrix_104[13][5] = 0;
+new_matrix_104[13][6] = 0;
+new_matrix_104[13][7] = 0;
+new_matrix_104[13][8] = 0;
+new_matrix_104[14][0] = 0;
+new_matrix_104[14][1] = 0;
+new_matrix_104[14][2] = 0;
+new_matrix_104[14][3] = 0;
+new_matrix_104[14][4] = 0;
+new_matrix_104[14][5] = 0;
+new_matrix_104[14][6] = 0;
+new_matrix_104[14][7] = 0;
+new_matrix_104[14][8] = 0;
+
+// begin new label set:
+int[] new_labelset_104 = new int[] {2,3,4,5,6,7,8,10,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][8].push(node_type(new_labelset_104, new_matrix_104));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][8].push(new int[] {7, 8});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][8].push(8);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_105 = 9;
+int coldim_105 = 16;
+real[][] new_matrix_105 = new real[coldim_105][rowdim_105];
+new_matrix_105[0][0] = 0;
+new_matrix_105[0][1] = 1;
+new_matrix_105[0][2] = 0;
+new_matrix_105[0][3] = 0;
+new_matrix_105[0][4] = 0;
+new_matrix_105[0][5] = 0;
+new_matrix_105[0][6] = 0;
+new_matrix_105[0][7] = 0;
+new_matrix_105[0][8] = 0;
+new_matrix_105[1][0] = 0;
+new_matrix_105[1][1] = 0;
+new_matrix_105[1][2] = 1;
+new_matrix_105[1][3] = 0;
+new_matrix_105[1][4] = 0;
+new_matrix_105[1][5] = 0;
+new_matrix_105[1][6] = 0;
+new_matrix_105[1][7] = 0;
+new_matrix_105[1][8] = 0;
+new_matrix_105[2][0] = 0;
+new_matrix_105[2][1] = 0;
+new_matrix_105[2][2] = 0;
+new_matrix_105[2][3] = 1;
+new_matrix_105[2][4] = 0;
+new_matrix_105[2][5] = 0;
+new_matrix_105[2][6] = 0;
+new_matrix_105[2][7] = 0;
+new_matrix_105[2][8] = 0;
+new_matrix_105[3][0] = 0;
+new_matrix_105[3][1] = 0;
+new_matrix_105[3][2] = 0;
+new_matrix_105[3][3] = 0;
+new_matrix_105[3][4] = 1;
+new_matrix_105[3][5] = 0;
+new_matrix_105[3][6] = 0;
+new_matrix_105[3][7] = 0;
+new_matrix_105[3][8] = 0;
+new_matrix_105[4][0] = 0;
+new_matrix_105[4][1] = 0;
+new_matrix_105[4][2] = 0;
+new_matrix_105[4][3] = 0;
+new_matrix_105[4][4] = 0;
+new_matrix_105[4][5] = 1;
+new_matrix_105[4][6] = 0;
+new_matrix_105[4][7] = 0;
+new_matrix_105[4][8] = 0;
+new_matrix_105[5][0] = 0;
+new_matrix_105[5][1] = 0;
+new_matrix_105[5][2] = 0;
+new_matrix_105[5][3] = 0;
+new_matrix_105[5][4] = 0;
+new_matrix_105[5][5] = 0;
+new_matrix_105[5][6] = 1;
+new_matrix_105[5][7] = 0;
+new_matrix_105[5][8] = 0;
+new_matrix_105[6][0] = 0;
+new_matrix_105[6][1] = 0;
+new_matrix_105[6][2] = 0;
+new_matrix_105[6][3] = 0;
+new_matrix_105[6][4] = 0;
+new_matrix_105[6][5] = 0;
+new_matrix_105[6][6] = 0;
+new_matrix_105[6][7] = 1;
+new_matrix_105[6][8] = 0;
+new_matrix_105[7][0] = 0;
+new_matrix_105[7][1] = 0;
+new_matrix_105[7][2] = 0;
+new_matrix_105[7][3] = 0;
+new_matrix_105[7][4] = 0;
+new_matrix_105[7][5] = 0;
+new_matrix_105[7][6] = 0;
+new_matrix_105[7][7] = 0;
+new_matrix_105[7][8] = 1;
+new_matrix_105[8][0] = 0;
+new_matrix_105[8][1] = 0;
+new_matrix_105[8][2] = 0;
+new_matrix_105[8][3] = 0;
+new_matrix_105[8][4] = 0;
+new_matrix_105[8][5] = 0;
+new_matrix_105[8][6] = 0;
+new_matrix_105[8][7] = 0;
+new_matrix_105[8][8] = 0;
+new_matrix_105[9][0] = 0;
+new_matrix_105[9][1] = 0;
+new_matrix_105[9][2] = 0;
+new_matrix_105[9][3] = 0;
+new_matrix_105[9][4] = 0;
+new_matrix_105[9][5] = 0;
+new_matrix_105[9][6] = 0;
+new_matrix_105[9][7] = 0;
+new_matrix_105[9][8] = 0;
+new_matrix_105[10][0] = 0;
+new_matrix_105[10][1] = 0;
+new_matrix_105[10][2] = 0;
+new_matrix_105[10][3] = 0;
+new_matrix_105[10][4] = 0;
+new_matrix_105[10][5] = 0;
+new_matrix_105[10][6] = 0;
+new_matrix_105[10][7] = 0;
+new_matrix_105[10][8] = 0;
+new_matrix_105[11][0] = 0;
+new_matrix_105[11][1] = 0;
+new_matrix_105[11][2] = 0;
+new_matrix_105[11][3] = 0;
+new_matrix_105[11][4] = 0;
+new_matrix_105[11][5] = 0;
+new_matrix_105[11][6] = 0;
+new_matrix_105[11][7] = 0;
+new_matrix_105[11][8] = 0;
+new_matrix_105[12][0] = 0;
+new_matrix_105[12][1] = 0;
+new_matrix_105[12][2] = 0;
+new_matrix_105[12][3] = 0;
+new_matrix_105[12][4] = 0;
+new_matrix_105[12][5] = 0;
+new_matrix_105[12][6] = 0;
+new_matrix_105[12][7] = 0;
+new_matrix_105[12][8] = 0;
+new_matrix_105[13][0] = 0;
+new_matrix_105[13][1] = 0;
+new_matrix_105[13][2] = 0;
+new_matrix_105[13][3] = 0;
+new_matrix_105[13][4] = 0;
+new_matrix_105[13][5] = 0;
+new_matrix_105[13][6] = 0;
+new_matrix_105[13][7] = 0;
+new_matrix_105[13][8] = 0;
+new_matrix_105[14][0] = 0;
+new_matrix_105[14][1] = 0;
+new_matrix_105[14][2] = 0;
+new_matrix_105[14][3] = 0;
+new_matrix_105[14][4] = 0;
+new_matrix_105[14][5] = 0;
+new_matrix_105[14][6] = 0;
+new_matrix_105[14][7] = 0;
+new_matrix_105[14][8] = 0;
+new_matrix_105[15][0] = 0;
+new_matrix_105[15][1] = 0;
+new_matrix_105[15][2] = 0;
+new_matrix_105[15][3] = 0;
+new_matrix_105[15][4] = 0;
+new_matrix_105[15][5] = 0;
+new_matrix_105[15][6] = 0;
+new_matrix_105[15][7] = 0;
+new_matrix_105[15][8] = 0;
+
+// begin new label set:
+int[] new_labelset_105 = new int[] {1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][8].push(node_type(new_labelset_105, new_matrix_105));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][8].push(new int[] {8, 9});
+// end new extension arc.
+
+// begin new veryearlydeadend node:
+veryearlydeadend_nodes[0][8].push(9);
+// end new veryearlydeadend node.
+
+// begin new staircase matrix:
+int rowdim_106 = 9;
+int coldim_106 = 17;
+real[][] new_matrix_106 = new real[coldim_106][rowdim_106];
+new_matrix_106[0][0] = 1;
+new_matrix_106[0][1] = 0;
+new_matrix_106[0][2] = 0;
+new_matrix_106[0][3] = 0;
+new_matrix_106[0][4] = 0;
+new_matrix_106[0][5] = 0;
+new_matrix_106[0][6] = 0;
+new_matrix_106[0][7] = 0;
+new_matrix_106[0][8] = 0;
+new_matrix_106[1][0] = 0;
+new_matrix_106[1][1] = 1;
+new_matrix_106[1][2] = 0;
+new_matrix_106[1][3] = 0;
+new_matrix_106[1][4] = 0;
+new_matrix_106[1][5] = 0;
+new_matrix_106[1][6] = 0;
+new_matrix_106[1][7] = 0;
+new_matrix_106[1][8] = 0;
+new_matrix_106[2][0] = 0;
+new_matrix_106[2][1] = 0;
+new_matrix_106[2][2] = 1;
+new_matrix_106[2][3] = 0;
+new_matrix_106[2][4] = 0;
+new_matrix_106[2][5] = 0;
+new_matrix_106[2][6] = 0;
+new_matrix_106[2][7] = 0;
+new_matrix_106[2][8] = 0;
+new_matrix_106[3][0] = 0;
+new_matrix_106[3][1] = 0;
+new_matrix_106[3][2] = 0;
+new_matrix_106[3][3] = 1;
+new_matrix_106[3][4] = 0;
+new_matrix_106[3][5] = 0;
+new_matrix_106[3][6] = 0;
+new_matrix_106[3][7] = 0;
+new_matrix_106[3][8] = 0;
+new_matrix_106[4][0] = 0;
+new_matrix_106[4][1] = 0;
+new_matrix_106[4][2] = 0;
+new_matrix_106[4][3] = 0;
+new_matrix_106[4][4] = 1;
+new_matrix_106[4][5] = 0;
+new_matrix_106[4][6] = 0;
+new_matrix_106[4][7] = 0;
+new_matrix_106[4][8] = 0;
+new_matrix_106[5][0] = 0;
+new_matrix_106[5][1] = 0;
+new_matrix_106[5][2] = 0;
+new_matrix_106[5][3] = 0;
+new_matrix_106[5][4] = 0;
+new_matrix_106[5][5] = 1;
+new_matrix_106[5][6] = 0;
+new_matrix_106[5][7] = 0;
+new_matrix_106[5][8] = 0;
+new_matrix_106[6][0] = 0;
+new_matrix_106[6][1] = 0;
+new_matrix_106[6][2] = 0;
+new_matrix_106[6][3] = 0;
+new_matrix_106[6][4] = 0;
+new_matrix_106[6][5] = 0;
+new_matrix_106[6][6] = 1;
+new_matrix_106[6][7] = 0;
+new_matrix_106[6][8] = 0;
+new_matrix_106[7][0] = 0;
+new_matrix_106[7][1] = 0;
+new_matrix_106[7][2] = 0;
+new_matrix_106[7][3] = 0;
+new_matrix_106[7][4] = 0;
+new_matrix_106[7][5] = 0;
+new_matrix_106[7][6] = 0;
+new_matrix_106[7][7] = 1;
+new_matrix_106[7][8] = 0;
+new_matrix_106[8][0] = 0;
+new_matrix_106[8][1] = 0;
+new_matrix_106[8][2] = 0;
+new_matrix_106[8][3] = 0;
+new_matrix_106[8][4] = 0;
+new_matrix_106[8][5] = 0;
+new_matrix_106[8][6] = 0;
+new_matrix_106[8][7] = 0;
+new_matrix_106[8][8] = 1;
+new_matrix_106[9][0] = 0;
+new_matrix_106[9][1] = 0;
+new_matrix_106[9][2] = 0;
+new_matrix_106[9][3] = 0;
+new_matrix_106[9][4] = 0;
+new_matrix_106[9][5] = 0;
+new_matrix_106[9][6] = 0;
+new_matrix_106[9][7] = 0;
+new_matrix_106[9][8] = 0;
+new_matrix_106[10][0] = 0;
+new_matrix_106[10][1] = 0;
+new_matrix_106[10][2] = 0;
+new_matrix_106[10][3] = 0;
+new_matrix_106[10][4] = 0;
+new_matrix_106[10][5] = 0;
+new_matrix_106[10][6] = 0;
+new_matrix_106[10][7] = 0;
+new_matrix_106[10][8] = 0;
+new_matrix_106[11][0] = 0;
+new_matrix_106[11][1] = 0;
+new_matrix_106[11][2] = 0;
+new_matrix_106[11][3] = 0;
+new_matrix_106[11][4] = 0;
+new_matrix_106[11][5] = 0;
+new_matrix_106[11][6] = 0;
+new_matrix_106[11][7] = 0;
+new_matrix_106[11][8] = 0;
+new_matrix_106[12][0] = 0;
+new_matrix_106[12][1] = 0;
+new_matrix_106[12][2] = 0;
+new_matrix_106[12][3] = 0;
+new_matrix_106[12][4] = 0;
+new_matrix_106[12][5] = 0;
+new_matrix_106[12][6] = 0;
+new_matrix_106[12][7] = 0;
+new_matrix_106[12][8] = 0;
+new_matrix_106[13][0] = 0;
+new_matrix_106[13][1] = 0;
+new_matrix_106[13][2] = 0;
+new_matrix_106[13][3] = 0;
+new_matrix_106[13][4] = 0;
+new_matrix_106[13][5] = 0;
+new_matrix_106[13][6] = 0;
+new_matrix_106[13][7] = 0;
+new_matrix_106[13][8] = 0;
+new_matrix_106[14][0] = 0;
+new_matrix_106[14][1] = 0;
+new_matrix_106[14][2] = 0;
+new_matrix_106[14][3] = 0;
+new_matrix_106[14][4] = 0;
+new_matrix_106[14][5] = 0;
+new_matrix_106[14][6] = 0;
+new_matrix_106[14][7] = 0;
+new_matrix_106[14][8] = 0;
+new_matrix_106[15][0] = 0;
+new_matrix_106[15][1] = 0;
+new_matrix_106[15][2] = 0;
+new_matrix_106[15][3] = 0;
+new_matrix_106[15][4] = 0;
+new_matrix_106[15][5] = 0;
+new_matrix_106[15][6] = 0;
+new_matrix_106[15][7] = 0;
+new_matrix_106[15][8] = 0;
+new_matrix_106[16][0] = 0;
+new_matrix_106[16][1] = 0;
+new_matrix_106[16][2] = 0;
+new_matrix_106[16][3] = 0;
+new_matrix_106[16][4] = 0;
+new_matrix_106[16][5] = 0;
+new_matrix_106[16][6] = 0;
+new_matrix_106[16][7] = 0;
+new_matrix_106[16][8] = 0;
+
+// begin new label set:
+int[] new_labelset_106 = new int[] {0,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17};
+// end new label set.
+
+// begin new node:
+tree_nodes[0][8].push(node_type(new_labelset_106, new_matrix_106));
+// end new node.
+
+// begin new extension arc:
+tree_arcs[0][8].push(new int[] {9, 10});
+// end new extension arc.
+
+// begin new earlydeadend node:
+earlydeadend_nodes[0][8].push(10);
+// end new earlydeadend node.
 
 // begin new solution node:
-solution_nodes[0][0].push(4);
+solution_nodes[0][8].push(9);
 // end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,11}, new int[][] {{0,1,3},{0,2,3},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {3, 5});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,11,13}, new int[][] {{0,1,3},{0,2,3},{1,2,4},{1,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {5, 6});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,11,13,16}, new int[][] {{0,1,3},{0,2,3},{1,2,4},{1,3,4},{2,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {6, 7});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(7);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,11,13,17}, new int[][] {{0,1,3},{0,2,3},{1,2,4},{1,3,4},{2,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {6, 8});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,11,13,17,18}, new int[][] {{0,1,3},{0,2,3},{1,2,4},{1,3,4},{2,3,5},{2,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {8, 9});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,11,13,17,18,19}, new int[][] {{0,1,3},{0,2,3},{1,2,4},{1,3,4},{2,3,5},{2,4,5},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {9, 10});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(10);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,11,13,17,19}, new int[][] {{0,1,3},{0,2,3},{1,2,4},{1,3,4},{2,3,5},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {8, 11});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(11);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,11,13,18}, new int[][] {{0,1,3},{0,2,3},{1,2,4},{1,3,4},{2,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {6, 12});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(12);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,11,16}, new int[][] {{0,1,3},{0,2,3},{1,2,4},{2,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {5, 13});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(13);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,12}, new int[][] {{0,1,3},{0,2,3},{1,2,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {3, 14});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,12,13}, new int[][] {{0,1,3},{0,2,3},{1,2,5},{1,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {14, 15});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,12,13,15}, new int[][] {{0,1,3},{0,2,3},{1,2,5},{1,3,4},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {15, 16});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,12,13,15,17}, new int[][] {{0,1,3},{0,2,3},{1,2,5},{1,3,4},{1,4,5},{2,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {16, 17});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,12,13,15,17,19}, new int[][] {{0,1,3},{0,2,3},{1,2,5},{1,3,4},{1,4,5},{2,3,5},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {17, 18});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(18);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,12,13,15,19}, new int[][] {{0,1,3},{0,2,3},{1,2,5},{1,3,4},{1,4,5},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {16, 19});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(19);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,12,13,17}, new int[][] {{0,1,3},{0,2,3},{1,2,5},{1,3,4},{2,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {15, 20});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(20);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,12,14}, new int[][] {{0,1,3},{0,2,3},{1,2,5},{1,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {14, 21});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,12,14,17}, new int[][] {{0,1,3},{0,2,3},{1,2,5},{1,3,5},{2,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {21, 22});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(22);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,12,15}, new int[][] {{0,1,3},{0,2,3},{1,2,5},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {14, 23});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(23);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,13}, new int[][] {{0,1,3},{0,2,3},{1,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {3, 24});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,13,15}, new int[][] {{0,1,3},{0,2,3},{1,3,4},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {24, 25});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(25);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,13,16}, new int[][] {{0,1,3},{0,2,3},{1,3,4},{2,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {24, 26});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(26);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,14}, new int[][] {{0,1,3},{0,2,3},{1,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {3, 27});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(27);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,4,15}, new int[][] {{0,1,3},{0,2,3},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {3, 28});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(28);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6}, new int[][] {{0,1,3},{0,2,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {2, 29});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8}, new int[][] {{0,1,3},{0,2,5},{0,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {29, 30});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,11}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {30, 31});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,11,13}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,2,4},{1,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {31, 32});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,11,13,18}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,2,4},{1,3,4},{2,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {32, 33});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,11,13,18,19}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,2,4},{1,3,4},{2,4,5},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {33, 34});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(34);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,11,13,19}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,2,4},{1,3,4},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {32, 35});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(35);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,11,18}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,2,4},{2,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {31, 36});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(36);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,12}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,2,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {30, 37});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,12,13}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,2,5},{1,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {37, 38});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,12,13,15}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,2,5},{1,3,4},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {38, 39});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,12,13,15,19}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,2,5},{1,3,4},{1,4,5},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {39, 40});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(40);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,12,13,19}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,2,5},{1,3,4},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {38, 41});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(41);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,12,14}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,2,5},{1,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {37, 42});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(42);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,12,15}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,2,5},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {37, 43});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(43);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,13}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {30, 44});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,13,15}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,3,4},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {44, 45});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(45);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,13,18}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,3,4},{2,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {44, 46});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(46);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,14}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {30, 47});
-// end new extension arc.
-
-// begin new deadend node:
-deadend_nodes[0][0].push(47);
-// end new deadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,8,15}, new int[][] {{0,1,3},{0,2,5},{0,3,5},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {30, 48});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(48);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,6,11}, new int[][] {{0,1,3},{0,2,5},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {29, 49});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(49);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,8}, new int[][] {{0,1,3},{0,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {2, 50});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(50);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {1,10}, new int[][] {{0,1,3},{1,2,3}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {2, 51});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(51);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2}, new int[][] {{0,1,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 52});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4}, new int[][] {{0,1,4},{0,2,3}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {52, 53});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7}, new int[][] {{0,1,4},{0,2,3},{0,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {53, 54});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,11}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {54, 55});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,11,16}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{1,2,4},{2,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {55, 56});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(56);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,11,17}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{1,2,4},{2,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {55, 57});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,11,17,18}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{1,2,4},{2,3,5},{2,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {57, 58});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,11,17,18,19}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{1,2,4},{2,3,5},{2,4,5},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {58, 59});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(59);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,11,17,19}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{1,2,4},{2,3,5},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {57, 60});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(60);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,11,18}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{1,2,4},{2,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {55, 61});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(61);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,12}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{1,2,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {54, 62});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,12,15}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{1,2,5},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {62, 63});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,12,15,17}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{1,2,5},{1,4,5},{2,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {63, 64});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,12,15,17,19}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{1,2,5},{1,4,5},{2,3,5},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {64, 65});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(65);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,12,15,19}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{1,2,5},{1,4,5},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {63, 66});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(66);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,12,17}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{1,2,5},{2,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {62, 67});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(67);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,15}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {54, 68});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(68);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,7,16}, new int[][] {{0,1,4},{0,2,3},{0,3,4},{2,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {54, 69});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(69);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,4,11}, new int[][] {{0,1,4},{0,2,3},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {53, 70});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(70);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,5}, new int[][] {{0,1,4},{0,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {52, 71});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,5,11}, new int[][] {{0,1,4},{0,2,4},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {71, 72});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(72);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6}, new int[][] {{0,1,4},{0,2,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {52, 73});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,7}, new int[][] {{0,1,4},{0,2,5},{0,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {73, 74});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,7,8}, new int[][] {{0,1,4},{0,2,5},{0,3,4},{0,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {74, 75});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,7,8,11}, new int[][] {{0,1,4},{0,2,5},{0,3,4},{0,3,5},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {75, 76});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,7,8,11,18}, new int[][] {{0,1,4},{0,2,5},{0,3,4},{0,3,5},{1,2,4},{2,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {76, 77});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,7,8,11,18,19}, new int[][] {{0,1,4},{0,2,5},{0,3,4},{0,3,5},{1,2,4},{2,4,5},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {77, 78});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(78);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,7,8,11,19}, new int[][] {{0,1,4},{0,2,5},{0,3,4},{0,3,5},{1,2,4},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {76, 79});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(79);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,7,8,12}, new int[][] {{0,1,4},{0,2,5},{0,3,4},{0,3,5},{1,2,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {75, 80});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,7,8,12,15}, new int[][] {{0,1,4},{0,2,5},{0,3,4},{0,3,5},{1,2,5},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {80, 81});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,7,8,12,15,19}, new int[][] {{0,1,4},{0,2,5},{0,3,4},{0,3,5},{1,2,5},{1,4,5},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {81, 82});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(82);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,7,8,12,19}, new int[][] {{0,1,4},{0,2,5},{0,3,4},{0,3,5},{1,2,5},{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {80, 83});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(83);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,7,8,15}, new int[][] {{0,1,4},{0,2,5},{0,3,4},{0,3,5},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {75, 84});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(84);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,7,8,18}, new int[][] {{0,1,4},{0,2,5},{0,3,4},{0,3,5},{2,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {75, 85});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(85);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,7,11}, new int[][] {{0,1,4},{0,2,5},{0,3,4},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {74, 86});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(86);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,8}, new int[][] {{0,1,4},{0,2,5},{0,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {73, 87});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(87);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,9}, new int[][] {{0,1,4},{0,2,5},{0,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {73, 88});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,9,11}, new int[][] {{0,1,4},{0,2,5},{0,4,5},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {88, 89});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,9,11,18}, new int[][] {{0,1,4},{0,2,5},{0,4,5},{1,2,4},{2,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {89, 90});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(90);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,9,12}, new int[][] {{0,1,4},{0,2,5},{0,4,5},{1,2,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {88, 91});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,9,12,15}, new int[][] {{0,1,4},{0,2,5},{0,4,5},{1,2,5},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {91, 92});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(92);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,9,15}, new int[][] {{0,1,4},{0,2,5},{0,4,5},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {88, 93});
-// end new extension arc.
-
-// begin new deadend node:
-deadend_nodes[0][0].push(93);
-// end new deadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,9,18}, new int[][] {{0,1,4},{0,2,5},{0,4,5},{2,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {88, 94});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(94);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,6,11}, new int[][] {{0,1,4},{0,2,5},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {73, 95});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(95);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,7}, new int[][] {{0,1,4},{0,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {52, 96});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,7,8}, new int[][] {{0,1,4},{0,3,4},{0,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {96, 97});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(97);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,7,11}, new int[][] {{0,1,4},{0,3,4},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {96, 98});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(98);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,8}, new int[][] {{0,1,4},{0,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {52, 99});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(99);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,9}, new int[][] {{0,1,4},{0,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {52, 100});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(100);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {2,11}, new int[][] {{0,1,4},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {52, 101});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(101);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {3}, new int[][] {{0,1,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 102});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {3,6}, new int[][] {{0,1,5},{0,2,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {102, 103});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {3,6,12}, new int[][] {{0,1,5},{0,2,5},{1,2,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {103, 104});
-// end new extension arc.
-
-// begin new solution node:
-solution_nodes[0][0].push(104);
-// end new solution node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {3,12}, new int[][] {{0,1,5},{1,2,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {102, 105});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(105);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {4}, new int[][] {{0,2,3}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 106});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {4,7}, new int[][] {{0,2,3},{0,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {106, 107});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(107);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {4,10}, new int[][] {{0,2,3},{1,2,3}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {106, 108});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(108);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {5}, new int[][] {{0,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 109});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(109);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {6}, new int[][] {{0,2,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 110});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {6,7}, new int[][] {{0,2,5},{0,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {110, 111});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {6,7,8}, new int[][] {{0,2,5},{0,3,4},{0,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {111, 112});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(112);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {6,7,11}, new int[][] {{0,2,5},{0,3,4},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {111, 113});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(113);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {6,8}, new int[][] {{0,2,5},{0,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {110, 114});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(114);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {6,9}, new int[][] {{0,2,5},{0,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {110, 115});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(115);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {6,11}, new int[][] {{0,2,5},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {110, 116});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(116);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {7}, new int[][] {{0,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 117});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {7,8}, new int[][] {{0,3,4},{0,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {117, 118});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(118);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {7,11}, new int[][] {{0,3,4},{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {117, 119});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(119);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {8}, new int[][] {{0,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 120});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(120);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {9}, new int[][] {{0,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 121});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(121);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {10}, new int[][] {{1,2,3}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 122});
-// end new extension arc.
-
-// begin new deadend node:
-deadend_nodes[0][0].push(122);
-// end new deadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {11}, new int[][] {{1,2,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 123});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {11,13}, new int[][] {{1,2,4},{1,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {123, 124});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(124);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {11,16}, new int[][] {{1,2,4},{2,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {123, 125});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(125);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {12}, new int[][] {{1,2,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 126});
-// end new extension arc.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {12,13}, new int[][] {{1,2,5},{1,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {126, 127});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(127);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {12,14}, new int[][] {{1,2,5},{1,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {126, 128});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(128);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {12,15}, new int[][] {{1,2,5},{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {126, 129});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(129);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {12,17}, new int[][] {{1,2,5},{2,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {126, 130});
-// end new extension arc.
-
-// begin new veryearlydeadend node:
-veryearlydeadend_nodes[0][0].push(130);
-// end new veryearlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {13}, new int[][] {{1,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 131});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(131);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {14}, new int[][] {{1,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 132});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(132);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {15}, new int[][] {{1,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 133});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(133);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {16}, new int[][] {{2,3,4}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 134});
-// end new extension arc.
-
-// begin new deadend node:
-deadend_nodes[0][0].push(134);
-// end new deadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {17}, new int[][] {{2,3,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 135});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(135);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {18}, new int[][] {{2,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 136});
-// end new extension arc.
-
-// begin new earlydeadend node:
-earlydeadend_nodes[0][0].push(136);
-// end new earlydeadend node.
-
-// begin new partial triangulation node:
-tree_nodes[0][0].push(node_type(new int[] {19}, new int[][] {{3,4,5}}));
-// end new partial triangulation node.
-
-// begin new extension arc:
-tree_arcs[0][0].push(new int[] {0, 137});
-// end new extension arc.
-
-// begin new deadend node:
-deadend_nodes[0][0].push(137);
-// end new deadend node.
 
 //////////////////////////////////////////////////////////////////////////////
 // begin of drawing parameters section:
@@ -1629,22 +8461,45 @@ for (int workerID = 0; workerID < tree_nodes.length; ++workerID) {
 // end of drawing parameters section.
 //////////////////////////////////////////////////////////////////////////////
 
-
 //////////////////////////////////////////////////////////////////////////////
 // begin of drawing definitions section:
 //////////////////////////////////////////////////////////////////////////////
 void draw_node(picture pic, int workerID, int runID, int nodeID) {
   pair new_pos = node_pos[workerID][runID][nodeID];
-  int[][] partialtriang = tree_nodes[workerID][runID][nodeID].partialtriang;
-  pointconf A_shifted = pointconf(A, copy=true);
-  A_shifted = shift(new_pos) * A_shifted;
-  A_shifted.draw_polygon(pic=tree_pic, pointconf_fillpen=default_pointconf_fillpen + opacity(0.95));
-  for (int[] simplex : partialtriang) {
-    pointconf pt = pointconf(A_shifted, cell=simplex, extremepoints=simplex);
-    pt.draw_polygon(pic=tree_pic,
-	             pointconf_pen=secondary_pointconf_pen,
-                    pointconf_fillpen=secondary_pointconf_fillpen + opacity(1));
+  pair new_pos_matrix = shift(0, -0.25 * size_y) * new_pos;
+  real[][] matrix = tree_nodes[workerID][runID][nodeID].matrix;
+  int matrix_coldim = matrix.length;
+  if (matrix_coldim > 0) {
+    int matrix_rowdim = matrix[0].length;
+    string matrixstring = "\(\setcounter{MaxMatrixCols}{" +  format("%d", matrix_coldim) + "}";
+    matrixstring += "\setlength{\arraycolsep}{"+ format("%f", size_y/(5 * matrix_rowdim)) + "bp}\begin{matrix}";
+    if (matrix_rowdim > 0) {
+      for (int row = 0; row < matrix_rowdim - 1; ++row) {;
+        for (int col = 0; col < matrix_coldim - 1; ++col) {;
+          matrixstring += format("%.2f", matrix[col][row]) + " & ";
+        }
+        matrixstring += format("%.2f", matrix[matrix_coldim - 1][row]) + "\\";
+      }
+      for (int col = 0; col < matrix_coldim - 1; ++col) {
+        matrixstring += format("%.2f", matrix[col][matrix_rowdim - 1]) + " & ";
+      }
+    }
+    matrixstring += format("%.2f", matrix[matrix_coldim - 1][matrix_rowdim - 1]);
+    matrixstring += "\end{matrix}\)";
+    label(pic=tree_pic, L=matrixstring, position=new_pos_matrix, align=N, p=fontsize(2 * min(size_y/(3 * (matrix_rowdim + 2)), size_x/(2 * matrix_coldim))));
   }
+  pair new_pos_labelset = shift(0, -0.3 * size_y) * new_pos;
+  int[] labelset = tree_nodes[workerID][runID][nodeID].labelset;
+  string labelsetstring = "\(\{";
+  for (int i = 0; i < labelset.length - 1; ++i) {;
+    labelsetstring += format("%d", labelset[i]) + ",";
+  }
+  if (labelset.length > 0) {
+    labelsetstring += format("%d", labelset[labelset.length - 1]);
+  }
+  labelsetstring += "\}\)";
+  filldraw(pic=tree_pic, shift(new_pos.x, new_pos.y) * scale(2 * size_x, size_y) * shift(-0.5, -0.5) * unitsquare, fillpen=white, drawpen=linewidth(thinlinewidth));
+  label(pic=tree_pic, L=labelsetstring, position=new_pos_labelset, align=S, p=fontsize(2 * size_x/(2 * (maxelmno + 2))));
 }
 //////////////////////////////////////////////////////////////////////////////
 // end of drawing defintions section.

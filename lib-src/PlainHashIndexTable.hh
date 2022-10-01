@@ -91,7 +91,7 @@ namespace topcom {
 	_preprocessed = phit._preprocessed;
       }
       else {
-	std::lock_guard<std::mutex> _index_data_guard(_index_data_mutex);
+	std::unique_lock<std::shared_mutex> _index_data_guard(_index_data_mutex);
 	key_table_type::operator=(phit);
 	_index_data = phit._index_data;
 	_preprocessed = phit._preprocessed;

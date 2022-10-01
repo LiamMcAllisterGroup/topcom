@@ -1,3 +1,5 @@
+version 1.1.1: first bug fixes based on reports; configure script now
+	allows to use system-wide gmp installation
 version 1.1.0: upgraded version for first distribution of the new TOPCOM
 version 1.0.19: many general corrections and improvements;
 	corrected a determinant calculation in VirtualChiro for the case
