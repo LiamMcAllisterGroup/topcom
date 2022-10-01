@@ -606,9 +606,13 @@ namespace topcom {
 #endif
       }
       else if (strcmp(argv[i], "--qsoptex") == 0) {
+#ifdef HAVE_LIBQSOPTEX     
 	_use_qsopt_ex = true;
 
 	std::cerr << "--qsoptex            : QSopt_ex activated" << std::endl;
+#else
+	std::cerr << "--qsoptex            : ignored (QSOpt_ex support was not configured for this binary)" << std::endl;
+#endif
       }
 
       // some options that are not documented:

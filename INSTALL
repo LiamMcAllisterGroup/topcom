@@ -38,7 +38,13 @@ threadsafe, thus, parallel enumeration can be used.
 Remark concerning the pacakged qsopt_ex LP solver library
 =========================================================
 
-The packaaged LP solver qsopt_ex is very fast but not threadsafe.
+Configuring with option
+
+  ./configure --enable-qsoptex
+
+compiles a binary with QSOpt_ex support.
+
+The packaaged LP solver QSOpt_ex is very fast but not threadsafe.
 Therefore, if you use it (option --qsoptex), then no parallel enumeration
 will be carried out.  Still, the internal memory managament
 of qsopt_ex may core-dump at the very end of the run.

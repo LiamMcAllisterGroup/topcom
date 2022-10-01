@@ -9,6 +9,8 @@
 #ifndef QSOINTERFACE_HH
 #define QSOINTERFACE_HH
 
+#ifdef HAVE_LIBQSOPTEX
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -101,6 +103,8 @@ namespace topcom {
   }
 
 }; // namespace topcom
+
+#endif // HAVE_LIBQSOPTEX
 
 #endif
 

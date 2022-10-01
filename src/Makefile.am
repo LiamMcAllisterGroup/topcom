@@ -123,13 +123,19 @@ santos_22_triang_SOURCES           = santos_22_triang.cc
 
 LDADD           = ../lib-src/libTOPCOM.a \
                   ../lib-src-reg/libCHECKREG.a \
-                  ../external/lib/libcddgmp.a \
-                  ../external/lib/libqsopt_ex.a
+                  ../external/lib/libcddgmp.a
+if USE_QSOPTEX
+LDADD          += ../external/lib/libqsopt_ex.a
+endif
 if USE_SOPLEX
 LDADD          += ../external/lib/libsoplex.a
 endif
+if USE_LOCAL_GMP
 LDADD          += ../external/lib/libgmpxx.a \
                   ../external/lib/libgmp.a
+else
+LIBS           += -lgmpxx -lgmp
+endif
 
 
 AM_CPPFLAGS    += -I../lib-src
