@@ -9,9 +9,6 @@ MANS = $(patsubst $(CURDIR)/debian/man/%.in, \
 	$(CURDIR)/debian/man/%, $(MANS_SOURCES))
 VERSION = $(shell echo $(DEB_VERSION_UPSTREAM) | sed 's|+ds||')
 
-# for reproducible manual
-export FORCE_SOURCE_DATE=1
-
 %:
 	dh $@
 
@@ -23,7 +20,6 @@ override_dh_auto_configure:
 
 execute_before_dh_installdocs:
 	iconv -f ISO-8859-1 -t UTF-8 $(CURDIR)/README -o $(CURDIR)/README
-	htlatex debian/manual.tex "xhtml,html5,charset=utf-8" " -cunihtf -utf8"
 
 execute_before_dh_installman: $(MANS)
 
