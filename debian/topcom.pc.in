@@ -7,6 +7,6 @@ Name: TOPCOM
 Description: Triangulations Of Point Configurations and Oriented Matroids
 Version: @PACKAGE_VERSION@
 URL: https://www.wm.uni-bayreuth.de/de/team/rambau_joerg/TOPCOM/
-Libs: -L${libdir} -lTOPCOM -lCHECKREG -lqsopt_ex
+Libs: -L${libdir} -lTOPCOM -lCHECKREG
 Cflags: -I${includedir} @AM_CPPFLAGS@ @SIZEOF_DEFINES@
 Requires: gmp
