@@ -10,6 +10,7 @@ Build-Depends: debhelper-compat (= 13),
                libqsopt-ex-dev,
                texlive-latex-base,
                texlive-plain-generic,
+               txt2man,
                zlib1g-dev
 Standards-Version: 4.6.1
 Homepage: https://www.wm.uni-bayreuth.de/de/team/rambau_joerg/TOPCOM/
