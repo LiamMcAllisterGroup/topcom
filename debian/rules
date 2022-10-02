@@ -3,10 +3,6 @@
 include /usr/share/dpkg/pkg-info.mk
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
-MANS_SOURCES = $(wildcard $(CURDIR)/debian/man/*.1.in) \
-	$(CURDIR)/debian/man/topcom.7.in
-MANS = $(patsubst $(CURDIR)/debian/man/%.in, \
-	$(CURDIR)/debian/man/%, $(MANS_SOURCES))
 VERSION = $(shell echo $(DEB_VERSION_UPSTREAM) | sed 's|+ds||')
 
 %:
@@ -21,10 +17,7 @@ override_dh_auto_configure:
 execute_before_dh_installdocs:
 	iconv -f ISO-8859-1 -t UTF-8 $(CURDIR)/README -o $(CURDIR)/README
 
-execute_before_dh_installman: $(MANS)
+execute_before_dh_installman: debian/topcom.7
 
-$(CURDIR)/debian/man/%.1: $(CURDIR)/debian/man/%.1.in
-	sed -e 's|@VERSION[@]|$(VERSION)|g' $< > $@
-
-$(CURDIR)/debian/man/topcom.7: $(CURDIR)/debian/man/topcom.7.in
-	sed -e 's|@VERSION[@]|$(VERSION)|g' $< > $@
+debian/topcom.7: debian/topcom.txt
+	txt2man -t TOPCOM -s 7 -r $(VERSION) $< > $@
