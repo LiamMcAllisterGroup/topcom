@@ -8,8 +8,6 @@ Build-Depends: debhelper-compat (= 13),
                libcdd-dev,
                libgmp-dev,
                libqsopt-ex-dev,
-               texlive-latex-base,
-               texlive-plain-generic,
                txt2man,
                zlib1g-dev
 Standards-Version: 4.6.1
