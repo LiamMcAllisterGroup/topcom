@@ -1,12 +1,58 @@
-topcom (1.1.1+ds-1) UNRELEASED; urgency=medium
+topcom (1.1.1+ds-1) unstable; urgency=medium
 
   * New upstream release.
+  * debian/clean
+    - Stop cleaning generated TeX manual files.
+    - Start cleaning generated manpage files.
+  * debian/clean
+    - Add libqsopt-ex-dev to Build-Depends; new optional dependency for
+      regularity checks.
+    - Add libbz2-dev and zlib1g-dev to Build-Depends; used by QSopt_ex.
+    - Add txt2man to Build-Depends; now used to generate manpage.
+    - Remove texlive-* from Build-Depends since we no longer build the
+      manual.
+  * debian/libtopcom-dev.install
+    - Install new pkg-config file.
+  * debian/man
+    - Remove directory.  To simplify maintenance, we now use a single
+      manpage (with symlinks) instead of individual manpages for each
+      command.
+  * debian/manual.tex
+    - Remove file.  This was the manual for a much older version of TOPCOM.
+  * debian/patches/fix-32-bit-build.patch
+    - New patch; avoid "cannot be overloaded" compiler errors on 32-bit
+      systems.
   * debian/patches/no-csh.patch
     - Remove patch; no longer necessary.
+  * debian/patches/pkg-config.patch
+    - New patch; add pkg-config file.
   * debian/patches/*
     - Refresh remaining patches for new upstream release.
+  * debian/README.Debian
+    - Update section about manual.  We now give a link to the online version.
+  * debian/rules
+    - Pass new --enable-qsoptex option to configure script.
+    - Update execute_before_dh_installman target; instead of injecting the
+      version numbers into dozens of individual manpages, we now build a
+      single manpage using txt2man.
+    - Add override_dh_link target to create symlinks to new manpage for
+      each of the many TOPCOM commands.
+  * debian/tests/control
+    - Update library-test to use new pkg-config file.
+  * debian/topcom.doc-base
+    - Remove file; no longer needed as we no longer ship the manual.
+  * debian/topcom.docs
+    - Stop installing manual.
+  * debian/topcom.manpages
+    - Stop installing individual *.1 manpages; they are now created as
+      symlinks by dh_link.
+    - Update path to topcom.7.
+  * debian/topcom.pc.in
+    - Add pkg-config file; processed by configure to generate topcom.pc.
+  * debian/topcom.txt
+    - Add new manpage; processed by txt2man to generate topcom.7.
 
- -- Doug Torrance <dtorrance@debian.org>  Sat, 01 Oct 2022 07:23:47 -0400
+ -- Doug Torrance <dtorrance@debian.org>  Sun, 02 Oct 2022 08:26:07 -0400
 
 topcom (0.17.10+ds-3) unstable; urgency=medium
 
