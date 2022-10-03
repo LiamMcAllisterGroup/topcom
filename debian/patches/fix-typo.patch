@@ -1,6 +1,7 @@
 Description: Fix typo.
 Author: Doug Torrance <dtorrance@debian.org>
-Last-Update: 2020-05-05
+Forwarded: yes
+Last-Update: 2022-10-03
 
 --- a/lib-src/SymmetricFlipGraph.cc
 +++ b/lib-src/SymmetricFlipGraph.cc

@@ -2,7 +2,8 @@ Description: Use libtool to build shared libraries.
  Upstream only builds static libraries.  We also install the headers
  in /usr/include/topcom instead of /usr/include.
 Author: Doug Torrance <dtorrance@debian.org>
-Last-Update: 2022-06-23
+Forwarded: not-needed
+Last-Update: 2022-10-03
 
 --- a/configure.ac
 +++ b/configure.ac

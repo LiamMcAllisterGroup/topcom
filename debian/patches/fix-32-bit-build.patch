@@ -7,7 +7,8 @@ Description: Avoid "cannot be overloaded" compiler errors.
  32-bit systems.
 Author: Doug Torrance <dtorrance@debian.org>
 Origin: https://stackoverflow.com/questions/7666509/hash-function-for-string
-Last-Update: 2022-09-13
+Forwarded: yes
+Last-Update: 2022-10-03
 
 --- a/configure.ac
 +++ b/configure.ac
