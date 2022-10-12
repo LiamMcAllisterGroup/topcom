@@ -24,8 +24,8 @@ Last-Update: 2022-10-03
 +
 +LT_INIT
  
- dnl Check for libraries:
- dnl Make libgmp if requested:
+ dnl Checks for typedefs, structures, and compiler characteristics.
+ AC_C_CONST
 --- a/lib-src/Makefile.am
 +++ b/lib-src/Makefile.am
 @@ -1,6 +1,8 @@
