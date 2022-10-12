@@ -12,6 +12,8 @@
 #include <assert.h>
 #include <iostream>
 
+#include "Global.hh"
+
 #ifdef USE_SPARSEINTSET
 #include "SparseIntegerSet.hh"
 #else
@@ -81,7 +83,7 @@ namespace topcom {
     inline parameter_type no() const;
     inline parameter_type rank() const;
     inline bool           has_dets() const;
-    inline size_type size() const;
+    inline size_type      size() const;
     inline Field det(const basis_type&) const;
     inline Field det(const Permutation&) const;
     // functions:
@@ -153,9 +155,9 @@ namespace topcom {
   inline bool           RealChiro::has_dets() const { return _has_dets; }
   inline size_type      RealChiro::size()     const { 
 #ifdef STL_CHIROTOPE
-    return chirotope_data::size();
+    return static_cast<size_type>(chirotope_data::size());
 #else
-    return chirotope_data::size();
+    return static_cast<size_type>(chirotope_data::size());
 #endif
   }
   inline Field RealChiro::det(const basis_type& basis) const {

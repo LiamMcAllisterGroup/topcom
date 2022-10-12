@@ -290,7 +290,7 @@ namespace topcom {
     Graphics::asy_stream() << "// end new label set node." << std::endl;
   }
 
-  void Graphics::partialtriang_to_asy(const int workerID, const size_type runID, const LabelSet& l, const SimplicialComplex& t) {
+  void Graphics::partialtriang_to_asy(const int workerID, const size_type runID, const IntegerSet& l, const SimplicialComplex& t) {
 
     // no message here because these calls are tight during the enumeration:
     std::lock_guard<std::mutex> lock(IO_sync::mutex);
@@ -467,7 +467,7 @@ namespace topcom {
     Graphics::asy_stream() << "  label(pic=tree_pic, L=minipage(labelsetstring, width=2*size_x), position=new_pos, align=Center, p=fontsize(1.5 * size_x/(labelset.length + 2)));" << std::endl;
     Graphics::asy_stream() << "}" << std::endl;
     Graphics::asy_stream() << "//////////////////////////////////////////////////////////////////////////////" << std::endl;
-    Graphics::asy_stream() << "// end of drawing defintions section." << std::endl;
+    Graphics::asy_stream() << "// end of drawing definitions section." << std::endl;
     Graphics::asy_stream() << "//////////////////////////////////////////////////////////////////////////////" << std::endl;
     Graphics::asy_stream() << std::endl;
     std::cerr << "... done." << std::endl;
@@ -519,7 +519,7 @@ namespace topcom {
     }
     Graphics::asy_stream() << "}" << std::endl;
     Graphics::asy_stream() << "//////////////////////////////////////////////////////////////////////////////" << std::endl;
-    Graphics::asy_stream() << "// end of drawing defintions section." << std::endl;
+    Graphics::asy_stream() << "// end of drawing definitions section." << std::endl;
     Graphics::asy_stream() << "//////////////////////////////////////////////////////////////////////////////" << std::endl;
     Graphics::asy_stream() << std::endl;
     std::cerr << "... done." << std::endl;
@@ -568,7 +568,7 @@ namespace topcom {
     Graphics::asy_stream() << "  label(pic=tree_pic, L=labelsetstring, position=new_pos_labelset, align=S, p=fontsize(2 * size_x/(2 * (maxelmno + 2))));" << std::endl;    
     Graphics::asy_stream() << "}" << std::endl;
     Graphics::asy_stream() << "//////////////////////////////////////////////////////////////////////////////" << std::endl;
-    Graphics::asy_stream() << "// end of drawing defintions section." << std::endl;
+    Graphics::asy_stream() << "// end of drawing definitions section." << std::endl;
     Graphics::asy_stream() << "//////////////////////////////////////////////////////////////////////////////" << std::endl;
     Graphics::asy_stream() << std::endl;
     std::cerr << "... done." << std::endl;

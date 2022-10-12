@@ -11,6 +11,7 @@
 #include <string.h>
 
 #include "IntegerSet64.hh"
+#include "Symmetry.hh"
 
 namespace topcom {
 
@@ -172,7 +173,7 @@ namespace topcom {
 #endif
 
   IntegerSet64::IntegerSet64() :
-    _bitrep(0UL) {
+    _bitrep(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet64::IntegerSet64()" << std::endl;
 #endif
@@ -190,11 +191,11 @@ namespace topcom {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet64::IntegerSet64(IntegerSet64&&)" << std::endl;
 #endif
-    s._bitrep = 0UL;
+    s._bitrep = no_bits;
   }
   
   IntegerSet64::IntegerSet64(const SparseIntegerSet& sis) :
-    _bitrep(0UL) {
+    _bitrep(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet64::IntegerSet64(const SparseIntegerSet&)" << std::endl;
 #endif
@@ -211,7 +212,7 @@ namespace topcom {
   }
 
   IntegerSet64::IntegerSet64(const size_type start, const size_type stop) :
-    _bitrep(0UL) {
+    _bitrep(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet64::IntegerSet64(const size_type, const size_type)" << std::endl;
 #endif
@@ -222,7 +223,7 @@ namespace topcom {
   }
 
   IntegerSet64::IntegerSet64(const size_type elem) :
-    _bitrep(0UL) {
+    _bitrep(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet64::IntegerSet64(const size_type)" << std::endl;
 #endif
@@ -234,7 +235,7 @@ namespace topcom {
   }
 
   IntegerSet64::IntegerSet64(const size_type len, const size_type* init) : 
-    _bitrep(0UL) {
+    _bitrep(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet64::IntegerSet64(const size_type, const size_type*)"
 	      << std::endl;
@@ -253,7 +254,7 @@ namespace topcom {
 
 #ifndef STL_CONTAINERS
   IntegerSet64::IntegerSet64(const Array<size_type>& init) : 
-    _bitrep(0UL) {
+    _bitrep(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet64::IntegerSet64(const Array<size_type>&)"
 	      << std::endl;
@@ -272,7 +273,7 @@ namespace topcom {
   }
 
   IntegerSet64::IntegerSet64(const PlainArray<size_type>& init) : 
-    _bitrep(0UL) {
+    _bitrep(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet64::IntegerSet64(const PlainArray<size_type>&)"
 	      << std::endl;
@@ -293,7 +294,7 @@ namespace topcom {
 #else
 
   IntegerSet64::IntegerSet64(const std::set<parameter_type>& init) : 
-    _bitrep(0UL) {
+    _bitrep(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet64::IntegerSet64(const std::set<parameter_type>&)"
 	      << std::endl;
@@ -314,7 +315,7 @@ namespace topcom {
   }
 
   IntegerSet64::IntegerSet64(const std::vector<parameter_type>& init) : 
-    _bitrep(0UL) {
+    _bitrep(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet64::IntegerSet64(const std::vector<parameter_type>&)"
 	      << std::endl;
@@ -353,7 +354,7 @@ namespace topcom {
 
   // modifier:
   IntegerSet64& IntegerSet64::clear() {
-    _bitrep = 0UL;
+    _bitrep = no_bits;
     return *this;
   }
 
@@ -383,6 +384,17 @@ namespace topcom {
     }
     return count;
   }
+
+  const size_type IntegerSet64::min_elem() const {
+    if (empty()) {
+      std::cerr << "IntegerSet::min_elem() const: "
+		<< "min element of empty set is not defined - exiting"
+		<< std::endl;
+      exit(1);
+    }
+    return *begin();
+  }
+
   const parameter_type IntegerSet64::max_elem() const {
     if (_bitrep != 0) {
       // if the compiler does not support a built-in
@@ -398,9 +410,9 @@ namespace topcom {
   // relations:
   const bool IntegerSet64::contains(const size_type elem) const {
 #ifdef BITCONSTANTS
-    if ((_bit[elem % block_len] & _bitrep) != 0UL) {
+    if ((_bit[elem % block_len] & _bitrep) != no_bits) {
 #else
-      if (((bit_one << (elem % block_len)) & _bitrep) != 0UL) {
+      if (((bit_one << (elem % block_len)) & _bitrep) != no_bits) {
 #endif
 	return true;
 #ifdef BITCONSTANTS
@@ -513,6 +525,46 @@ namespace topcom {
     return *this;
   }
 
+  // other modifiers:
+  IntegerSet64& IntegerSet64::remove_max(const size_type how_many) {
+    if (empty()) {
+      return *this;
+    }
+    for (size_type i = 0; i < how_many; ++i) {
+      *this -= max_elem();
+      if (empty()) {
+	break;
+      }
+    }
+    return *this;
+  }
+  
+  IntegerSet64& IntegerSet64::remove_min(const size_type how_many) {
+    if (empty()) {
+      return *this;
+    }
+    for (size_type i = 0; i < how_many; ++i) {
+      *this -= *begin();
+      if (empty()) {
+	break;
+      }
+    }
+    return *this;
+  }
+  
+  IntegerSet64& IntegerSet64::permute(const Symmetry& s) {
+    IntegerSet64 cpy(*this);
+    for (IntegerSet64::const_iterator iter = cpy.begin();
+	 iter != cpy.end();
+	 ++iter) {
+      if (*iter != s(*iter)) {
+	(*this) ^= *iter;
+	(*this) ^= s(*iter);
+      }
+    }
+    return *this;
+  }
+
   // the same but a new set is returned:
 
   IntegerSet64 IntegerSet64::operator+(const size_type elem) const {
@@ -549,6 +601,124 @@ namespace topcom {
     IntegerSet64 s(*this);
     s ^= s1;
     return s;
+  }
+
+  // other out-of-place functions:
+  IntegerSet64 IntegerSet64::lexmin_subset(const size_type card) const {
+    IntegerSet64 result(*this);
+    return result.remove_max(this->card() - card);
+  }
+  
+  IntegerSet64 IntegerSet64::lexmax_subset(const size_type card) const {
+    IntegerSet64 result(*this);
+    return result.remove_min(this->card() - card);
+  }
+  
+  IntegerSet64 IntegerSet64::permute(const Symmetry& s) const {
+    IntegerSet64 result(*this);
+    for (IntegerSet64::const_iterator iter = begin();
+	 iter != end();
+	 ++iter) {
+      if (*iter != s(*iter)) {
+	result ^= *iter;
+	result ^= s(*iter);
+      }
+    }
+    return result;
+  }
+
+  
+  // the intersection with a set of integer sets,
+  // returns cardinality of intersection:
+  // 0 means 0 elements, 1 means 1 element, 2 means 2 or more elements:
+  const int IntegerSet64::intersection_card(const IntegerSet64** setarray, 
+					    const size_type size,
+					    size_type& common_index) const {
+    if (empty()) {
+      return 0;
+    }
+    if (size == 0) {
+      IntegerSet64::const_iterator iter = begin();
+      common_index = *iter;
+      if (++iter == end()) {
+	return 1;
+      }
+      else {
+	return 2;
+      }
+    }
+
+    // intersect and keep control over uniqueness:
+    int intersection_card = 0;
+    block_type computation_buffer = 0;
+    computation_buffer = _bitrep;
+    for (size_type j = 0; j < size; ++j) {
+      computation_buffer &= setarray[j]->_bitrep;
+      if (computation_buffer == 0) {
+	return 0;
+      }
+    }
+
+    // analyse computation_buffer:
+    for (size_type k = 0; k < block_len; ++k) {
+      if ((computation_buffer & (bit_one << k)) != 0) {
+	common_index = k;
+	if (++intersection_card > 1) {
+	  return 2;
+	}
+      }
+    }
+#ifdef COMPUTATIONS_DEBUG
+    for (size_type j = 0; j < size; ++j) {
+      if (!setarray[j]->contains(common_index)) {
+	std::cerr << "IntegerSet64::intersection_card"
+		  << "(const IntegerSet64**, size_type, size_type&): "
+		  << "computational error."
+		  << std::endl;
+	std::cerr << *setarray[j] << " does not contain common_index " 
+		  << common_index
+		  << std::endl;
+	exit(1); 
+      }
+    }
+#endif
+    return 1;
+  }
+
+  // as a special case of the previous function:
+  // 0 means 0 elements, 1 means at least 1 element:
+  const int IntegerSet64::intersection_nonempty(const IntegerSet64** setarray, 
+						const size_type size,
+						size_type& common_index) const {
+     if (empty()) {
+      return 0;
+    }
+    if (size == 0) {
+      return 1;
+    }
+
+    // intersect and keep control over uniqueness:
+    int intersection_card = 0;
+    block_type computation_buffer = 0;
+    computation_buffer = _bitrep;
+    for (size_type j = 0; j < size; ++j) {
+      computation_buffer &= setarray[j]->_bitrep;
+      if (computation_buffer == 0) {
+	return 0;
+      }
+    }
+    return 1;
+  }
+
+  // specialization for two IntegerSets:
+  const bool IntegerSet64::intersection_nonempty(const IntegerSet64& is) const {
+    if (empty() || is.empty()) {
+      return false;
+    }
+    if ((_bitrep & is._bitrep) != 0) {
+      return true;
+    }
+    return false;
   }
 
   // stream input:
@@ -624,7 +794,7 @@ namespace topcom {
 #ifndef BIT_LINEAR_SEARCH
     // here we proceed by looking up the first bit in a byte table:
     for (size_type j = 0; j < bytes_per_block; ++j) {
-      unsigned char current_byte(static_cast<unsigned char>(b & ~(unsigned char)0UL));
+      unsigned char current_byte(static_cast<unsigned char>(b & byte_one));
       if (current_byte) {
 	_current_bit   = j * byte_len + IntegerSet64::_S_first_one[current_byte];
 #ifdef COMPUTATIONS_DEBUG
@@ -638,9 +808,9 @@ namespace topcom {
     // here we proceed by linear search for the first bit:
     for (size_type j = 0; j < block_len; j++) {
 #ifdef BITCONSTANTS
-      if ((b & _bit[j]) != 0UL) {
+      if ((b & _bit[j]) != no_bits) {
 #else
-	if ((b & (bit_one << j)) != 0UL) {
+	if ((b & (bit_one << j)) != no_bits) {
 #endif
 	  _current_bit = j;
 	  return;
@@ -669,9 +839,9 @@ namespace topcom {
       // mask away bits before _current_bit:
       b &= (all_bits << _current_bit);
     
-      if (b != 0UL) {
+      if (b != no_bits) {
 	for (size_type j = 0; j < bytes_per_block; ++j) {
-	  unsigned char current_byte(static_cast<unsigned char>(b & ~(unsigned char)0UL));
+	  unsigned char current_byte(static_cast<unsigned char>(b & byte_one));
 	  if (current_byte) {
 	    _current_bit   = j * byte_len + IntegerSet64::_S_first_one[current_byte];
 	    return *this;
@@ -685,9 +855,9 @@ namespace topcom {
     // here we proceed by linear search for the first bit:
     for (size_type j = _current_bit + 1; j < block_len; j++) {
 #ifdef BITCONSTANTS
-      if ((_container->_bitrep & _bit[j]) != 0UL) {
+      if ((_container->_bitrep & _bit[j]) != no_bits) {
 #else
-	if ((_container->_bitrep & (bit_one << j)) != 0UL) {
+	if ((_container->_bitrep & (bit_one << j)) != no_bits) {
 #endif
 	  _current_bit = j;
 	  return *this;
@@ -698,15 +868,15 @@ namespace topcom {
 #endif
     }
     const block_type& b = _container->_bitrep;
-    if (b == 0UL) {
+    if (b == no_bits) {
       _current_bit = block_len;
       return *this;
     }
     for (size_type j = 0; j < block_len; j++) {
 #ifdef BITCONSTANTS
-      if ((_container->_bitrep & _bit[j]) != 0UL) {
+      if ((_container->_bitrep & _bit[j]) != no_bits) {
 #else
-	if ((_container->_bitrep & (bit_one << j)) != 0UL) {
+	if ((_container->_bitrep & (bit_one << j)) != no_bits) {
 #endif
 	  _current_bit = j;
 	  return *this;

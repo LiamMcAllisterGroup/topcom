@@ -80,6 +80,7 @@ namespace topcom {
     // functions:
     const parameter_type card()     const; // cardinality
     const parameter_type max_elem() const; // returns the maximal element (-1 for empty set)
+    const size_type      min_elem() const; // returns the minimal element (std::numeric_limits<size_type>::max() for empty set)
 
     // boolean functions:
     const bool contains(const size_type)         const; // membership
@@ -125,6 +126,11 @@ namespace topcom {
     IntegerSet64& operator*=(const IntegerSet64&); // intersection
     IntegerSet64& operator^=(const IntegerSet64&); // symmetric difference
   
+    // other modifiers:
+    IntegerSet64& remove_max(const size_type);
+    IntegerSet64& remove_min(const size_type);
+    IntegerSet64& permute(const Symmetry&);
+    
     // the same but a new set is returned:
     IntegerSet64 operator+(const size_type)   const; // add integer
     IntegerSet64 operator-(const size_type)   const; // delete integer
@@ -132,6 +138,24 @@ namespace topcom {
     IntegerSet64 operator-(const IntegerSet64&) const; // difference
     IntegerSet64 operator*(const IntegerSet64&) const; // intersection
     IntegerSet64 operator^(const IntegerSet64&) const; // symmetric difference
+
+    // other out-of-place functions:
+    IntegerSet64 lexmin_subset(const size_type) const;
+    IntegerSet64 lexmax_subset(const size_type) const;
+    IntegerSet64 permute(const Symmetry&) const;
+
+    // returns the cardinalities
+    // 0, 1, or 2 (2 or more) of
+    // the intersection of several IntegerSet's:
+    const int intersection_card(const IntegerSet64**, 
+				const size_type, 
+				size_type&) const;
+    // specialization returning 0 (no element) or 1 (at least one element):
+    const int intersection_nonempty(const IntegerSet64**, 
+				    const size_type, 
+				    size_type&) const;
+    // specialization for only one other IntegerSet:
+    const bool intersection_nonempty(const IntegerSet64&) const;
 
     // iostream:
     std::istream& read(std::istream&);

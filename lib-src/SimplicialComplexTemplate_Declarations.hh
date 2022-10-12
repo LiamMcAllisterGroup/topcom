@@ -91,7 +91,7 @@ namespace topcom {
     // together with the information about the rank
     // (-1 for empty complex, ignored but mostly set to -2 for non-pure complex):
     bool                            _is_pure;
-    int                             _pure_rank;
+    parameter_type                  _pure_rank;
     // for a non-pure complex, we need to have multiple index sets:
     parameter_type                  _mincard;     // minimum cardinality of a simplex
     parameter_type                  _maxcard;     // maximum cardinality of a simplex plus one
@@ -124,7 +124,7 @@ namespace topcom {
 
     // accessors:
     inline const  bool             pure()           const { return _is_pure; }
-    inline const  int              pure_rank()      const { return _pure_rank; }
+    inline const  parameter_type   pure_rank()      const { return _pure_rank; }
     inline const  parameter_type   mincard()        const { return _mincard; }
     inline const  parameter_type   maxcard()        const { return _maxcard; }
     inline const  IndexSetArray&   index_set()      const { return _index_set; }
@@ -171,7 +171,7 @@ namespace topcom {
       }
       return _index_table[card].get_index(simp);
     }
-    static       size_type   index_of_simplex(const Simplex& simp)       { return index_of_simplex(simp, simp.card()); }
+    static       size_type   index_of_simplex(const Simplex& simp)       { return index_of_simplex(simp, static_cast<parameter_type>(simp.card())); }
     static       Simplex     simplex_of_index(const size_type index, const parameter_type card) {
       return _index_table[card].get_obj(index);
     }
@@ -193,7 +193,7 @@ namespace topcom {
 
     // status information:
     const bool           empty() const { return (_maxcard == 0); }
-    const int rank()     const {
+    const parameter_type rank()  const {
       if (_is_pure) {
 	return _pure_rank;
       }
@@ -348,7 +348,7 @@ namespace topcom {
   inline __sc_const_iterator<T>::__sc_const_iterator(const SimplicialComplexTemplate<T>& s, int) :
     _container(&s),
     _current_card(_container->_maxcard),
-    _current_indexset_iter(NULL) {}
+    _current_indexset_iter(nullptr) {}
 
   template<class T>
   inline __sc_const_iterator<T>::~__sc_const_iterator() {
@@ -367,14 +367,19 @@ namespace topcom {
 
   template<class T>
   inline const Simplex& __sc_const_iterator<T>::operator*() const {
+#ifdef SCITER_DEBUG
+    std::cerr << "inline const Simplex& __sc_const_iterator<T>::operator*() const: dereferencing _current_indexset_iter at "
+	      << _current_indexset_iter << " ..."
+	      << std::endl;
+#endif
 #ifdef INDEXTABLE_DEBUG
-    if (CommandlineOptions::debug()) {
+    if (CommandlineOptions::verbose()) {
       const parameter_type card = _container->_is_pure ? _container->_pure_rank : _current_card;
       std::cerr << "dereferencing iterator pointing to container "
 		<< _container << " with _index_table address "
 		<< &_container->_index_table << " and _index_table of current_card "
 		<< _container->_index_table[card] << " ..." << std::endl;
-      std::cerr << "pointing to indices in "
+      std::cerr << "pointing to objects in "
 		<< _container->_index_table[card]._index_data << std::endl;
       std::cerr << "using _current_indexset_iter with address "
 		<< _current_indexset_iter << " and value "
@@ -385,19 +390,25 @@ namespace topcom {
 #endif
     if (_container->_is_pure) {
       const Simplex& result(_container->_index_table.get_obj(_container->_pure_rank, **_current_indexset_iter));
+#ifdef SCITER_DEBUG
+      std::cerr << "... done." << std::endl;
+#endif
       return result;
     }
     else {
       const Simplex& result(_container->_index_table.get_obj(_current_card, **_current_indexset_iter));
   
 #ifdef INDEXTABLE_DEBUG
-      if (CommandlineOptions::debug()) {
+      if (CommandlineOptions::verbose()) {
 	std::cerr << "... done" << std::endl;
       }
-      if (CommandlineOptions::debug()) {
+      if (CommandlineOptions::verbose()) {
 	std::cerr << "returning reference with address " << &result
 		  << " and value " << result << std::endl;
       }
+#endif
+#ifdef SCITER_DEBUG
+      std::cerr << "... done." << std::endl;
 #endif
       return result;
     }
@@ -405,12 +416,23 @@ namespace topcom {
 
   template<class T>
   inline const Simplex* __sc_const_iterator<T>::operator->() const {
+#ifdef SCITER_DEBUG
+    std::cerr << "inline const Simplex* __sc_const_iterator<T>::operator->() const: dereferencing _current_indexset_iter at "
+	      << _current_indexset_iter << " ..."
+	      << std::endl;
+#endif
     if (_container->_is_pure) {
       const Simplex* result(&_container->_index_table.get_obj(_container->_pure_rank, **_current_indexset_iter));
+#ifdef SCITER_DEBUG
+      std::cerr << "... done." << std::endl;
+#endif
       return result;
     }
     else {
       const Simplex* result(&_container->_index_table.get_obj(_current_card, **_current_indexset_iter));
+#ifdef SCITER_DEBUG
+      std::cerr << "... done." << std::endl;
+#endif
       return result;
     }
   }
@@ -549,14 +571,14 @@ namespace topcom {
   template<class T>
   inline SimplicialComplexTemplate<T>::SimplicialComplexTemplate(const Simplex& simp) :
     _is_pure(true),
-    _pure_rank(simp.card()),
+    _pure_rank(static_cast<int>(simp.card())),
     _index_set() {
     _index_set.reserve(init_capacity);
     _index_set.resize(init_size);
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "SimplicialComplexTemplate<T>::SimplicialComplexTemplate(const Simplex&)" << std::endl;
 #endif
-    const parameter_type card = simp.card();
+    const parameter_type card = static_cast<parameter_type>(simp.card());
     // _maxcard = card + 1;
     // resize(_maxcard);
     // _mincard = card;
@@ -632,7 +654,7 @@ namespace topcom {
 
   template<class T>
   inline const bool SimplicialComplexTemplate<T>::contains(const Simplex& simp) const {
-    parameter_type card = simp.card();
+    parameter_type card = static_cast<parameter_type>(simp.card());
     return contains(simp, card);
   }
 
@@ -643,21 +665,21 @@ namespace topcom {
 
   template<class T>
   inline const bool SimplicialComplexTemplate<T>::contains_face(const Simplex& simp) const {
-    const parameter_type card = simp.card();
+    const parameter_type card = static_cast<parameter_type>(simp.card());
     return contains_face(simp, card);
   }
 
   template<class T>
   inline const bool SimplicialComplexTemplate<T>::contains_face(const Simplex& simp, 
 								Simplex& facet) const {
-    const parameter_type card = simp.card();
+    const parameter_type card = static_cast<parameter_type>(simp.card());
     return contains_face(simp, card, facet);
   }
 
   template<class T>
   inline const bool SimplicialComplexTemplate<T>::contains_free_face(const Simplex& simp,
 								     Simplex& facet) const {
-    const parameter_type card = simp.card();
+    const parameter_type card = static_cast<parameter_type>(simp.card());
     return contains_free_face(simp, card, facet);
   }
 
@@ -665,19 +687,19 @@ namespace topcom {
 
   template<class T>
   inline SimplicialComplexTemplate<T> SimplicialComplexTemplate<T>::star(const Simplex& simp) const {
-    parameter_type card = simp.card();
+    parameter_type card = static_cast<parameter_type>(simp.card());
     return star(simp, card);
   }
   
   template<class T>
   inline SimplicialComplexTemplate<T> SimplicialComplexTemplate<T>::link(const Simplex& simp) const {
-    parameter_type card = simp.card();
+    parameter_type card = static_cast<parameter_type>(simp.card());
     return link(simp, card);
   }
 
   template<class T>
   inline SimplicialComplexTemplate<T>& SimplicialComplexTemplate<T>::deletion(const Simplex& simp) {
-    parameter_type card = simp.card();
+    parameter_type card = static_cast<parameter_type>(simp.card());
     return deletion(simp, card);
   }
 
@@ -702,7 +724,7 @@ namespace topcom {
 
   template<class T>
   inline SimplicialComplexTemplate<T>& SimplicialComplexTemplate<T>::insert_boundary(const Simplex& simp) {
-    return insert_boundary(simp, simp.card());
+    return insert_boundary(simp, static_cast<parameter_type>(simp.card()));
   }
 
   template<class T>
@@ -734,32 +756,32 @@ namespace topcom {
   // adding and deleting a simplex:
   template<class T>
   inline SimplicialComplexTemplate<T>& SimplicialComplexTemplate<T>::operator+=(const Simplex& simp) {
-    return insert(simp,simp.card());
+    return insert(simp, static_cast<parameter_type>(simp.card()));
   }
 
   template<class T>
   inline SimplicialComplexTemplate<T>& SimplicialComplexTemplate<T>::insert(const Simplex& simp) {
-    return insert(simp,simp.card());  
+    return insert(simp,static_cast<parameter_type>(simp.card()));  
   }
 
   template<class T>
   inline SimplicialComplexTemplate<T>& SimplicialComplexTemplate<T>::operator-=(const Simplex& simp) {
-    return erase(simp,simp.card());
+    return erase(simp,static_cast<parameter_type>(simp.card()));
   }
 
   template<class T>
   inline SimplicialComplexTemplate<T>& SimplicialComplexTemplate<T>::erase(const Simplex& simp) {
-    return erase(simp,simp.card());
+    return erase(simp,static_cast<parameter_type>(simp.card()));
   }
 
   template<class T>
   inline SimplicialComplexTemplate<T>& SimplicialComplexTemplate<T>::operator^=(const Simplex& simp) {
-    return exclusiveor(simp,simp.card());
+    return exclusiveor(simp,static_cast<parameter_type>(simp.card()));
   }
 
   template<class T>
   inline SimplicialComplexTemplate<T>& SimplicialComplexTemplate<T>::exclusiveor(const Simplex& simp) {
-    return exclusiveor(simp,simp.card());
+    return exclusiveor(simp,static_cast<parameter_type>(simp.card()));
   }
 
   // union, difference, and intersection with simplicial complexes, a new set is returned:
@@ -834,7 +856,7 @@ namespace topcom {
 
   template<class T>
   inline SimplicialComplexTemplate<T> SimplicialComplexTemplate<T>::join(const Simplex& simp) const {
-    return join(simp, simp.card());
+    return join(simp, static_cast<parameter_type>(simp.card()));
   }
 
   // friends:

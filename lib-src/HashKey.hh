@@ -28,17 +28,21 @@ namespace topcom {
   // for the use in STL vectors/unordered sets/maps:
   template<class Key>
   class Hash {
+  private:
+    static const size_type _init_constant  = sizeof(size_type) >= 8 ? 525201411107845655ull : 3323198485ul;
+    static const size_type _mult_constant  = sizeof(size_type) >= 8 ? 0x5bd1e9955bd1e995    : 0x5bd1e995 ; 
+    static const int       _shift_constant = sizeof(size_type) >= 8 ? 47ul                  : 15; 
   public:
     inline size_type operator()(const Key& key) const {
       // use single-byte MurmurHash:
-      size_type result(525201411107845655ull);
+      size_type result(_init_constant);
       const size_type keysize = key.keysize();
       for (size_type i = 0; i < keysize; ++i) {
 	// result = (result << 5) - result;
 	// result += key.key(i);
 	result ^= key.key(i);
-	result *= 0x5bd1e9955bd1e995;
-	result ^= (result >> 47UL);
+	result *= _mult_constant;
+	result ^= (result >> _shift_constant);
       }
       return result;
     }

@@ -42,12 +42,7 @@ namespace topcom {
 
     parameter_type no   = _chiroptr->no();
     parameter_type rank = _chiroptr->rank();
-
-    if (rank < 3) {
-      // all rank-2 triangulations are regular:
-      return;
-    }
-
+    
     // we build the coefficient matrix from the chirotope and the triangulation t:
     SimplicialComplex intfacets;
     std::unordered_set<Simplex, Hash<Simplex> > unionsimps;
@@ -78,7 +73,7 @@ namespace topcom {
     for (SimplicialComplex::const_iterator iter = intfacets.begin();
 	 iter != intfacets.end();
 	 ++iter) {
-      const Simplex& intfacet(*iter);
+      const Simplex intfacet(*iter);
       if (CommandlineOptions::debug()) {
 	std::lock_guard<std::mutex> lock(IO_sync::mutex);
 	std::cerr << "processing interior facet " << intfacet << " ..." << std::endl;
@@ -94,13 +89,17 @@ namespace topcom {
 	// intfacet is not interior in t, thus no constraint:
 	continue;
       }
-      SimplicialComplex::const_iterator pairiter = simppair.begin();
-      const Simplex& simp1(*pairiter);
-      ++pairiter;
-      const Simplex& simp2(*pairiter);
+      SimplicialComplex::const_iterator pairiter(simppair.begin());
+      const Simplex simp1(*pairiter);
       if (CommandlineOptions::debug()) {
 	std::lock_guard<std::mutex> lock(IO_sync::mutex);
-	std::cerr << "simp1 = " << simp1 << ", simp2 = " << simp2 << std::endl;
+	std::cerr << "simp1 = " << simp1 << std::endl;
+      }
+      ++pairiter;
+      const Simplex simp2(*pairiter);
+      if (CommandlineOptions::debug()) {
+	std::lock_guard<std::mutex> lock(IO_sync::mutex);
+	std::cerr << "simp2 = " << simp2 << std::endl;
       }
       const Simplex unionsimp(simp1 + simp2);
       if (CommandlineOptions::debug()) {
@@ -149,12 +148,7 @@ namespace topcom {
 
       // determinants can be taken from the chirotope, since
       // RegularityCheck is only called when there are points available:
-      if (calibrate > 0) {
-	new_col[new_index] = _chiroptr->det(simp1);
-      }
-      else {
-	new_col[new_index] = -_chiroptr->det(simp1);
-      }
+      new_col[new_index] = calibrate * _chiroptr->det(simp1);
       calibrate = -calibrate;
 
       // build a permutation out of simp1, i.e., at first, new_index is missing:
@@ -177,12 +171,7 @@ namespace topcom {
       while (true) {
 
 	// fetch determinant from chirotope structure:
-	if (calibrate > 0) {
-	  new_col[*simp1_iter] = _chiroptr->det(simp1_perm);
-	}
-	else {
-	  new_col[*simp1_iter] = -_chiroptr->det(simp1_perm);
-	}	
+	new_col[*simp1_iter] = calibrate * _chiroptr->det(simp1_perm);
 	calibrate = -calibrate;
 
 	// check if we are done already:

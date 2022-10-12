@@ -26,9 +26,15 @@ int main (const int argc, const char** argv) {
   }
   PointConfiguration points;
   if (std::cin >> points) {
-    if ((points.no() < 2) || (points.rank() < 2)) {
+    if (points.rank() < points.rowdim()) {
+      std::cerr << "point configuration has " << points.rowdim() << " rows of rank " << points.rank() << std::endl;
+      points.transform_to_full_rank();
+      std::cerr << "resulting no of rows after transformation: " << points.rank() << std::endl;
+      points.pretty_print(std::cerr);
+    }
+    if ((points.no() < 1) || (points.rank() < 1)) {
       if (CommandlineOptions::verbose()) {
-	std::cerr << "no of points and rank must be at least two." << std::endl;
+	std::cerr << "no of points and rank must be at least one." << std::endl;
       }
       return 1;
     }

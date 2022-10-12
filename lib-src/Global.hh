@@ -27,7 +27,7 @@ namespace topcom {
   
   typedef std::uint64_t      block_type;       // type for blocks of a bitstring
   typedef std::size_t        size_type;        // type for sizes of containers like memory size and numbers of objects
-  typedef unsigned int       parameter_type;   // type for element labels like no or rank
+  typedef int                parameter_type;   // type for element labels like no or rank, *** must be signed! ***
 
   // generic computations:
   inline size_type _factorial(const parameter_type n) {

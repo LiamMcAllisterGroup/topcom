@@ -29,11 +29,15 @@ namespace topcom {
 
   class Symmetry;
 
-  const block_type     all_bits        = ~0UL;
-  const size_type      byte_len        = 8UL;
-  const size_type      bytes_per_block = sizeof(block_type);
-  const size_type      block_len       = sizeof(block_type) * byte_len;
-  const block_type     bit_one         = 1UL;
+  constexpr block_type     no_bits         {0x0000000000000000};
+  constexpr block_type     all_bits        {0xffffffffffffffff};
+  constexpr block_type     bit_one         {0x0000000000000001};
+  constexpr block_type     byte_one        {0x00000000000000ff};
+  constexpr size_type      byte_len        {8};
+  constexpr size_type      bytes_per_block {sizeof(block_type)};
+  constexpr size_type      block_len       {sizeof(block_type) * byte_len};
+  constexpr size_type      zero_size       {0};
+  constexpr size_type      unit_size       {1};
 
   // general functions:
 
@@ -189,8 +193,8 @@ namespace topcom {
     IntegerSet operator^(const IntegerSet&) const; // symmetric difference
 
     // other out-of-place functions:
-    IntegerSet lexmin_subset(const size_type card) const;
-    IntegerSet lexmax_subset(const size_type card) const;
+    IntegerSet lexmin_subset(const size_type) const;
+    IntegerSet lexmax_subset(const size_type) const;
     IntegerSet permute(const Symmetry&) const;
 
     // returns the cardinalities

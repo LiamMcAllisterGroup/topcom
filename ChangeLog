@@ -1,3 +1,11 @@
+version 1.1.2: added support for height ouput even in cases where all
+	triangulations are regular; supported transformation to full rank
+	also in checkregularity and points2placingtriang; completed
+	IntegerSet64 with missing functions available for IntegerSet;
+	fixed template overload with identical types on 32-bit systems by
+	making parameter_type signed; fixed output of heights in
+	checkregularity client; made murmur hash function 32bit-safe; some
+	more technical bugfixes for 32bit compatibility
 version 1.1.1: first bug fixes based on reports; configure script now
 	allows to use system-wide gmp installation
 version 1.1.0: upgraded version for first distribution of the new TOPCOM

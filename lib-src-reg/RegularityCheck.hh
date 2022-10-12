@@ -142,9 +142,10 @@ namespace topcom {
       std::lock_guard<std::mutex> lock(_reg_mutex);
       ++cnt_calls;
     }
-    if (_chiroptr->rank() < 3) {
-      return true;
-    }
+    // do not interrupt computation because user may want heights!
+    // if (_chiroptr->rank() < 3) {
+    //   return true;
+    // }
 
     if (_coeffs.coldim() == 0) {
       if (CommandlineOptions::output_heights()) {

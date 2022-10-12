@@ -46,15 +46,15 @@ namespace topcom {
 
       // build cdd's matrix row by row;
       // recall that the coefficient matrix m is transposed for efficiency reasons;
-      // the first entry is ZERO in every row because
+      // the first entry is MINUSONE in every row because
       // its meaning in cdd is is "minus the right hand side":
       dd_set_R(_matrixptr->matrix[i][0], FieldConstants::MINUSONE);
       for (size_type j = 0; j < m.rowdim(); ++j) {
       
 	// because the first column contains the data for the right hand side 
-	// (which is ZERO) we need to shift the column index by one;
+	// (which is MINUSONE) we need to shift the column index by one;
 	// again, we have to use the coefficient matrix m in a transposed way:
-	dd_set_R(_matrixptr->matrix[i][j+1], -m(j, i));
+	dd_set_R(_matrixptr->matrix[i][j+1], m(j, i));
       }
     }
     if (CommandlineOptions::debug()) {
@@ -117,20 +117,23 @@ namespace topcom {
       // output a height vector:
       _solptr = dd_CopyLPSolution(_lpptr);
       Field maxheight(FieldConstants::ONE);
-      for (dd_rowrange j = 0; j < (_solptr->d) - 2; j++) {
+      for (dd_rowrange j = 0; j < (_solptr->d) - 1; j++) {
 	const Field x_j = Field(_solptr->sol[j+1]);
 	if (maxheight - FieldConstants::ONE < x_j) {
 	  maxheight = x_j + FieldConstants::ONE;
 	}
       }
-      for (dd_rowrange j = 0; j < (_solptr->d) - 2; j++) {
+      for (dd_rowrange j = 0; j < (_solptr->d) - 1; j++) {
 	const Field x_j = Field(_solptr->sol[j+1]);
 	if (_support.contains(j)) {
 	  heightsptr->at(j) = x_j;
+	  if (CommandlineOptions::debug()) {
+	    std::cerr << "-- point " << j << " used, assigning height " << x_j << " --" << std::endl;
+	  }
 	}
 	else {
 	  if (CommandlineOptions::debug()) {
-	    std::cerr << std::endl << "-- point " << j << " unused, assigning height " << maxheight << " --" << std::endl;
+	    std::cerr << "-- point " << j << " unused, assigning height " << maxheight << " --" << std::endl;
 	  }
 	  heightsptr->at(j) = maxheight;
 	}
