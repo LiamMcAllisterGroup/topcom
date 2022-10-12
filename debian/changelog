@@ -1,3 +1,18 @@
+topcom (1.1.2+ds-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+  * debian/control
+    - Mark libtopcom-dev as Multi-Arch: same.
+  * debian/patches/fix-typo.patch
+    - Remove patch; applied upstream.
+  * debian/patches/fix-32-bit-build.patch
+    - Remove patch; issue fixed upstream.
+  * debian/patches/*
+    - Refresh remaining patches for new upstream release.
+    - Add Forwarded fields where missing.
+
+ -- Doug Torrance <dtorrance@debian.org>  Wed, 12 Oct 2022 19:08:41 -0400
+
 topcom (1.1.1+ds-1) unstable; urgency=medium
 
   * New upstream release.
