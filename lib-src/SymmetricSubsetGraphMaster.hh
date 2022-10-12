@@ -119,7 +119,8 @@ namespace topcom {
     const Chirotope*                     _chiroptr;
     const SymmetryGroup*                 _symmetriesptr;
     const ClassifiedSubsetSymmetries*    _classified_symmetriesptr;
-    const SwitchTable<colexmax_mode>*    _switch_tableptr;
+    const SwitchTable<LabelSet,
+		      colexmax_mode>*    _switch_tableptr;
     node_type*                           _root_nodeptr;
     bool                                 _print_objects;
     bool                                 _save_objects;
@@ -730,7 +731,7 @@ namespace topcom {
 	std::cerr << "computing switch tables ..." << std::endl;
       }
       // _switch_tableptr = new SwitchTable<colexmax_mode>(*_symmetriesptr);
-      _switch_tableptr = new SwitchTable<colexmax_mode>(_symmetriesptr->n(), _symmetriesptr->generators());
+      _switch_tableptr = new SwitchTable<LabelSet, colexmax_mode>(_symmetriesptr->n(), _symmetriesptr->generators());
       if (CommandlineOptions::verbose()) {
 	std::cerr << "... done." << std::endl;
       }

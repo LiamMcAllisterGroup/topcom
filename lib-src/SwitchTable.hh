@@ -53,14 +53,15 @@ namespace topcom {
 
   typedef std::vector<switch_table_row_type> switch_table_data_type;
 
-  template <comparison_mode_type mode>
+  template <class IndexSet, comparison_mode_type mode>
   class SwitchTable : public switch_table_data_type {
   public:
     typedef comparison_mode_type mode_type;
+    typedef typename IndexSet::const_iterator IndexSet_const_iterator;
   private:
     parameter_type                _n;
-    LabelSet                      _non_trivial_rowset;
-    std::vector<LabelSet>         _non_trivial_colsetvec;
+    IndexSet                      _non_trivial_rowset;
+    std::vector<IndexSet>         _non_trivial_colsetvec;
     Symmetry                      _identity;
     size_type                     _order;
   private:
@@ -81,8 +82,8 @@ namespace topcom {
 
     // accessors:
     inline parameter_type                     n() const;
-    inline const LabelSet&                    non_trivial_rowset() const;
-    inline const std::vector<LabelSet>&       non_trivial_colsetvec() const;
+    inline const IndexSet&                    non_trivial_rowset() const;
+    inline const std::vector<IndexSet>&       non_trivial_colsetvec() const;
     inline const Symmetry&                    identity() const;
     inline size_type                          order() const;
     // functionality:
@@ -98,37 +99,37 @@ namespace topcom {
     symmetry_collectordata              all_switches   () const;
     symmetry_collectordata              all_switches   (const parameter_type) const;
 
-    // extract those switches that may colex-increase a LabelSet:
+    // extract those switches that may colex-increase a IndexSet:
     switch_selection_type               canonicalizing_switchptrs(const parameter_type,
-								  const LabelSet&) const;
+								  const IndexSet&) const;
     switch_selection_type               neutral_switchptrs(const parameter_type i,
-							   const LabelSet& ls) const;
+							   const IndexSet& ls) const;
     // Jordan-Joswig-Kastner specialization:
     bool                                not_canonical  (const parameter_type,
-							const LabelSet&,
-							const LabelSet&) const;
+							const IndexSet&,
+							const IndexSet&) const;
     // combination of Jordan-Joswig-Kastner with Pech-Reichard:
     bool                                not_canonicalPR(const parameter_type,
-							const LabelSet&,
-							const LabelSet&) const;
-    bool                                lex_decreases  (const LabelSet&) const;
-    bool                                colex_increases(const LabelSet&) const;
+							const IndexSet&,
+							const IndexSet&) const;
+    bool                                lex_decreases  (const IndexSet&) const;
+    bool                                colex_increases(const IndexSet&) const;
 
     // scan switch products stabilizing a subset:
     switch_selection_type               stabilizing_switchptrs(const parameter_type,
-							       const LabelSet&,
-							       const LabelSet&) const;
+							       const IndexSet&,
+							       const IndexSet&) const;
     size_type                           count_stabilizing_switchproducts(const parameter_type,
-									 const LabelSet&,
-									 const LabelSet&) const;
+									 const IndexSet&,
+									 const IndexSet&) const;
    
     // stream input/output:
     inline std::istream& read(std::istream&);
-    template <mode_type streammode>
-    inline friend std::istream& operator>>(std::istream&, SwitchTable<streammode>&);
+    template <class StreamIndexSet, mode_type streammode>
+    inline friend std::istream& operator>>(std::istream&, SwitchTable<StreamIndexSet, streammode>&);
     inline std::ostream& write(std::ostream&) const;
-    template <mode_type streammode>
-    inline friend std::ostream& operator<<(std::ostream&, const SwitchTable<streammode>&);
+    template <class StreamIndexSet, mode_type streammode>
+    inline friend std::ostream& operator<<(std::ostream&, const SwitchTable<StreamIndexSet, streammode>&);
 
   private:
     
@@ -136,38 +137,62 @@ namespace topcom {
     inline parameter_type _elem(const parameter_type) const;
     inline parameter_type _mincol(const parameter_type) const;
     inline parameter_type _maxcol(const parameter_type) const;
-    inline bool _compare_subsets(const LabelSet&, const LabelSet&) const;
+    inline bool _compare_subsets(const IndexSet&, const IndexSet&) const;
     bool _add_symmetry(const Symmetry&);
   };
   
   // forward template specializations:
   template <>
-  inline parameter_type SwitchTable<lexmin_mode>::_elem(const parameter_type) const;
+  inline parameter_type SwitchTable<IntegerSet, lexmin_mode>::_elem(const parameter_type) const;
   
   template <>
-  inline parameter_type SwitchTable<colexmax_mode>::_elem(const parameter_type) const;
+  inline parameter_type SwitchTable<IntegerSet, colexmax_mode>::_elem(const parameter_type) const;
 
   template <>
-  inline parameter_type SwitchTable<lexmin_mode>::_mincol(const parameter_type) const;
+  inline parameter_type SwitchTable<IntegerSet, lexmin_mode>::_mincol(const parameter_type) const;
   
   template <>
-  inline parameter_type SwitchTable<colexmax_mode>::_mincol(const parameter_type) const;
+  inline parameter_type SwitchTable<IntegerSet, colexmax_mode>::_mincol(const parameter_type) const;
 
   template <>
-  inline parameter_type SwitchTable<lexmin_mode>::_maxcol(const parameter_type) const;
+  inline parameter_type SwitchTable<IntegerSet, lexmin_mode>::_maxcol(const parameter_type) const;
   
   template <>
-  inline parameter_type SwitchTable<colexmax_mode>::_maxcol(const parameter_type) const;
+  inline parameter_type SwitchTable<IntegerSet, colexmax_mode>::_maxcol(const parameter_type) const;
 
   template <>
-  inline bool SwitchTable<lexmin_mode>::_compare_subsets(const LabelSet&, const LabelSet&) const;
+  inline bool SwitchTable<IntegerSet, lexmin_mode>::_compare_subsets(const IntegerSet&, const IntegerSet&) const;
   
   template <>
-  inline bool SwitchTable<colexmax_mode>::_compare_subsets(const LabelSet&, const LabelSet&) const;
+  inline bool SwitchTable<IntegerSet, colexmax_mode>::_compare_subsets(const IntegerSet&, const IntegerSet&) const;
+
+  template <>
+  inline parameter_type SwitchTable<IntegerSet64, lexmin_mode>::_elem(const parameter_type) const;
+  
+  template <>
+  inline parameter_type SwitchTable<IntegerSet64, colexmax_mode>::_elem(const parameter_type) const;
+
+  template <>
+  inline parameter_type SwitchTable<IntegerSet64, lexmin_mode>::_mincol(const parameter_type) const;
+  
+  template <>
+  inline parameter_type SwitchTable<IntegerSet64, colexmax_mode>::_mincol(const parameter_type) const;
+
+  template <>
+  inline parameter_type SwitchTable<IntegerSet64, lexmin_mode>::_maxcol(const parameter_type) const;
+  
+  template <>
+  inline parameter_type SwitchTable<IntegerSet64, colexmax_mode>::_maxcol(const parameter_type) const;
+
+  template <>
+  inline bool SwitchTable<IntegerSet64, lexmin_mode>::_compare_subsets(const IntegerSet64&, const IntegerSet64&) const;
+  
+  template <>
+  inline bool SwitchTable<IntegerSet64, colexmax_mode>::_compare_subsets(const IntegerSet64&, const IntegerSet64&) const;
 
   // constructors:
-  template <comparison_mode_type mode>
-  inline SwitchTable<mode>::SwitchTable(const SwitchTable& st) :
+  template <class IndexSet, comparison_mode_type mode>
+  inline SwitchTable<IndexSet, mode>::SwitchTable(const SwitchTable& st) :
     switch_table_data_type(st),
     _n(st._n),
     _non_trivial_rowset(st._non_trivial_rowset),
@@ -176,23 +201,23 @@ namespace topcom {
     _order(st._order) {
   }
   
-  template <comparison_mode_type mode>
-  SwitchTable<mode>::SwitchTable(const parameter_type n) :
+  template <class IndexSet, comparison_mode_type mode>
+  SwitchTable<IndexSet, mode>::SwitchTable(const parameter_type n) :
     switch_table_data_type(switch_table_data_type(n, switch_table_row_type(n))),
     _n(n),
     _non_trivial_rowset(),
-    _non_trivial_colsetvec(n, LabelSet()),
+    _non_trivial_colsetvec(n, IndexSet()),
     _identity(Symmetry(n)),
     _order(1UL) {
   }
      
-  template <comparison_mode_type mode>
-  SwitchTable<mode>::SwitchTable(const parameter_type n,
+  template <class IndexSet, comparison_mode_type mode>
+  SwitchTable<IndexSet, mode>::SwitchTable(const parameter_type n,
 				 const symmetry_collectordata& generators) :
     switch_table_data_type(switch_table_data_type(n, switch_table_row_type(n))),
     _n(n),
     _non_trivial_rowset(),
-    _non_trivial_colsetvec(n, LabelSet()),
+    _non_trivial_colsetvec(n, IndexSet()),
     _identity(Symmetry(n)),
     _order(1UL) {
     if (CommandlineOptions::verbose()) {
@@ -218,10 +243,10 @@ namespace topcom {
 	   geniter != generators.end();
 	   ++geniter) {
 	const Symmetry& generator(*geniter);
-	for (LabelSet::const_iterator rowiter = _non_trivial_rowset.begin();
+	for (IndexSet_const_iterator rowiter = _non_trivial_rowset.begin();
 	     rowiter != _non_trivial_rowset.end();
 	     ++rowiter) {
-	  for (LabelSet::const_iterator coliter = _non_trivial_colsetvec.at(*rowiter).begin();
+	  for (IndexSet_const_iterator coliter = _non_trivial_colsetvec.at(*rowiter).begin();
 	       coliter != _non_trivial_colsetvec.at(*rowiter).end();
 	       ++coliter) {
 	    const Symmetry sym = this->at(*rowiter).at(*coliter) * generator;
@@ -264,12 +289,12 @@ namespace topcom {
     }
   }
    
-  template <comparison_mode_type mode>
-  SwitchTable<mode>::SwitchTable(const SymmetryGroup& sg) :
+  template <class IndexSet, comparison_mode_type mode>
+  SwitchTable<IndexSet, mode>::SwitchTable(const SymmetryGroup& sg) :
     switch_table_data_type(switch_table_data_type(sg.n(), switch_table_row_type(sg.n()))),
     _n(sg.n()),
     _non_trivial_rowset(),
-    _non_trivial_colsetvec(sg.n(), LabelSet()),
+    _non_trivial_colsetvec(sg.n(), IndexSet()),
     _identity(sg.identity()),
     _order(1UL) {
     if (CommandlineOptions::verbose()) {
@@ -318,13 +343,13 @@ namespace topcom {
   }
 
   // destructor:
-  template <comparison_mode_type mode>
-  inline SwitchTable<mode>::~SwitchTable() {
+  template <class IndexSet, comparison_mode_type mode>
+  inline SwitchTable<IndexSet, mode>::~SwitchTable() {
   }
 
   // assignment:
-  template <comparison_mode_type mode>
-  inline SwitchTable<mode>& SwitchTable<mode>::operator=(const SwitchTable& st) {
+  template <class IndexSet, comparison_mode_type mode>
+  inline SwitchTable<IndexSet, mode>& SwitchTable<IndexSet, mode>::operator=(const SwitchTable& st) {
     if (&st == this) {
       return *this;
     }
@@ -338,41 +363,41 @@ namespace topcom {
   }
 
   // accessors:
-  template <comparison_mode_type mode>
-  inline parameter_type SwitchTable<mode>::n() const {
+  template <class IndexSet, comparison_mode_type mode>
+  inline parameter_type SwitchTable<IndexSet, mode>::n() const {
     return _n;
   }
 
-  template <comparison_mode_type mode>
-  inline const LabelSet& SwitchTable<mode>::non_trivial_rowset() const {
+  template <class IndexSet, comparison_mode_type mode>
+  inline const IndexSet& SwitchTable<IndexSet, mode>::non_trivial_rowset() const {
     return _non_trivial_rowset;
   }
 
-  template <comparison_mode_type mode>
-  inline const std::vector<LabelSet>& SwitchTable<mode>::non_trivial_colsetvec() const {
+  template <class IndexSet, comparison_mode_type mode>
+  inline const std::vector<IndexSet>& SwitchTable<IndexSet, mode>::non_trivial_colsetvec() const {
     return _non_trivial_colsetvec;
   }
 
-  template <comparison_mode_type mode>
-  inline const Symmetry& SwitchTable<mode>::identity() const {
+  template <class IndexSet, comparison_mode_type mode>
+  inline const Symmetry& SwitchTable<IndexSet, mode>::identity() const {
     return _identity;
   }
 
-  template <comparison_mode_type mode>
-  inline size_type SwitchTable<mode>::order() const {
+  template <class IndexSet, comparison_mode_type mode>
+  inline size_type SwitchTable<IndexSet, mode>::order() const {
     return _order;
   }
 
   // standard functions:
-  template <comparison_mode_type mode>
-  bool SwitchTable<mode>::empty() const {
+  template <class IndexSet, comparison_mode_type mode>
+  bool SwitchTable<IndexSet, mode>::empty() const {
     return _non_trivial_rowset.empty();
   }
 
-  template <comparison_mode_type mode>
-  size_type SwitchTable<mode>::compute_order() const {
+  template <class IndexSet, comparison_mode_type mode>
+  size_type SwitchTable<IndexSet, mode>::compute_order() const {
     size_type result(1UL);
-    for (LabelSet::const_iterator rowiter = _non_trivial_rowset.begin();
+    for (IndexSet_const_iterator rowiter = _non_trivial_rowset.begin();
 	 rowiter != _non_trivial_rowset.end();
 	 ++rowiter) {
       result *= (_non_trivial_colsetvec.at(*rowiter).card() + 1);
@@ -380,8 +405,8 @@ namespace topcom {
     return result;
   }
 
-  template <comparison_mode_type mode>
-  bool SwitchTable<mode>::is_in_group(const Symmetry& s) const {
+  template <class IndexSet, comparison_mode_type mode>
+  bool SwitchTable<IndexSet, mode>::is_in_group(const Symmetry& s) const {
     Symmetry product(s);
     // std::vector<Symmetry> word(_n, Symmetry(_n));
     if (CommandlineOptions::debug()) {
@@ -421,8 +446,8 @@ namespace topcom {
     return true;
   }
  
-  template <comparison_mode_type mode>
-  bool SwitchTable<mode>::add_to_group(const Symmetry& s) {
+  template <class IndexSet, comparison_mode_type mode>
+  bool SwitchTable<IndexSet, mode>::add_to_group(const Symmetry& s) {
     Symmetry product(s);
     // std::vector<Symmetry> word(_n, Symmetry(_n));
     if (CommandlineOptions::debug()) {
@@ -459,30 +484,30 @@ namespace topcom {
     return false;
   }
 
-  template <comparison_mode_type mode>
-  size_type SwitchTable<mode>::stabilizer_card(const IntegerSet& is) const {
+  template <class IndexSet, comparison_mode_type mode>
+  size_type SwitchTable<IndexSet, mode>::stabilizer_card(const IntegerSet& is) const {
     return count_stabilizing_switchproducts(0, is, is);
   }
   
-  template <comparison_mode_type mode>
-  size_type SwitchTable<mode>::stabilizer_card(const IntegerSet64& is) const {
+  template <class IndexSet, comparison_mode_type mode>
+  size_type SwitchTable<IndexSet, mode>::stabilizer_card(const IntegerSet64& is) const {
     return count_stabilizing_switchproducts(0, is, is);
   }
 
-  template <comparison_mode_type mode>
-  size_type SwitchTable<mode>::orbit_size(const IntegerSet& is) const {
+  template <class IndexSet, comparison_mode_type mode>
+  size_type SwitchTable<IndexSet, mode>::orbit_size(const IntegerSet& is) const {
     return _order / stabilizer_card(is);
   }
 
-  template <comparison_mode_type mode>
-  size_type SwitchTable<mode>::orbit_size(const IntegerSet64& is) const {
+  template <class IndexSet, comparison_mode_type mode>
+  size_type SwitchTable<IndexSet, mode>::orbit_size(const IntegerSet64& is) const {
     return _order / stabilizer_card(is);
   }
 
-  template <comparison_mode_type mode>
-  symmetry_collectordata SwitchTable<mode>::all_switches(const parameter_type i) const {
+  template <class IndexSet, comparison_mode_type mode>
+  symmetry_collectordata SwitchTable<IndexSet, mode>::all_switches(const parameter_type i) const {
     symmetry_collectordata result;
-    for (LabelSet::const_iterator coliter = _non_trivial_colsetvec.at(i).begin();
+    for (IndexSet_const_iterator coliter = _non_trivial_colsetvec.at(i).begin();
 	 coliter != _non_trivial_colsetvec.at(i).end();
 	 ++coliter) {
       result.insert(this->at(i).at(*coliter));
@@ -490,13 +515,13 @@ namespace topcom {
     return result;
   }
 
-  template <comparison_mode_type mode>
-  symmetry_collectordata SwitchTable<mode>::all_switches() const {
+  template <class IndexSet, comparison_mode_type mode>
+  symmetry_collectordata SwitchTable<IndexSet, mode>::all_switches() const {
     symmetry_collectordata result;
-    for (LabelSet::const_iterator rowiter = _non_trivial_rowset.begin();
+    for (IndexSet_const_iterator rowiter = _non_trivial_rowset.begin();
 	 rowiter != _non_trivial_rowset.end();
 	 ++rowiter) {
-      for (LabelSet::const_iterator coliter = _non_trivial_colsetvec.at(*rowiter).begin();
+      for (IndexSet_const_iterator coliter = _non_trivial_colsetvec.at(*rowiter).begin();
 	   coliter != _non_trivial_colsetvec.at(*rowiter).end();
 	   ++coliter) {
 	result.insert(this->at(*rowiter).at(*coliter));
@@ -505,10 +530,10 @@ namespace topcom {
     return result;
   }
 
-  // extract those switches that may lex-decrease/colex-increase a LabelSet:
-  template <comparison_mode_type mode>
-  switch_selection_type SwitchTable<mode>::canonicalizing_switchptrs(const parameter_type i,
-								     const LabelSet& ls) const {
+  // extract those switches that may lex-decrease/colex-increase a IndexSet:
+  template <class IndexSet, comparison_mode_type mode>
+  switch_selection_type SwitchTable<IndexSet, mode>::canonicalizing_switchptrs(const parameter_type i,
+								     const IndexSet& ls) const {
 
     // these switches necessarily canonicalize ls strictly:
     switch_selection_type result;
@@ -516,8 +541,8 @@ namespace topcom {
     const parameter_type elem(_elem(i));
     if (_non_trivial_rowset.contains(i)) {
       if (!ls.contains(elem)) {
-	const LabelSet canonicalizing_colset = _non_trivial_colsetvec.at(i) * ls;
-	for (LabelSet::const_iterator coliter = canonicalizing_colset.begin();
+	const IndexSet canonicalizing_colset = _non_trivial_colsetvec.at(i) * ls;
+	for (IndexSet_const_iterator coliter = canonicalizing_colset.begin();
 	     coliter != canonicalizing_colset.end();
 	     ++coliter) {
 	  const parameter_type j(*coliter);
@@ -528,16 +553,16 @@ namespace topcom {
     return result;
   }
 
-  template <comparison_mode_type mode>
-  switch_selection_type SwitchTable<mode>::neutral_switchptrs(const parameter_type i,
-							      const LabelSet& ls) const {
+  template <class IndexSet, comparison_mode_type mode>
+  switch_selection_type SwitchTable<IndexSet, mode>::neutral_switchptrs(const parameter_type i,
+							      const IndexSet& ls) const {
 
     // these switches behave neutrally w.r.t. ls:
     switch_selection_type result;
     result.reserve(_non_trivial_colsetvec.at(i).card());
     const parameter_type elem(_elem(i));
     if (_non_trivial_rowset.contains(i)) {
-      for (LabelSet::const_iterator coliter = _non_trivial_colsetvec.at(i).begin();
+      for (IndexSet_const_iterator coliter = _non_trivial_colsetvec.at(i).begin();
 	   coliter != _non_trivial_colsetvec.at(i).end();
 	   ++coliter) {
 	const parameter_type j(*coliter);
@@ -550,10 +575,10 @@ namespace topcom {
     return result;
   }
 
-  template <comparison_mode_type mode>
-  bool SwitchTable<mode>::not_canonical(const parameter_type i,
-					const LabelSet&      ls_org,
-					const LabelSet&      ls_img) const {
+  template <class IndexSet, comparison_mode_type mode>
+  bool SwitchTable<IndexSet, mode>::not_canonical(const parameter_type i,
+					const IndexSet&      ls_org,
+					const IndexSet&      ls_img) const {
     if (empty()) {
       return false;
     }
@@ -571,7 +596,7 @@ namespace topcom {
       for (switch_selection_type::const_iterator iter = neutrals.begin();
 	   iter != neutrals.end();
 	   ++iter) {
-	const LabelSet new_ls_img(ls_img.permute(**iter));
+	const IndexSet new_ls_img(ls_img.permute(**iter));
 	if (_compare_subsets(new_ls_img, ls_org)) {
 	  return true;
 	}
@@ -584,7 +609,7 @@ namespace topcom {
       for (switch_selection_type::const_iterator iter = canonicalizers.begin();
 	   iter != canonicalizers.end();
 	   ++iter) {
-	const LabelSet new_ls_img(ls_img.permute(**iter));
+	const IndexSet new_ls_img(ls_img.permute(**iter));
 	if (_compare_subsets(new_ls_img, ls_org)) {
 	  return true;
 	}
@@ -596,10 +621,10 @@ namespace topcom {
     return false;
   }
 
-  template <comparison_mode_type mode>
-  bool SwitchTable<mode>::not_canonicalPR(const parameter_type i,
-					  const LabelSet& ls_org,
-					  const LabelSet& ls_img) const {
+  template <class IndexSet, comparison_mode_type mode>
+  bool SwitchTable<IndexSet, mode>::not_canonicalPR(const parameter_type i,
+					  const IndexSet& ls_org,
+					  const IndexSet& ls_img) const {
 
     // a combination of the Pech-Reichard-algorithm with the power of switch tables:
     if (CommandlineOptions::debug()) {
@@ -682,14 +707,14 @@ namespace topcom {
 	}
 
 	// now process all neutral non-identity switches mapping non-elements to a non-element:
-	for (LabelSet::const_iterator preimg_iter = _non_trivial_colsetvec.at(i).begin();
+	for (IndexSet_const_iterator preimg_iter = _non_trivial_colsetvec.at(i).begin();
 	     preimg_iter != _non_trivial_colsetvec.at(i).end();
 	     ++preimg_iter) {
 	  const parameter_type j(*preimg_iter);
 	  if (ls_img.contains(j)) {
 	    continue;
 	  }
-	  const LabelSet new_ls_img(ls_img.permute(this->at(i).at(j)));
+	  const IndexSet new_ls_img(ls_img.permute(this->at(i).at(j)));
 	  if (not_canonicalPR(i + 1, ls_org, new_ls_img)) {
 	    if (CommandlineOptions::debug()) {
 	      std::lock_guard<std::mutex> lock(IO_sync::mutex);
@@ -713,9 +738,9 @@ namespace topcom {
     }
     else {
       if (!ls_img.contains(elem)) {
-	// const LabelSet possible_preimages(_non_trivial_colsetvec.at(i) * ls_img);
-	LabelSet new_ls_org(ls_org - elem);
-	for (LabelSet::const_iterator preimg_iter = _non_trivial_colsetvec.at(i).begin();
+	// const IndexSet possible_preimages(_non_trivial_colsetvec.at(i) * ls_img);
+	IndexSet new_ls_org(ls_org - elem);
+	for (IndexSet_const_iterator preimg_iter = _non_trivial_colsetvec.at(i).begin();
 	     preimg_iter != _non_trivial_colsetvec.at(i).end();
 	     ++preimg_iter) {
 	  const parameter_type j(*preimg_iter);
@@ -725,7 +750,7 @@ namespace topcom {
 	    // the current extremal element elem of ls_org:
 	    continue;
 	  }
-	  const LabelSet new_ls_img((ls_img - j).permute(this->at(i).at(j)));
+	  const IndexSet new_ls_img((ls_img - j).permute(this->at(i).at(j)));
 	  if (not_canonicalPR(i + 1, new_ls_org, new_ls_img)) {
 	    if (CommandlineOptions::debug()) {
 	      std::lock_guard<std::mutex> lock(IO_sync::mutex);
@@ -755,8 +780,8 @@ namespace topcom {
 	}
 	
 	// start implicitly with the identity switch:
-	const LabelSet new_ls_img(ls_img - elem);
-	LabelSet new_ls_org(ls_org - elem);
+	const IndexSet new_ls_img(ls_img - elem);
+	IndexSet new_ls_org(ls_org - elem);
 	if (not_canonicalPR(i + 1, new_ls_org, new_ls_img)) {
 	  if (CommandlineOptions::debug()) {
 	    std::lock_guard<std::mutex> lock(IO_sync::mutex);
@@ -767,7 +792,7 @@ namespace topcom {
 	}
 
 	// now process all neutral non-identity switches mapping elements to elements:
-	for (LabelSet::const_iterator preimg_iter = _non_trivial_colsetvec.at(i).begin();
+	for (IndexSet_const_iterator preimg_iter = _non_trivial_colsetvec.at(i).begin();
 	     preimg_iter != _non_trivial_colsetvec.at(i).end();
 	     ++preimg_iter) {
 	  const parameter_type j(*preimg_iter);
@@ -777,7 +802,7 @@ namespace topcom {
 	    // the current extremal element elem of ls_org:
 	    continue;
 	  }
-	  const LabelSet new_ls_img((ls_img - j).permute(this->at(i).at(j)));
+	  const IndexSet new_ls_img((ls_img - j).permute(this->at(i).at(j)));
 	  if (not_canonicalPR(i + 1, new_ls_org, new_ls_img)) {
 	    if (CommandlineOptions::debug()) {
 	      std::lock_guard<std::mutex> lock(IO_sync::mutex);
@@ -801,16 +826,16 @@ namespace topcom {
     }
   }  
 
-  // extract those switches that may stabilize a LabelSet:
-  template <comparison_mode_type mode>
-  switch_selection_type SwitchTable<mode>::stabilizing_switchptrs(const parameter_type i,
-								  const LabelSet&      ls_org,
-								  const LabelSet&      ls_img) const {
+  // extract those switches that may stabilize a IndexSet:
+  template <class IndexSet, comparison_mode_type mode>
+  switch_selection_type SwitchTable<IndexSet, mode>::stabilizing_switchptrs(const parameter_type i,
+								  const IndexSet&      ls_org,
+								  const IndexSet&      ls_img) const {
     switch_selection_type result;
     result.reserve(_non_trivial_colsetvec.at(i).card());
     const parameter_type elem(_elem(i));
     if (_non_trivial_rowset.contains(i)) {
-      for (LabelSet::const_iterator coliter = _non_trivial_colsetvec.at(i).begin();
+      for (IndexSet_const_iterator coliter = _non_trivial_colsetvec.at(i).begin();
 	   coliter != _non_trivial_colsetvec.at(i).end();
 	   ++coliter) {
 	const parameter_type j(*coliter);
@@ -832,10 +857,10 @@ namespace topcom {
     return result;
   }
 
-  template <comparison_mode_type mode>
-  size_type SwitchTable<mode>::count_stabilizing_switchproducts(const parameter_type i,
-								const LabelSet&      ls_org,
-								const LabelSet&      ls_img) const {
+  template <class IndexSet, comparison_mode_type mode>
+  size_type SwitchTable<IndexSet, mode>::count_stabilizing_switchproducts(const parameter_type i,
+								const IndexSet&      ls_org,
+								const IndexSet&      ls_img) const {
     if (empty()) {
 
       // count the identity:
@@ -858,8 +883,8 @@ namespace topcom {
       // by the remaining switches, since they fix elem:
       result += count_stabilizing_switchproducts(i + 1, ls_org, ls_img) - 1;
     }
-    const LabelSet new_ls_org(ls_org - elem);
-    LabelSet new_ls_img(ls_img - elem);
+    const IndexSet new_ls_org(ls_org - elem);
+    IndexSet new_ls_img(ls_img - elem);
     if (ls_org.contains(elem) && ls_img.contains(elem)) { 
 
       // elem is already in both ls_img and ls_org, which cannot be changed
@@ -868,7 +893,7 @@ namespace topcom {
     }
 
     if (_non_trivial_rowset.contains(i)) {
-      for (LabelSet::const_iterator iter = _non_trivial_colsetvec.at(i).begin();
+      for (IndexSet_const_iterator iter = _non_trivial_colsetvec.at(i).begin();
 	   iter != _non_trivial_colsetvec.at(i).end();
 	   ++iter) {
 	const parameter_type j(*iter);
@@ -907,8 +932,8 @@ namespace topcom {
     return result;
   }
 
-  template <comparison_mode_type mode>
-  bool SwitchTable<mode>::lex_decreases(const LabelSet& ls) const {
+  template <class IndexSet, comparison_mode_type mode>
+  bool SwitchTable<IndexSet, mode>::lex_decreases(const IndexSet& ls) const {
     const bool result(not_canonicalPR(0, ls, ls));
     if (mode != lexmin_mode) {
       std::cerr << "SwitchTable::lex_decreases(...): wrong mode - exiting." << std::endl;
@@ -917,7 +942,7 @@ namespace topcom {
     if (CommandlineOptions::debug()) {
       if (result != not_canonical(0, ls, ls)) {
 	std::lock_guard<std::mutex> lock(IO_sync::mutex);
-	std::cerr << "SwitchTable<mode>::lex_decreases(const LabelSet& ls) const: "
+	std::cerr << "SwitchTable<IndexSet, mode>::lex_decreases(const IndexSet& ls) const: "
 		  << "incompatible results of not_canonicalPR and not_canonical - exiting." << std::endl;
 	std::cerr << "switch table:\n" << *this << std::endl;
 	exit(1);
@@ -926,8 +951,8 @@ namespace topcom {
     return result;
   }
 
-  template <comparison_mode_type mode>
-  bool SwitchTable<mode>::colex_increases(const LabelSet& ls) const {
+  template <class IndexSet, comparison_mode_type mode>
+  bool SwitchTable<IndexSet, mode>::colex_increases(const IndexSet& ls) const {
     const bool result(not_canonicalPR(0, ls, ls));
     if (mode != colexmax_mode) {
       std::cerr << "SwitchTable::colex_increases(...): wrong mode - exiting." << std::endl;
@@ -936,7 +961,7 @@ namespace topcom {
     if (CommandlineOptions::debug()) {
       if (result != not_canonical(0, ls, ls)) {
 	std::lock_guard<std::mutex> lock(IO_sync::mutex);
-	std::cerr << "SwitchTable<mode>::colex_increases(const LabelSet& ls) const: "
+	std::cerr << "SwitchTable<IndexSet, mode>::colex_increases(const IndexSet& ls) const: "
 		  << "incompatible results of not_canonicalPR and not_canonical - exiting." << std::endl;
 	std::cerr << "switch table:\n" << *this << std::endl;
 	exit(1);
@@ -946,24 +971,24 @@ namespace topcom {
   }
   
   // stream input/output:
-  template <comparison_mode_type mode>
-  inline std::istream& SwitchTable<mode>::read(std::istream& ist) {
+  template <class IndexSet, comparison_mode_type mode>
+  inline std::istream& SwitchTable<IndexSet, mode>::read(std::istream& ist) {
     std::cerr << "SwitchTable::read(std::istream&): reading pointers not supported - exiting" << std::endl;
     exit(1);
   }
   
-  template <comparison_mode_type streammode>
-  inline std::istream& operator>>(std::istream& ist, SwitchTable<streammode>& st) {
+  template <class StreamIndexSet, comparison_mode_type streammode>
+  inline std::istream& operator>>(std::istream& ist, SwitchTable<StreamIndexSet, streammode>& st) {
     return st.read(ist);
   }
   
-  template <comparison_mode_type mode>
-  inline std::ostream& SwitchTable<mode>::write(std::ostream& ost) const {
-    for (LabelSet::const_iterator rowiter = _non_trivial_rowset.begin();
+  template <class IndexSet, comparison_mode_type mode>
+  inline std::ostream& SwitchTable<IndexSet, mode>::write(std::ostream& ost) const {
+    for (IndexSet_const_iterator rowiter = _non_trivial_rowset.begin();
 	 rowiter != _non_trivial_rowset.end();
 	 ++rowiter) {
       ost << "row " << *rowiter << ":";
-      for (LabelSet::const_iterator coliter = _non_trivial_colsetvec.at(*rowiter).begin();
+      for (IndexSet_const_iterator coliter = _non_trivial_colsetvec.at(*rowiter).begin();
 	   coliter != _non_trivial_colsetvec.at(*rowiter).end();
 	   ++coliter) {
 	ost << " " << *coliter << " -> " << this->at(*rowiter).at(*coliter);
@@ -973,56 +998,98 @@ namespace topcom {
     return ost;
   }
   
-  template <comparison_mode_type streammode>
-  inline std::ostream& operator<<(std::ostream& ost, const SwitchTable<streammode>& st) {
+  template <class StreamIndexSet, comparison_mode_type streammode>
+  inline std::ostream& operator<<(std::ostream& ost, const SwitchTable<StreamIndexSet, streammode>& st) {
     return st.write(ost);
   }
   
   // internal methods:
   template <>
-  inline parameter_type SwitchTable<lexmin_mode>::_elem(const parameter_type i) const {
+  inline parameter_type SwitchTable<IntegerSet, lexmin_mode>::_elem(const parameter_type i) const {
     return i;
   }
 
   template <>
-  inline parameter_type SwitchTable<colexmax_mode>::_elem(const parameter_type i) const {
+  inline parameter_type SwitchTable<IntegerSet, colexmax_mode>::_elem(const parameter_type i) const {
     return _n - i - 1;
   }
 
   template <>
-  inline parameter_type SwitchTable<lexmin_mode>::_mincol(const parameter_type elem) const {
+  inline parameter_type SwitchTable<IntegerSet, lexmin_mode>::_mincol(const parameter_type elem) const {
     return elem + 1;
   }
 
   template <>
-  inline parameter_type SwitchTable<colexmax_mode>::_mincol(const parameter_type elem) const {
+  inline parameter_type SwitchTable<IntegerSet, colexmax_mode>::_mincol(const parameter_type elem) const {
     return 0;
   }
 
   template <>
-  inline parameter_type SwitchTable<lexmin_mode>::_maxcol(const parameter_type elem) const {
+  inline parameter_type SwitchTable<IntegerSet, lexmin_mode>::_maxcol(const parameter_type elem) const {
     return _n;
   }
 
   template <>
-  inline parameter_type SwitchTable<colexmax_mode>::_maxcol(const parameter_type elem) const {
+  inline parameter_type SwitchTable<IntegerSet, colexmax_mode>::_maxcol(const parameter_type elem) const {
     return elem;
   }
 
   template <>
-  inline bool SwitchTable<lexmin_mode>::_compare_subsets(const LabelSet& ls1,
-							 const LabelSet& ls2) const {
+  inline bool SwitchTable<IntegerSet, lexmin_mode>::_compare_subsets(const IntegerSet& ls1,
+								     const IntegerSet& ls2) const {
     return ls1.lexsmaller(ls2);
   }
 
   template <>
-  inline bool SwitchTable<colexmax_mode>::_compare_subsets(const LabelSet& ls1,
-							   const LabelSet& ls2) const {
+  inline bool SwitchTable<IntegerSet, colexmax_mode>::_compare_subsets(const IntegerSet& ls1,
+								       const IntegerSet& ls2) const {
     return ls1.colexgreater(ls2);
   }
 
-  template <comparison_mode_type mode>
-  bool SwitchTable<mode>::_add_symmetry(const Symmetry& sym) {
+  template <>
+  inline parameter_type SwitchTable<IntegerSet64, lexmin_mode>::_elem(const parameter_type i) const {
+    return i;
+  }
+
+  template <>
+  inline parameter_type SwitchTable<IntegerSet64, colexmax_mode>::_elem(const parameter_type i) const {
+    return _n - i - 1;
+  }
+
+  template <>
+  inline parameter_type SwitchTable<IntegerSet64, lexmin_mode>::_mincol(const parameter_type elem) const {
+    return elem + 1;
+  }
+
+  template <>
+  inline parameter_type SwitchTable<IntegerSet64, colexmax_mode>::_mincol(const parameter_type elem) const {
+    return 0;
+  }
+
+  template <>
+  inline parameter_type SwitchTable<IntegerSet64, lexmin_mode>::_maxcol(const parameter_type elem) const {
+    return _n;
+  }
+
+  template <>
+  inline parameter_type SwitchTable<IntegerSet64, colexmax_mode>::_maxcol(const parameter_type elem) const {
+    return elem;
+  }
+
+  template <>
+  inline bool SwitchTable<IntegerSet64, lexmin_mode>::_compare_subsets(const IntegerSet64& ls1,
+								       const IntegerSet64& ls2) const {
+    return ls1.lexsmaller(ls2);
+  }
+
+  template <>
+  inline bool SwitchTable<IntegerSet64, colexmax_mode>::_compare_subsets(const IntegerSet64& ls1,
+									 const IntegerSet64& ls2) const {
+    return ls1.colexgreater(ls2);
+  }
+
+  template <class IndexSet, comparison_mode_type mode>
+  bool SwitchTable<IndexSet, mode>::_add_symmetry(const Symmetry& sym) {
     for (parameter_type i = 0; i < _n; ++i) {
       const parameter_type elem = _elem(i);
       if (sym(elem) != elem) {

@@ -27,8 +27,8 @@ int main (const int argc, const char** argv) {
   topcom::symmetry_collectordata collector;
   topcom::parameter_type n = 4;
 
-  topcom::LabelSet ls1(std::vector<topcom::size_type> {31, 30, 29, 28, 27, 26});
-  topcom::LabelSet ls2(std::vector<topcom::size_type> {31, 30, 29, 28, 1, 0});
+  topcom::LabelSet ls1(std::vector<topcom::parameter_type> {31, 30, 29, 28, 27, 26});
+  topcom::LabelSet ls2(std::vector<topcom::parameter_type> {31, 30, 29, 28, 1, 0});
   
   // topcom::Permutation cycle(n, 2);
   // auto g1 = topcom::Symmetry(cycle, true);
@@ -68,7 +68,7 @@ int main (const int argc, const char** argv) {
   std::cout << "built group with " << G.order() << " elements" << std::endl;
 
   // topcom::SwitchTable<topcom::lexmin_mode> st(G);
-  topcom::SwitchTable<topcom::colexmax_mode> stg(n, collector);
+  topcom::SwitchTable<topcom::LabelSet, topcom::colexmax_mode> stg(n, collector);
 
   // std::cout << "switch table from group:\n" << st << std::endl;
   std::cout << "switch table from generators:\n" << stg << std::endl;

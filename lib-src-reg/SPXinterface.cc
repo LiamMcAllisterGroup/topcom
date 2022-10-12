@@ -70,6 +70,10 @@ namespace topcom {
   // functions:
   bool SPXinterface::has_interior_point(Vector* heightsptr) {
 
+    if (CommandlineOptions::debug()) {
+      _soplex_obj.writeFileRational("SPX_LP_debugfile.lp");
+    }
+
     static size_type idx = 0;  
     soplex::SPxSolver::Status stat;
   
@@ -101,10 +105,6 @@ namespace topcom {
 	    }
 	    heightsptr->at(j) = __soplexrational_to_field(maxheight);
 	  }
-	}
-	
-	if (CommandlineOptions::debug()) {
-	  _soplex_obj.writeFileRational("SPX_LP_debugfile.lp");
 	}
       }
       return true;

@@ -82,7 +82,8 @@ namespace topcom {
     const PointConfiguration*         _pointsptr;
     const SymmetryGroup*              _symmetriesptr;
     const ClassifiedSubsetSymmetries* _classified_symmetriesptr;
-    const SwitchTable<colexmax_mode>* _switch_tableptr;
+    const SwitchTable<LabelSet,
+		      colexmax_mode>* _switch_tableptr;
     const node_type*                  _root_nodeptr;
     const bool                        _print_objects;
     const bool                        _save_objects;
@@ -137,7 +138,7 @@ namespace topcom {
 				const PointConfiguration*,
 				const SymmetryGroup*,
 				const ClassifiedSubsetSymmetries*,
-				const SwitchTable<colexmax_mode>*,
+				const SwitchTable<LabelSet, colexmax_mode>*,
 				const node_type*,
 				// const ssg_circuits_node*,
 				// const ssg_cocircuits_node*,
@@ -214,7 +215,7 @@ namespace topcom {
 							  const PointConfiguration*                           pointsptr,
 							  const SymmetryGroup*                                symmetriesptr,
 							  const ClassifiedSubsetSymmetries*                   classified_symmetriesptr,
-							  const SwitchTable<colexmax_mode>*                   switch_tabletptr,
+							  const SwitchTable<LabelSet, colexmax_mode>*         switch_tabletptr,
 							  const node_type*                                    root_nodeptr,
 							  std::deque<node_type>&                              open_nodes,
 							  ssg_doneset_type&                                   result_set,

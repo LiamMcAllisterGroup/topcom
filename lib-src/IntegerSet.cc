@@ -182,7 +182,7 @@ namespace topcom {
     while (new_memsize < new_no_of_blocks) {
       new_memsize *= 2;
     }
-    block_type* bp(0);
+    block_type* bp(nullptr);
     try {
       bp = std::allocator_traits<std::allocator<block_type> >::allocate(block_allocator, new_memsize);
     }
@@ -192,12 +192,12 @@ namespace topcom {
     }
     if (_bitrep) {
       // std::memcpy(bp, _bitrep, _memsize * sizeof(block_type));
-      // std::memset(bp + _memsize, 0UL, (new_memsize - _memsize) * sizeof(block_type));
+      // std::memset(bp + _memsize, zero_size, (new_memsize - _memsize) * sizeof(block_type));
       for (size_type i = 0; i < _memsize; ++i) {
         bp[i] = _bitrep[i];
       }
       for (size_type i = _memsize; i < new_memsize; ++i) {
-        bp[i] = 0UL;
+        bp[i] = no_bits;
       }
       std::allocator_traits<std::allocator<block_type> >::deallocate(block_allocator, _bitrep, _memsize);
       _bitrep = 0;
@@ -218,7 +218,7 @@ namespace topcom {
     while (new_memsize > 4 * new_no_of_blocks + 1) {
       new_memsize /= 2;
     }
-    block_type* bp(0);
+    block_type* bp(nullptr);
     try {
       bp = std::allocator_traits<std::allocator<block_type> >::allocate(block_allocator, new_memsize);
     }
@@ -258,11 +258,11 @@ namespace topcom {
       std::cerr << "allocation of " << _memsize << " blocks failed in IntegerSet::IntegerSet(...) - exiting" << std::endl;
       exit(1);
     }
-    for (size_type i = 0UL; i < is._no_of_blocks; ++i) {
+    for (size_type i = 0; i < is._no_of_blocks; ++i) {
       _bitrep[i] = is._bitrep[i];
     }
     for (size_type i = is._no_of_blocks; i < _no_of_blocks; ++i) {
-      _bitrep[i] = 0UL;
+      _bitrep[i] = no_bits;
     }
     for (IntegerSet::const_iterator iter = is.begin();
 	 iter != is.end();
@@ -273,7 +273,7 @@ namespace topcom {
   }
 
   IntegerSet::IntegerSet(const size_type len, block_type* init) : 
-    _no_of_blocks(0UL), _memsize(1UL), _invariant(0UL) {
+    _no_of_blocks(zero_size), _memsize(unit_size), _invariant(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet::IntegerSet(const size_type, block_type*)" << std::endl;
 #endif
@@ -289,16 +289,16 @@ namespace topcom {
     }
     for (size_type i = 0; i < len; ++i) {
       _bitrep[i] = init[i];
-      if (_bitrep[i] != 0UL) {
+      if (_bitrep[i] != no_bits) {
 	_invariant ^= _bitrep[i];
 	_no_of_blocks = i;
       }
     }
     for (size_type i = len; i < _memsize; ++i) {
-      _bitrep[i] = 0UL;
+      _bitrep[i] = no_bits;
     }
 #ifdef CHECK_INVARIANT
-    size_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -313,7 +313,7 @@ namespace topcom {
 #endif
   }
 
-  IntegerSet::IntegerSet() : _no_of_blocks(0), _memsize(1UL), _invariant(0UL) {
+  IntegerSet::IntegerSet() : _no_of_blocks(zero_size), _memsize(unit_size), _invariant(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet::IntegerSet()" << std::endl;
 #endif
@@ -324,9 +324,9 @@ namespace topcom {
       std::cerr << "allocation of " << _memsize << " blocks failed in IntegerSet::IntegerSet(...) - exiting" << std::endl;
       exit(1);
     }
-    _bitrep[0] = 0UL;
+    _bitrep[0] = no_bits;
 #ifdef CHECK_INVARIANT
-    size_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -357,7 +357,7 @@ namespace topcom {
       _bitrep[i] = s._bitrep[i];
     }
 #ifdef CHECK_INVARIANT
-    size_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -377,8 +377,8 @@ namespace topcom {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet::IntegerSet(IntegerSet&&)" << std::endl;
 #endif
-    s._no_of_blocks = 0UL;
-    s._memsize = 1UL;
+    s._no_of_blocks = zero_size;
+    s._memsize = unit_size;
     try {
       s._bitrep = std::allocator_traits<std::allocator<block_type> >::allocate(block_allocator, s._memsize);
     }
@@ -386,15 +386,15 @@ namespace topcom {
       std::cerr << "allocation of " << s._memsize << " blocks failed in IntegerSet::IntegerSet(...) - exiting" << std::endl;
       exit(1);
     }
-    s._bitrep[0] = 0UL;
-    s._invariant = 0UL;
+    s._bitrep[0] = no_bits;
+    s._invariant = no_bits;
 #ifdef WATCH_MAXBLOCKNO
     set_maxblockno();
 #endif
   }
   
   IntegerSet::IntegerSet(const SparseIntegerSet& sis) :
-    _no_of_blocks(0UL), _memsize(1UL), _invariant(0UL) {
+    _no_of_blocks(zero_size), _memsize(unit_size), _invariant(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet::IntegerSet(const SparseIntegerSet&)" << std::endl;
 #endif
@@ -406,10 +406,10 @@ namespace topcom {
 	std::cerr << "allocation of " << _memsize << " blocks failed in IntegerSet::IntegerSet(...) - exiting" << std::endl;
 	exit(1);
       }
-      _bitrep[0] = 0UL;
+      _bitrep[0] = no_bits;
       return;
     }
-    size_type maxel(0);
+    size_type maxel(0UL);
     for (SparseIntegerSet::const_iterator iter = sis.begin(); iter != sis.end(); ++iter) {
       if (*iter > maxel) {
 	maxel = *iter;
@@ -427,7 +427,7 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = 0; i < _memsize; ++i) {
-      _bitrep[i] = 0UL;
+      _bitrep[i] = no_bits;
     }
     for (SparseIntegerSet::const_iterator iter = sis.begin(); iter != sis.end(); ++iter) {
 #ifdef BITCONSTANTS
@@ -440,7 +440,7 @@ namespace topcom {
       _invariant ^= _bitrep[i];
     }
 #ifdef CHECK_INVARIANT
-    size_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -456,7 +456,7 @@ namespace topcom {
   }
 
   IntegerSet::IntegerSet(const size_type start, const size_type stop) :
-    _no_of_blocks(0UL), _memsize(1UL), _invariant(0UL) {
+    _no_of_blocks(zero_size), _memsize(unit_size), _invariant(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet::IntegerSet(const size_type, const size_type)" << std::endl;
 #endif
@@ -468,7 +468,7 @@ namespace topcom {
 	std::cerr << "allocation of " << _memsize << " blocks failed in IntegerSet::IntegerSet(...) - exiting" << std::endl;
 	exit(1);
       }
-      _bitrep[0] = 0UL;
+      _bitrep[0] = no_bits;
       return;
     }
     _no_of_blocks = calc_no_of_blocks(stop - 1);
@@ -483,10 +483,10 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = 0; i < _memsize; ++i) {
-      _bitrep[i] = 0UL;
+      _bitrep[i] = no_bits;
     }
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -503,7 +503,7 @@ namespace topcom {
   }
 
   IntegerSet::IntegerSet(const size_type elem) :
-    _memsize(1UL), _invariant(0UL) {
+    _memsize(unit_size), _invariant(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet::IntegerSet(const size_type)" << std::endl;
 #endif
@@ -519,7 +519,7 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = 0; i < _memsize; ++i) {
-      _bitrep[i] = 0UL;
+      _bitrep[i] = no_bits;
     }
 #ifdef BITCONSTANTS
     _bitrep[elem / block_len] |= _bit[elem % block_len];
@@ -528,7 +528,7 @@ namespace topcom {
 #endif
     _invariant ^= _bitrep[elem / block_len];
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -544,7 +544,7 @@ namespace topcom {
   }
 
   IntegerSet::IntegerSet(const size_type len, const size_type* init) : 
-    _no_of_blocks(0), _memsize(1UL), _invariant(0UL) {
+    _no_of_blocks(zero_size), _memsize(unit_size), _invariant(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet::IntegerSet(const size_type, const size_type*)"
 	      << std::endl;
@@ -557,7 +557,7 @@ namespace topcom {
 	std::cerr << "allocation of " << _memsize << " blocks failed in IntegerSet::IntegerSet(...) - exiting" << std::endl;
 	exit(1);
       }
-      _bitrep[0] = 0UL;
+      _bitrep[0] = no_bits;
       _no_of_blocks = 0; 
       return;
     }
@@ -579,7 +579,7 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = 0; i < _memsize; ++i) {
-      _bitrep[i] = 0UL;
+      _bitrep[i] = no_bits;
     }
     for (size_type i = 0; i < len; i++) {
 #ifdef BITCONSTANTS
@@ -592,7 +592,7 @@ namespace topcom {
       _invariant ^= _bitrep[i];
     }
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -609,7 +609,7 @@ namespace topcom {
 
 #ifndef STL_CONTAINERS
   IntegerSet::IntegerSet(const Array<size_type>& init) : 
-    _no_of_blocks(0UL), _memsize(1UL) {
+    _no_of_blocks(zero_size), _memsize(unit_size) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet::IntegerSet(const Array<size_type>&)"
 	      << std::endl;
@@ -623,7 +623,7 @@ namespace topcom {
 	std::cerr << "allocation of " << _memsize << " blocks failed in IntegerSet::IntegerSet(...) - exiting" << std::endl;
 	exit(1);
       }
-      _bitrep[0] = 0UL;
+      _bitrep[0] = no_bits;
       return;
     }
     size_type maxel = 0;
@@ -644,7 +644,7 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = 0; i < _memsize; ++i) {
-      _bitrep[i] = 0UL;
+      _bitrep[i] = no_bits;
     }
     for (size_type i = 0; i < len; i++) {
 #ifdef BITCONSTANTS
@@ -657,7 +657,7 @@ namespace topcom {
       _invariant ^= _bitrep[i];
     }
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -673,7 +673,7 @@ namespace topcom {
   }
 
   IntegerSet::IntegerSet(const PlainArray<size_type>& init) : 
-    _no_of_blocks(0UL), _memsize(1UL), _invariant(0UL) {
+    _no_of_blocks(zero_size), _memsize(unit_size), _invariant(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet::IntegerSet(const PlainArray<size_type>&)"
 	      << std::endl;
@@ -687,7 +687,7 @@ namespace topcom {
 	std::cerr << "allocation of " << _memsize << " blocks failed in IntegerSet::IntegerSet(...) - exiting" << std::endl;
 	exit(1);
       }
-      _bitrep[0] = 0UL;
+      _bitrep[0] = no_bits;
       return;
     }
     size_type maxel = 0;
@@ -708,7 +708,7 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = 0; i < _memsize; ++i) {
-      _bitrep[i] = 0UL;
+      _bitrep[i] = no_bits;
     }
     for (size_type i = 0; i < len; i++) {
 #ifdef BITCONSTANTS
@@ -721,7 +721,7 @@ namespace topcom {
       _invariant ^= _bitrep[i];
     }
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -739,7 +739,7 @@ namespace topcom {
 #else
 
   IntegerSet::IntegerSet(const std::set<size_type>& init) : 
-    _no_of_blocks(0UL), _memsize(1UL), _invariant(0UL) {
+    _no_of_blocks(zero_size), _memsize(unit_size), _invariant(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet::IntegerSet(const std::vector<size_type>&)"
 	      << std::endl;
@@ -753,7 +753,7 @@ namespace topcom {
 	std::cerr << "allocation of " << _memsize << " blocks failed in IntegerSet::IntegerSet(...) - exiting" << std::endl;
 	exit(1);
       }
-      _bitrep[0] = 0UL;
+      _bitrep[0] = no_bits;
       return;
     }
     size_type maxel = 0;
@@ -776,7 +776,7 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = 0; i < _memsize; ++i) {
-      _bitrep[i] = 0UL;
+      _bitrep[i] = no_bits;
     }
     for (std::set<size_type>::const_iterator inititer = init.begin();
 	 inititer != init.end();
@@ -791,7 +791,7 @@ namespace topcom {
       _invariant ^= _bitrep[i];
     }
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -807,7 +807,7 @@ namespace topcom {
   }
 
   IntegerSet::IntegerSet(const std::set<parameter_type>& init) : 
-    _no_of_blocks(0UL), _memsize(1UL), _invariant(0UL) {
+    _no_of_blocks(zero_size), _memsize(unit_size), _invariant(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet::IntegerSet(const std::vector<size_type>&)"
 	      << std::endl;
@@ -821,7 +821,7 @@ namespace topcom {
 	std::cerr << "allocation of " << _memsize << " blocks failed in IntegerSet::IntegerSet(...) - exiting" << std::endl;
 	exit(1);
       }
-      _bitrep[0] = 0UL;
+      _bitrep[0] = no_bits;
       return;
     }
     size_type maxel = 0;
@@ -844,7 +844,7 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = 0; i < _memsize; ++i) {
-      _bitrep[i] = 0UL;
+      _bitrep[i] = no_bits;
     }
     for (std::set<parameter_type>::const_iterator inititer = init.begin();
 	 inititer != init.end();
@@ -859,7 +859,7 @@ namespace topcom {
       _invariant ^= _bitrep[i];
     }
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -875,7 +875,7 @@ namespace topcom {
   }
 
   IntegerSet::IntegerSet(const std::vector<size_type>& init) : 
-    _no_of_blocks(0UL), _memsize(1UL), _invariant(0UL) {
+    _no_of_blocks(zero_size), _memsize(unit_size), _invariant(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet::IntegerSet(const std::vector<size_type>&)"
 	      << std::endl;
@@ -889,7 +889,7 @@ namespace topcom {
 	std::cerr << "allocation of " << _memsize << " blocks failed in IntegerSet::IntegerSet(...) - exiting" << std::endl;
 	exit(1);
       }
-      _bitrep[0] = 0UL;
+      _bitrep[0] = no_bits;
       return;
     }
     size_type maxel = 0;
@@ -910,7 +910,7 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = 0; i < _memsize; ++i) {
-      _bitrep[i] = 0UL;
+      _bitrep[i] = no_bits;
     }
     for (size_type i = 0; i < len; i++) {
 #ifdef BITCONSTANTS
@@ -923,7 +923,7 @@ namespace topcom {
       _invariant ^= _bitrep[i];
     }
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -939,7 +939,7 @@ namespace topcom {
   }
 
   IntegerSet::IntegerSet(const std::vector<parameter_type>& init) : 
-    _no_of_blocks(0UL), _memsize(1UL), _invariant(0UL) {
+    _no_of_blocks(zero_size), _memsize(unit_size), _invariant(no_bits) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cout << "IntegerSet::IntegerSet(const std::vector<size_type>&)"
 	      << std::endl;
@@ -953,7 +953,7 @@ namespace topcom {
 	std::cerr << "allocation of " << _memsize << " blocks failed in IntegerSet::IntegerSet(...) - exiting" << std::endl;
 	exit(1);
       }
-      _bitrep[0] = 0UL;
+      _bitrep[0] = no_bits;
       return;
     }
     size_type maxel = 0;
@@ -974,7 +974,7 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = 0; i < _memsize; ++i) {
-      _bitrep[i] = 0UL;
+      _bitrep[i] = no_bits;
     }
     for (size_type i = 0; i < len; i++) {
 #ifdef BITCONSTANTS
@@ -987,7 +987,7 @@ namespace topcom {
       _invariant ^= _bitrep[i];
     }
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -1044,11 +1044,11 @@ namespace topcom {
       _bitrep[i] = s._bitrep[i];
     }
     for (size_type i = _no_of_blocks; i < _memsize; ++i) {
-      _bitrep[i] = 0UL;
+      _bitrep[i] = no_bits;
     }
   
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -1099,8 +1099,8 @@ namespace topcom {
       std::cerr << "IntegerSet::IntegerSet(...): *this/argument is an uninitialized IntegerSet - exiting" << std::endl;
       exit(1);
     }
-    s._no_of_blocks = 0UL;
-    s._memsize = 1UL;
+    s._no_of_blocks = zero_size;
+    s._memsize = unit_size;
     try {
       s._bitrep = std::allocator_traits<std::allocator<block_type> >::allocate(block_allocator, s._memsize);
     }
@@ -1108,20 +1108,20 @@ namespace topcom {
       std::cerr << "allocation of " << s._memsize << " blocks failed in IntegerSet::IntegerSet(...) - exiting" << std::endl;
       exit(1);
     }
-    s._bitrep[0] = 0UL;
-    s._invariant = 0UL;
+    s._bitrep[0] = no_bits;
+    s._invariant = no_bits;
     return *this;
   }
 
   // modifier:
   IntegerSet& IntegerSet::clear() {
-    if (_memsize > 1UL) {
+    if (_memsize > unit_size) {
       if (_bitrep) {
 	std::allocator_traits<std::allocator<block_type> >::deallocate(block_allocator, _bitrep, _memsize);
 	_bitrep = 0;
 	_memsize = 0;
       }
-      _memsize = 1UL;
+      _memsize = unit_size;
       try {
 	_bitrep = std::allocator_traits<std::allocator<block_type> >::allocate(block_allocator, _memsize);
       }
@@ -1130,8 +1130,8 @@ namespace topcom {
 	exit(1);
       }
     }
-    else if (_memsize < 1UL) {
-      _memsize = 1UL;
+    else if (_memsize < unit_size) {
+      _memsize = unit_size;
       try {
 	_bitrep = std::allocator_traits<std::allocator<block_type> >::allocate(block_allocator, _memsize);
       }
@@ -1140,11 +1140,11 @@ namespace topcom {
 	exit(1);
       }
     }
-    _bitrep[0] = 0UL;
-    _invariant = 0UL;
+    _bitrep[0] = no_bits;
+    _invariant = no_bits;
     _no_of_blocks = 0;
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -1201,7 +1201,7 @@ namespace topcom {
       _invariant ^= _bitrep[i];
     }
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -1219,7 +1219,7 @@ namespace topcom {
     //   size_type count = 0;
     //   for (size_type i = 0; i < _no_of_blocks; i++) {
     //     block_type b = _bitrep[i];
-    //     if (b == 0UL) {
+    //     if (b == no_bits) {
     //       continue;
     //     }
     //     for (size_type j = 0; j < block_len; j++) {
@@ -1232,7 +1232,7 @@ namespace topcom {
     //   }
     //   return count;
 
-    size_type count(0);
+    size_type count(0UL);
 
     // algorithm taken from "http://www.caam.rice.edu/~dougm/twiddle/BitCount.html"
     for (size_type i = 0; i < _no_of_blocks; i++) {
@@ -1246,7 +1246,7 @@ namespace topcom {
 
 
     //   // algorithm taken from "http://www.devx.com/free/tips/tipview.asp?content_id=3839"
-    //   size_type count(0);
+    //   size_type count(0UL);
     //   for (size_type i = 0; i < _no_of_blocks; i++) {
     //     block_type bits = _bitrep[i];
     //     bits = bits - ((bits >> 1) & 0x55555555);
@@ -1308,9 +1308,9 @@ namespace topcom {
       return false;
     }
 #ifdef BITCONSTANTS
-    if ((_bit[elem % block_len] & _bitrep[block_pos]) != 0UL) {
+    if ((_bit[elem % block_len] & _bitrep[block_pos]) != no_bits) {
 #else
-      if (((bit_one << (elem % block_len)) & _bitrep[block_pos]) != 0UL) {
+      if (((bit_one << (elem % block_len)) & _bitrep[block_pos]) != no_bits) {
 #endif
 	return true;
       }
@@ -1481,7 +1481,7 @@ namespace topcom {
     set_maxblockno();
 #endif
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -1510,7 +1510,7 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = _no_of_blocks; i < _memsize; ++i) {
-      if (_bitrep[i] != 0UL) {
+      if (_bitrep[i] != no_bits) {
 	std::cerr << "IntegerSet::operator+=(const size_type): "
 		  << "computational error."
 		  << std::endl;
@@ -1540,12 +1540,12 @@ namespace topcom {
     if (block_pos < _no_of_blocks - 1) {
       return *this;
     }
-    if (_bitrep[block_pos] != 0UL) {
+    if (_bitrep[block_pos] != no_bits) {
       return *this;
     }
     _no_of_blocks = block_pos + 1;
     while (_no_of_blocks > 0) {
-      if (_bitrep[_no_of_blocks - 1] != 0UL) {
+      if (_bitrep[_no_of_blocks - 1] != no_bits) {
 	break;
       }
       else {
@@ -1556,7 +1556,7 @@ namespace topcom {
       _contract(_no_of_blocks);
     }
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -1576,7 +1576,7 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = _no_of_blocks; i < _memsize; ++i) {
-      if (_bitrep[i] != 0UL) {
+      if (_bitrep[i] != no_bits) {
 	std::cerr << "IntegerSet::operator-=(const size_type): "
 		  << "computational error."
 		  << std::endl;
@@ -1610,12 +1610,12 @@ namespace topcom {
     if (block_pos < _no_of_blocks - 1) {
       return *this;
     }
-    if (_bitrep[block_pos] != 0UL) {
+    if (_bitrep[block_pos] != no_bits) {
       return *this;
     }
     _no_of_blocks = block_pos + 1;
     while (_no_of_blocks > 0) {
-      if (_bitrep[_no_of_blocks - 1] != 0UL) {
+      if (_bitrep[_no_of_blocks - 1] != no_bits) {
 	break;
       }
       else {
@@ -1626,7 +1626,7 @@ namespace topcom {
       _contract(_no_of_blocks);
     }
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -1648,7 +1648,7 @@ namespace topcom {
     if (s.empty()) {
       return *this;
     }
-    _invariant = 0UL;
+    _invariant = no_bits;
     if (_no_of_blocks < s._no_of_blocks) {
       for (size_type i = 0; i < _no_of_blocks; i++) {
 	_bitrep[i] |= s._bitrep[i];
@@ -1677,7 +1677,7 @@ namespace topcom {
     }
 
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -1697,7 +1697,7 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = _no_of_blocks; i < _memsize; ++i) {
-      if (_bitrep[i] != 0UL) {
+      if (_bitrep[i] != no_bits) {
 	std::cerr << "IntegerSet::operator+=(const IntegerSet&): "
 		  << "computational error."
 		  << std::endl;
@@ -1716,7 +1716,7 @@ namespace topcom {
       return *this;
     }
     if (_no_of_blocks > s._no_of_blocks) {
-      _invariant = 0UL;
+      _invariant = no_bits;
       for (size_type i = 0; i < s._no_of_blocks; ++i) {
 	_bitrep[i] &= ~(s._bitrep[i]);
 	_invariant ^= _bitrep[i];
@@ -1727,9 +1727,9 @@ namespace topcom {
     }
     else {
       size_type new_no_of_blocks = 0;
-      _invariant = 0UL;
+      _invariant = no_bits;
       for (size_type i = 0; i < _no_of_blocks; ++i) {
-	if ((_bitrep[i] &= ~(s._bitrep[i])) != 0UL) {
+	if ((_bitrep[i] &= ~(s._bitrep[i])) != no_bits) {
 	  new_no_of_blocks = i + 1;
 	  _invariant ^= _bitrep[i];	    
 	}
@@ -1741,7 +1741,7 @@ namespace topcom {
     }
 
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -1761,7 +1761,7 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = _no_of_blocks; i < _memsize; ++i) {
-      if (_bitrep[i] != 0UL) {
+      if (_bitrep[i] != no_bits) {
 	std::cerr << "IntegerSet::operator-=(const IntegerSet&): "
 		  << "computational error."
 		  << std::endl;
@@ -1783,16 +1783,16 @@ namespace topcom {
       return clear();
     }
     if (_no_of_blocks > s._no_of_blocks) {
-      _invariant = 0UL;
+      _invariant = no_bits;
       for (size_type i = s._no_of_blocks; i < _no_of_blocks; ++i) {
-	_bitrep[i] = 0UL;
+	_bitrep[i] = no_bits;
       }
       _no_of_blocks = s._no_of_blocks;
     }
     size_type new_no_of_blocks = 0;
-    _invariant = 0UL;
+    _invariant = no_bits;
     for (size_type i = 0; i < _no_of_blocks; ++i) {
-      if ((_bitrep[i] &= s._bitrep[i]) != 0UL) {
+      if ((_bitrep[i] &= s._bitrep[i]) != no_bits) {
 	new_no_of_blocks = i + 1;
 	_invariant ^= _bitrep[i];	    
       }
@@ -1803,8 +1803,8 @@ namespace topcom {
     }
 
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0);
-    for (size_type i = 0UL; i < _no_of_blocks; ++i) {
+    block_type check_invariant(no_bits);
+    for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
     if (check_invariant != _invariant) {
@@ -1823,7 +1823,7 @@ namespace topcom {
       exit(1);
     }
     for (size_type i = _no_of_blocks; i < _memsize; ++i) {
-      if (_bitrep[i] != 0UL) {
+      if (_bitrep[i] != no_bits) {
 	std::cerr << "IntegerSet::operator*=(const IntegerSet&): "
 		  << "computational error."
 		  << std::endl;
@@ -1845,7 +1845,7 @@ namespace topcom {
       if (_memsize < s._no_of_blocks) {
 	_expand(s._no_of_blocks);
       }
-      _invariant = 0UL;
+      _invariant = no_bits;
       for (size_type i = 0; i < _no_of_blocks; i++) {
 	_bitrep[i] ^= s._bitrep[i];
 	_invariant ^= _bitrep[i];
@@ -1861,15 +1861,15 @@ namespace topcom {
     }
     else {
       size_type new_no_of_blocks = 0;
-      _invariant = 0UL;
+      _invariant = no_bits;
       for (size_type i = 0; i < s._no_of_blocks; ++i) {
-	if ((_bitrep[i] ^= s._bitrep[i]) != 0UL) {
+	if ((_bitrep[i] ^= s._bitrep[i]) != no_bits) {
 	  new_no_of_blocks = i + 1;
 	  _invariant ^= _bitrep[i];	    
 	}
       }
       for (size_type i = s._no_of_blocks; i < _no_of_blocks; ++i) {
-	if ((_bitrep[i]) != 0UL) {
+	if ((_bitrep[i]) != no_bits) {
 	  new_no_of_blocks = i + 1;
 	  _invariant ^= _bitrep[i];	    
 	}
@@ -1881,7 +1881,7 @@ namespace topcom {
     }
 
 #ifdef CHECK_INVARIANT
-    block_type check_invariant(0UL);
+    block_type check_invariant(no_bits);
     for (size_type i = 0; i < _no_of_blocks; ++i) {
       check_invariant ^= _bitrep[i];
     }
@@ -1991,14 +1991,14 @@ namespace topcom {
 
     // finally, assign the intersection values:
     if (_no_of_blocks == s._no_of_blocks) {
-      result._invariant = 0UL;
+      result._invariant = no_bits;
       for (size_type i = 0; i < result._no_of_blocks; ++i) {
 	result._bitrep[i] = (_bitrep[i] | s._bitrep[i]);
 	result._invariant ^= result._bitrep[i];
       }
     }
     else if (_no_of_blocks < s._no_of_blocks) {
-      result._invariant = 0UL;
+      result._invariant = no_bits;
       for (size_type i = 0; i < _no_of_blocks; ++i) {
 	result._bitrep[i] = (_bitrep[i] | s._bitrep[i]);
 	result._invariant ^= result._bitrep[i];
@@ -2009,7 +2009,7 @@ namespace topcom {
       }      
     }
     else {
-      result._invariant = 0UL;
+      result._invariant = no_bits;
       for (size_type i = 0; i < s._no_of_blocks; ++i) {
 	result._bitrep[i] = (_bitrep[i] | s._bitrep[i]);
 	result._invariant ^= result._bitrep[i];
@@ -2037,7 +2037,7 @@ namespace topcom {
       result._expand(result._no_of_blocks);
 
       // finally, assign the difference values:
-      result._invariant = 0UL;
+      result._invariant = no_bits;
       for (size_type i = 0; i < s._no_of_blocks; ++i) {
 	result._bitrep[i] = (_bitrep[i] & ~(s._bitrep[i]));
 	result._invariant ^= result._bitrep[i];
@@ -2067,7 +2067,7 @@ namespace topcom {
       result._expand(result._no_of_blocks);
 
       // finally, assign the difference values:
-      result._invariant = 0UL;
+      result._invariant = no_bits;
       for (size_type i = 0; i < result._no_of_blocks; ++i) {
 	result._bitrep[i] = (_bitrep[i] & ~(s._bitrep[i]));
 	result._invariant ^= result._bitrep[i];
@@ -2105,7 +2105,7 @@ namespace topcom {
     result._expand(result._no_of_blocks);
 
     // finally, assign the intersection values:
-    result._invariant = 0UL;
+    result._invariant = no_bits;
     for (size_type i = 0; i < result._no_of_blocks; ++i) {
       result._bitrep[i] = (_bitrep[i] & s._bitrep[i]);
       result._invariant ^= result._bitrep[i];
@@ -2156,14 +2156,14 @@ namespace topcom {
 
     // finally, assign the xor values:
     if (_no_of_blocks == s._no_of_blocks) {
-      result._invariant = 0UL;
+      result._invariant = no_bits;
       for (size_type i = 0; i < result._no_of_blocks; ++i) {
 	result._bitrep[i] = (_bitrep[i] ^ s._bitrep[i]);
 	result._invariant ^= result._bitrep[i];
       }
     }
     else if (_no_of_blocks < s._no_of_blocks) {
-      result._invariant = 0UL;
+      result._invariant = no_bits;
       for (size_type i = 0; i < _no_of_blocks; ++i) {
 	result._bitrep[i] = (_bitrep[i] ^ s._bitrep[i]);
 	result._invariant ^= result._bitrep[i];
@@ -2174,7 +2174,7 @@ namespace topcom {
       }
     }
     else {
-      result._invariant = 0UL;
+      result._invariant = no_bits;
       for (size_type i = 0; i < s._no_of_blocks; ++i) {
 	result._bitrep[i] = (_bitrep[i] ^ s._bitrep[i]);
 	result._invariant ^= result._bitrep[i];
@@ -2407,7 +2407,7 @@ namespace topcom {
 
   // stream output:
   std::ostream& IntegerSet::write(std::ostream& ost) const {
-    size_type count = 0;
+    size_type count = 0UL;
     size_type card = this->card();
 
     ost << "{";
@@ -2439,13 +2439,13 @@ namespace topcom {
 
   __is_const_iterator::__is_const_iterator(const IntegerSet& s) :
     _container(&s),
-    _current_block(0),
-    _current_bit(0) {
+    _current_block(0UL),
+    _current_bit(0UL) {
 #ifdef CONSTRUCTOR_DEBUG
     std::cerr << "__is_const_iterator::__is_const_iterator(const IntegerSet&):" << std::endl;
 #endif
     for (size_type i = 0; i < _container->_no_of_blocks; i++) {
-      if (_container->_bitrep[i] == 0UL) {
+      if (_container->_bitrep[i] == no_bits) {
 	continue;
       }    
       block_type b = _container->_bitrep[i];
@@ -2453,7 +2453,7 @@ namespace topcom {
 
       // here we proceed by looking up the first bit in a byte table:
       for (size_type j = 0; j < bytes_per_block; ++j) {
-	unsigned char current_byte(static_cast<unsigned char>(b & ~(unsigned char)0UL));
+	unsigned char current_byte(static_cast<unsigned char>(b & byte_one));
 	if (current_byte) {
 	  _current_block = i;
 	  _current_bit   = j * byte_len + IntegerSet::_S_first_one[current_byte];
@@ -2469,9 +2469,9 @@ namespace topcom {
       // here we proceed by linear search for the first bit:
       for (size_type j = 0; j < block_len; j++) {
 #ifdef BITCONSTANTS
-	if ((b & _bit[j]) != 0UL) {
+	if ((b & _bit[j]) != no_bits) {
 #else
-	  if ((b & (bit_one << j)) != 0UL) {
+	  if ((b & (bit_one << j)) != no_bits) {
 #endif
 	    _current_block = i;
 	    _current_bit = j;
@@ -2513,9 +2513,9 @@ namespace topcom {
       std::cout << "current bit is " << _current_bit << " in block " << _current_block << std::endl;
 #endif
     
-      if (b != 0UL) {
+      if (b != no_bits) {
 	for (size_type j = 0; j < bytes_per_block; ++j) {
-	  unsigned char current_byte(static_cast<unsigned char>(b & ~(unsigned char)0UL));
+	  unsigned char current_byte(static_cast<unsigned char>(b & byte_one));
 #ifdef COMPUTATIONS_DEBUG
 	  std::cout << "checking byte " << j << "=" << (size_type)current_byte << " in block " << _current_block << std::endl;
 #endif
@@ -2530,12 +2530,12 @@ namespace topcom {
   
     // investigate subsequent blocks:
     for (size_type i = _current_block + 1; i < _container->_no_of_blocks; i++) {
-      if (_container->_bitrep[i] == 0UL) {
+      if (_container->_bitrep[i] == no_bits) {
 	continue;
       }    
       block_type b = _container->_bitrep[i];
       for (size_type j = 0; j < bytes_per_block; ++j) {
-	unsigned char current_byte(static_cast<unsigned char>(b & ~(unsigned char)0UL));
+	unsigned char current_byte(static_cast<unsigned char>(b & byte_one));
 #ifdef COMPUTATIONS_DEBUG
 	std::cout << "checking byte " << j << "=" << (size_type)current_byte << " in subsequent block " << i << std::endl;
 #endif
@@ -2552,9 +2552,9 @@ namespace topcom {
     // here we proceed by linear search for the first bit:
     for (size_type j = _current_bit + 1; j < block_len; j++) {
 #ifdef BITCONSTANTS
-      if ((_container->_bitrep[_current_block] & _bit[j]) != 0UL) {
+      if ((_container->_bitrep[_current_block] & _bit[j]) != no_bits) {
 #else
-	if ((_container->_bitrep[_current_block] & (bit_one << j)) != 0UL) {
+	if ((_container->_bitrep[_current_block] & (bit_one << j)) != no_bits) {
 #endif
 	  _current_bit = j;
 	  return *this;
@@ -2565,15 +2565,15 @@ namespace topcom {
 #endif
     }
     for (size_type i = _current_block + 1; i < _container->_no_of_blocks; i++) {
-      if (_container->_bitrep[i] == 0UL) {
+      if (_container->_bitrep[i] == no_bits) {
 	continue;
       }
       block_type b = _container->_bitrep[i];
       for (size_type j = 0; j < block_len; j++) {
 #ifdef BITCONSTANTS
-	if ((_container->_bitrep[i] & _bit[j]) != 0UL) {
+	if ((_container->_bitrep[i] & _bit[j]) != no_bits) {
 #else
-	  if ((_container->_bitrep[i] & (bit_one << j)) != 0UL) {
+	  if ((_container->_bitrep[i] & (bit_one << j)) != no_bits) {
 #endif
 	    _current_block = i;
 	    _current_bit = j;

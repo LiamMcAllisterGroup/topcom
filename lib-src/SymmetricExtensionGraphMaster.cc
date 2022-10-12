@@ -332,7 +332,7 @@ namespace topcom {
 	if (CommandlineOptions::verbose()) {
 	  std::cerr << "switch tables directly from generators ..." << std::endl;
 	}
-	_switch_tableptr = new SwitchTable<lexmin_mode>(SimplicialComplex::no_of_simplices(_rank), simpidx_generators);
+	_switch_tableptr = new SwitchTable<IntegerSet, lexmin_mode>(SimplicialComplex::no_of_simplices(_rank), simpidx_generators);
 	if (CommandlineOptions::verbose()) {
 	  std::cerr << "... done." << std::endl;
 	}

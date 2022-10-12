@@ -129,7 +129,8 @@ namespace topcom {
     const SymmetryGroup*                 _symmetriesptr;
     const SymmetryGroup*                 _simpidx_symmetriesptr;
     const ClassifiedExtensionSymmetries* _classified_symmetriesptr;
-    const SwitchTable<lexmin_mode>*      _switch_tableptr;
+    const SwitchTable<IntegerSet,
+		      lexmin_mode>*      _switch_tableptr;
     const Admissibles*                   _admtableptr;
     const Incidences*                    _inctableptr;
     const Volumes*                       _voltableptr;

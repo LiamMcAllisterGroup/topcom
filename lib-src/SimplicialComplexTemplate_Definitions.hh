@@ -29,7 +29,7 @@ namespace topcom {
   __sc_const_iterator<T>::__sc_const_iterator(const __sc_const_iterator& iter) :
     _container(iter._container),
     _current_card(iter._current_card),
-    _current_indexset_iter(NULL) {
+    _current_indexset_iter(nullptr) {
     if (iter._current_indexset_iter) {
       _current_indexset_iter = iter_allocator.allocate(1);
       std::allocator_traits<std::allocator<IndexSet_const_iterator> >::construct(iter_allocator,
@@ -45,7 +45,7 @@ namespace topcom {
   __sc_const_iterator<T>::__sc_const_iterator(const SimplicialComplexTemplate<T>& s) :
     _container(&s), 
     _current_card(_container->_mincard),
-    _current_indexset_iter(NULL) {
+    _current_indexset_iter(nullptr) {
     while (_current_card < _container->_maxcard) {
       if (!_container->_index_set[_current_card].empty()) {
 	_current_indexset_iter = iter_allocator.allocate(1);
@@ -67,7 +67,7 @@ namespace topcom {
     }
     _container = iter._container;
     _current_card = iter._current_card;
-    if (_current_indexset_iter) {
+    if (_current_indexset_iter && (_current_indexset_iter != iter._current_indexset_iter)) {
       iter_allocator.deallocate(_current_indexset_iter);
     }
     if (iter._current_indexset_iter) {
@@ -90,7 +90,7 @@ namespace topcom {
     if (_current_indexset_iter == iter._current_indexset_iter) {
       return true;
     }
-    if ((_current_indexset_iter == NULL) || (iter._current_indexset_iter == NULL)) {
+    if ((_current_indexset_iter == nullptr) || (iter._current_indexset_iter == nullptr)) {
       return false;
     }
     return (*_current_indexset_iter == *iter._current_indexset_iter);
@@ -99,13 +99,20 @@ namespace topcom {
   template<class T>
   __sc_const_iterator<T>& __sc_const_iterator<T>::operator++() {
     if (!_current_indexset_iter) {
+#ifdef SCITER_DEBUG
+      std::cerr << "__sc_const_iterator<T>& __sc_const_iterator<T>::operator++(): _current_indexset_iter == nullptr already" << std::endl;
+#endif
       return *this;
     }
     if (_current_card >= _container->_maxcard) {           
       std::allocator_traits<std::allocator<IndexSet_const_iterator> >::destroy(iter_allocator,
 									       _current_indexset_iter);
       iter_allocator.deallocate(_current_indexset_iter, 1);
-      _current_indexset_iter = NULL;
+      _current_indexset_iter = nullptr;
+#ifdef SCITER_DEBUG
+      std::cerr << "__sc_const_iterator<T>& __sc_const_iterator<T>::operator++(): "
+	<< _current_card << " = _current_card >= _maxcard =" << _container->_maxcard << " => _current_indexset_iter set to nullptr" << std::endl;
+#endif
       return *this;
     }
     ++(*_current_indexset_iter);
@@ -123,7 +130,10 @@ namespace topcom {
     std::allocator_traits<std::allocator<IndexSet_const_iterator> >::destroy(iter_allocator,
 									     _current_indexset_iter);
     iter_allocator.deallocate(_current_indexset_iter, 1);
-    _current_indexset_iter = NULL;
+    _current_indexset_iter = nullptr;
+#ifdef SCITER_DEBUG
+    std::cerr << "__sc_const_iterator<T>& __sc_const_iterator<T>::operator++(): upcoming indexsets empty => _current_indexset_iter set to nullptr" << std::endl;
+#endif
     return *this;
   }
 
@@ -1183,7 +1193,7 @@ namespace topcom {
   SimplicialComplexTemplate<T>& SimplicialComplexTemplate<T>::insert(const Simplex& simp, 
 								     const parameter_type card) {
 #ifdef DEBUG
-    if (simp.card() != card) {
+    if (static_cast<parameter_type>(simp.card()) != card) {
       std::cerr << "SimplicialComplexTemplate<T>::insert(const Simplex&, const parameter_type): "
 		<< "wrong cardinality in second parameter. "
 		<< "card(" << simp << ") != " << card << std::endl;
@@ -1244,7 +1254,7 @@ namespace topcom {
   SimplicialComplexTemplate<T>& SimplicialComplexTemplate<T>::erase(const Simplex& simp,
 								    const parameter_type card) {
 #ifdef DEBUG
-    if (simp.card() != card) {
+    if (static_cast<parameter_type>(simp.card()) != card) {
       std::cerr << "SimplicialComplexTemplate<T>::erase(const Simplex&, const parameter_type): "
 		<< "wrong cardinality in second parameter." << std::endl;
     }
@@ -1333,7 +1343,7 @@ namespace topcom {
   SimplicialComplexTemplate<T>& SimplicialComplexTemplate<T>::exclusiveor(const Simplex& simp,
 									  const parameter_type card) {
 #ifdef DEBUG
-    if (simp.card() != card) {
+    if (static_cast<parameter_type>(simp.card()) != card) {
       std::cerr << "SimplicialComplexTemplate<T>::exclusiveor(const Simplex&, const parameter_type): "
 		<< "wrong cardinality in second parameter." << std::endl;
     }

@@ -44,7 +44,7 @@ namespace topcom {
     static void typedef_for_matrix_to_asy();
     static void worker_to_asy();
     static void run_to_asy(const int);
-    static void partialtriang_to_asy(const int, const size_type, const LabelSet&, const SimplicialComplex&);
+    static void partialtriang_to_asy(const int, const size_type, const IntegerSet&, const SimplicialComplex&);
     static void labelset_to_asy(const int, const size_type, const LabelSet&);
     static void matrix_to_asy(const int, const size_type, const LabelSet&, const StairCaseMatrix&);
     static void arc_to_asy(const int, const size_type, const size_type, const size_type);

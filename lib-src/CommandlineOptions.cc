@@ -746,6 +746,15 @@ namespace topcom {
       }
     }
 
+    if (_dump_status) {
+      if ((strstr(argv[0], "points2ntriangs") == 0)
+	  &&
+	  (strstr(argv[0], "points2triangs") == 0)) {
+	std::cerr << "--dump               : ignored because unsupported by " << argv[0] << std::endl;
+	_dump_status = false;
+      }
+    }
+
     if (_use_qsopt_ex && _parallel_enumeration) {
       std::cerr << "--parallelenumeration: ignored because qsopt_ex is not thread-safe" << std::endl;
       _parallel_enumeration = false;

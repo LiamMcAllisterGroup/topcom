@@ -1233,7 +1233,7 @@ namespace topcom {
 	  exit(1);
 	}
 	if (CommandlineOptions::debug()) {
-	  std::cerr << "no of points in input conincides with no of points in dump file: okay" << std::endl;
+	  std::cerr << "no of points in input coincides with no of points in dump file: okay" << std::endl;
 	}
       }
       if (keyword == "_rank") {
@@ -1251,7 +1251,7 @@ namespace topcom {
 	  exit(1);
 	}
 	if (CommandlineOptions::debug()) {
-	  std::cerr << "rank of input conincides with rank of dump file: okay" << std::endl;
+	  std::cerr << "rank of input coincides with rank of dump file: okay" << std::endl;
 	}
       }
       if (_pointsptr) {
@@ -1270,7 +1270,7 @@ namespace topcom {
 	    exit(1);
 	  }
 	  if (CommandlineOptions::debug()) {
-	    std::cerr << "points of input conincide with points in dump file: okay" << std::endl;
+	    std::cerr << "points of input coincide with points in dump file: okay" << std::endl;
 	  }
 	}
       }
@@ -1290,7 +1290,7 @@ namespace topcom {
 	    exit(1);
 	  }
 	  if (CommandlineOptions::debug()) {
-	    std::cerr << "chirotope of input conincides with chirotope of dump file: okay" << std::endl;
+	    std::cerr << "chirotope of input coincides with chirotope of dump file: okay" << std::endl;
 	  }
 	}
       }
@@ -1308,7 +1308,7 @@ namespace topcom {
 	  exit(1);
 	}
 	if (CommandlineOptions::debug()) {
-	  std::cerr << "symmetries of input conincide with _symmetries in dump file: okay" << std::endl;
+	  std::cerr << "symmetries of input coincide with _symmetries in dump file: okay" << std::endl;
 	}
       }
       // finally, parse the partial computational result from the dump file:
