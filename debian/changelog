@@ -1,4 +1,4 @@
-topcom (1.1.2+ds-1) UNRELEASED; urgency=medium
+topcom (1.1.2+ds-1) unstable; urgency=medium
 
   * New upstream release.
   * debian/control
@@ -10,8 +10,10 @@ topcom (1.1.2+ds-1) UNRELEASED; urgency=medium
   * debian/patches/*
     - Refresh remaining patches for new upstream release.
     - Add Forwarded fields where missing.
+  * debian/topcom.pc
+    - Remove SIZEOF_DEFINES macro; no longer necessary.
 
- -- Doug Torrance <dtorrance@debian.org>  Wed, 12 Oct 2022 19:08:41 -0400
+ -- Doug Torrance <dtorrance@debian.org>  Wed, 12 Oct 2022 19:20:30 -0400
 
 topcom (1.1.1+ds-1) unstable; urgency=medium
 
