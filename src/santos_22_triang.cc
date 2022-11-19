@@ -1,4 +1,5 @@
-// This program contains the construction of
+// This program contains the construction of a derived triangulation
+// based on
 // * the Santos point configuration,
 // * its symmteries,
 // * the Santos triangulation of it without flips
@@ -15,12 +16,15 @@
 #include "PointConfiguration.hh"
 #include "Symmetry.hh"
 #include "SimplicialComplex.hh"
+#include "HashSet.hh"
+
+namespace topcom {
 
 PointConfiguration create_a() {
   if (CommandlineOptions::verbose()) {
     std::cerr << "constructing a ..." << std::endl;
   }
-  PointConfiguration result(Matrix(4, 3, ZERO));
+  PointConfiguration result(Matrix(4, 3, FieldConstants::ZERO));
 
   result[0][0] = Field(11);
   result[0][2] = Field(-2);
@@ -41,7 +45,7 @@ PointConfiguration create_b() {
   if (CommandlineOptions::verbose()) {
     std::cerr << "constructing b ..." << std::endl;
   }
-  PointConfiguration result(Matrix(4, 3, ZERO));
+  PointConfiguration result(Matrix(4, 3, FieldConstants::ZERO));
 
   result[0][0] = Field(2);
   result[0][1] = Field(2);
@@ -68,7 +72,7 @@ PointConfiguration create_o() {
   if (CommandlineOptions::verbose()) {
     std::cerr << "constructing o ..." << std::endl;
   }
-  PointConfiguration result(Matrix(4, 2, ZERO));
+  PointConfiguration result(Matrix(4, 2, FieldConstants::ZERO));
 
   result[0][0] = Field(3);
   result[0][1] = Field(3);
@@ -90,7 +94,7 @@ PointConfiguration create_c() {
   if (CommandlineOptions::verbose()) {
     std::cerr << "constructing c ..." << std::endl;
   }
-  PointConfiguration result(Matrix(4, 3, ZERO));
+  PointConfiguration result(Matrix(4, 3, FieldConstants::ZERO));
 
   CyclicIndex cyclic_index(3,3); 
 
@@ -136,9 +140,9 @@ PointConfiguration create_B() {
     std::cerr << "constructing one-dimensional point configuration B ..." 
 	 << std::endl;
   }
-  Matrix result(1, 2, ZERO);
-  result[0][0] = MINUSONE;
-  result[1][0] = ONE;
+  Matrix result(1, 2, FieldConstants::ZERO);
+  result[0][0] = FieldConstants::MINUSONE;
+  result[1][0] = FieldConstants::ONE;
   if (CommandlineOptions::verbose()) {
     std::cerr << "... done." << std::endl;
   }
@@ -187,7 +191,7 @@ SymmetryGroup create_G() {
     std::cerr << "constructing symmetry group G1 of A from g1 ..." 
 	 << std::endl;
   }
-  symmetry_data result;
+  symmetry_collectordata result;
   result.insert(create_g());
   if (CommandlineOptions::verbose()) {
     std::cerr << "... done." << std::endl;
@@ -200,7 +204,7 @@ SymmetryGroup create_H() {
     std::cerr << "constructing symmetry group H of B (trivial) ..." 
 	 << std::endl;
   }
-  symmetry_data result;
+  symmetry_collectordata result;
   result.insert(Symmetry(2));
   if (CommandlineOptions::verbose()) {
     std::cerr << "... done." << std::endl;
@@ -224,7 +228,7 @@ SymmetryGroup create_product(const SymmetryGroup& G, const SymmetryGroup& H) {
     std::cerr << "constructing symmetry group GH of C from G and H ..." 
 	 << std::endl;
   }
-  symmetry_data result;
+  symmetry_collectordata result;
   for (SymmetryGroup::const_iterator iter1 = G.begin();
        iter1 != G.end();
        ++iter1) {
@@ -439,9 +443,9 @@ HashSet<Permutation> insert_orbit(const Permutation& s, const SymmetryGroup& G,
 #endif
     
     if (CommandlineOptions::debug()) {
-      std::cerr << "inserting " << g(s) << " ..." << std::endl;
+      std::cerr << "inserting " << g.map(s) << " ..." << std::endl;
     }
-    result.insert(g(s));
+    result.insert(g.map(s));
     if (CommandlineOptions::debug()) {
       std::cerr << "... done." << std::endl;
     }
@@ -560,8 +564,11 @@ SimplicialComplex create_staircase_triang(const HashSet<Permutation>& h1, const 
   return result;
 }
 
+};
 
 int main(int argc, const char** argv) {
+  using namespace topcom;
+
   CommandlineOptions::init(argc, argv);
 
   //  create_C().pretty_print(std::cout);
@@ -588,3 +595,5 @@ int main(int argc, const char** argv) {
 
   return 0;
 }
+
+// eof santos_22_triang.cc

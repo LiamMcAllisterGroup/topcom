@@ -1,3 +1,118 @@
+version 1.1.2: added support for height ouput even in cases where all
+	triangulations are regular; supported transformation to full rank
+	also in checkregularity and points2placingtriang; completed
+	IntegerSet64 with missing functions available for IntegerSet;
+	fixed template overload with identical types on 32-bit systems by
+	making parameter_type signed; fixed output of heights in
+	checkregularity client; made murmur hash function 32bit-safe; some
+	more technical bugfixes for 32bit compatibility
+version 1.1.1: first bug fixes based on reports; configure script now
+	allows to use system-wide gmp installation
+version 1.1.0: upgraded version for first distribution of the new TOPCOM
+version 1.0.19: many general corrections and improvements;
+	corrected a determinant calculation in VirtualChiro for the case
+	of --memopt
+version 1.0.18: supported a prescribed cardinality for the enumeration of
+	all triangulations; fully supported the lazy evaluation of
+	chirotope determinant values (not only the signs)
+version 1.0.17: excluded flips on positive circuits in order to provide a
+	sensible result for totally cyclic point configurations; shifted
+	the output of heights to the same output stream where the
+	triangulations are output
+version 1.0.16: added an option to utilize Permlib for symmetry
+	computations (temporary and only for testing)
+version 1.0.15: implemented a novel canonicity-check combined from switch
+	tables and the Pech-Reichard algorithm, which is suitable when the
+	order of the symmetry group is much larger than the degree
+version 1.0.14: implemented construction of switch tables directly from
+	generators; fixed some indexing and memory management bugs
+version 1.0.13: upgraded to c++17 standard; drastically improved the
+	cocircuit enumeration by better pruning
+version 1.0.12: improved some memory management details
+version 1.0.11: improved the implementation of switch tables including
+	renaming them to the original name "switch table"; improved the
+	symmetry check for subsets (can be deactivated with --memopt);
+	added a more cache coherent representation of symmetries for the
+	enumeration of all triangulations
+version 1.0.10: added an alternative algorithm for cocircuit enumeration
+version 1.0.9: added non-sophisticated support to compute all vertices of
+	a point configuration via circuits;
+	added a graphics module to generate graphics output for the
+	graphics language "asymptote"
+version 1.0.8: used lex-comparison of integer sets only for sets of equal
+	cardinality; in the lex-order enumeration case of all
+	triangulations now the processing of admissibles in a partial
+	triangulation is stopped as soon as the lex-minimal interior facet
+	is lex-smaller than the lex-minimal facet of the new simplex
+	because all further admissible simplices will have the same
+	property
+version 1.0.7: added the Cayley embedding of two hypersimplices to the
+	example clients as an extension to the "hypersimplex" client;
+	exchanged the parameters to the order "dimension", "sum"[,
+	"sum2"]; a minimal triangulations is now output in
+	points2mintriang and chiro2mintriang
+version 1.0.6: introduced an extendability check relying on the lex-order
+	of all simplices; bug fixes
+version 1.0.5: improved RegularityCheck by enhancing the chirotope by the
+	rational values of all determinants, which have always been
+	computed anyway but have never been used; supported usage of GKZ
+	vectors as a proxy for detection of an old symmetry class; improved
+	the order of extendability and symmetry checks in enumeration of
+	all triangulations
+version 1.0.4: fixed a bug where the report_progress function was totally
+	enclosed in a critical section, where only the actual output is
+	critical; all waits of conditional variables are now enclosed in
+	appropriate while loops
+version 1.0.3: encapsulated TOPCOM into the name space "topcom"
+version 1.0.2: updated the interface to the soplex LP solver
+version 1.0.1: implemented a more capable node type with symmetry support
+	for the enumeration of (co-)circuits to be used in
+	SymmetricSubsetGraph; used the same concept for the enumeration of
+	triangulations using a representation of symmetries in terms of
+	permutations of simplex indices
+version 1.0.0: implemented a simple version of the mts principle by Avis &
+	Jordan ("A parallel framework for reverse search using mts")
+	for the clients to enumerate all triangulations and (co)circuits,
+	resp.; introduced classification tables for symmetries to speed up
+	the check for the existence of lex-decreasing symmetries;
+	implemented multithreading into symmetry orbit processing;
+	implemented an interface to QSopt_ex; upgraded to gmp-6.2.0 and to
+	cddlib-0.94j;
+	remark:
+	the general code cleanup and the major technical changes can make
+	hidden errors more likely; if in doubt wait for bug-fixed releases
+	with larger minor version numbers
+version 0.19.3: improved the enumeration algorithms for (co)circuits by
+	checking for old symmetry class by the existence of
+	colex-increasing permutations
+version 0.19.2: reorganized the code by calling the flip graph enumeration
+	structure SymmetricFlipGraph instead of SymmetricBFS and
+	the extension graph structure SymmetricExtensionGraph instead of
+	SymmetricDFS because both can be explored by both BFS and DFS;
+	adapted the old chiro2mintriang client to the new
+	SymmetricExtensionGraph methods; added a matching points2mintriang
+	client; corrected an error in the extendability obstruction: two
+	free facets might be covered by the same simplex, in which case
+	that simplex as an extension at one freefacet is not admissible to
+	itself as an extension to the other freefacet.
+version 0.19.1: replaced the simplistic enumeration of all triangulations
+	in the client points/chiro2(n)alltriangs by a more sophisticated
+	preprocessing structure and a modified algorithm that uses a
+	certificate for non-extendability of a partial triangulation (a
+	drastic improvement); moreover, at last, it supports symmetries.
+version 0.19.0: added a new implementation of circuit enumeration
+	utilizing symmetries; reorganized the code for enumeration of all
+	triangulations so that the algorithm uses symmetries as well;
+	added a class IntegerSet64 that can be used instead of
+	IntegerSet for subsets of {0, 1, 2, ..., 63}. No check is
+	performed; instead all element numbers are considered modulo 64;
+	using this structure for simplices can be switched on by a
+	compiler define
+version 0.18.0: added more efficient clients "<points|chiro>2<n>circuits"
+	for computing/counting all circuits of a point
+	configuration/chirotope	using symmetries
+version 0.17.9: issue an error message when "--regular" is given but all
+	triangulations shall be computed
 version 0.17.8: pure bugfix: the wrong version of gmp was packaged;
 	must be 6.1.1 by now
 version 0.17.7: fixed a bug in SPXinterface.cc where a new[] had a

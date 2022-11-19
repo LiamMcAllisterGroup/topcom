@@ -1,0 +1,251 @@
+NAME
+  TOPCOM - Triangulations Of Point Configurations and Oriented Matroids
+COMMANDS
+  The following commands are provided. In Debian, each command is prefixed by
+  "topcom-".
+
+  points2prettyprint      Displays the point and their symmetry generators in a
+                          more readable form.
+  points2chiro            Computes the chirotope of a point configuration.
+  chiro2dual              Computes the dual of a chirotope.
+  chiro2circuits          Computes the circuits of a chirotope.
+  points2circuits         Dto. for point configurations (using a faster method).
+  chiro2cocircuits        Computes the cocircuits of a chirotope.
+  points2cocircuits       Dto. for point configurations (using a faster method).
+  cocircuits2facets       Computes the facets of a set of cocircuits.
+  points2facets           Computes the facets of a point configuration.
+  points2gale             Computes a Gale transform of a point configuration.
+  chiro2circuits          Computes the circuits of a point configuration.
+  chiro2cocircuits        Computes the cocircuits of a point configuration.
+  points2facets           Computes the facets of a point configuration.
+  points2nflips           Computes the number of flips of a point configurations
+                          and the seed triangulation.
+  points2flips            Computes all flips of a point configurations and the
+                          seed triangulation.
+  chiro2placingtriang     Computes the placing triangulation of a chirotope
+                          given by the numbering of the elements.
+  points2placingtriang    Dto. for point configurations.
+  chiro2finetriang        Computes a fine (i.e., using all vertices)
+                          triangulation by placing and pushing.
+  points2finetriang       Dto. for point configurations.
+  chiro2triangs           Computes all triangulations of a chirotope that are
+                          connected by bistellar flips to the seed, which is a
+                          regular triangulation if no seed is given in the
+                          input file.
+  points2triangs          Dto. for point configurations.
+  chiro2ntriangs          Computes the number of all triangulations of a
+                          chirotope that are connected by bistellar flips to the
+                          seed, which is a regular triangulation if no seed is
+                          given in the input file.
+  points2ntriangs         Dto. for point configurations.
+  chiro2finetriangs       Computes all fine triangulations (the ones that use
+                          all the points sometimes called “full”) of a
+                          chirotope that are connected by bistellar flips to a
+                          fine seed triangulation.
+  points2finetriangs      Dto. for point configurations.
+  chiro2nfinetriangs      Computes the number of all fine triangulations of a
+                          chirotope that are connected by bistellar flips to a
+                          fine seed triangulation.
+  points2nfinetriangs     Dto. for point configurations.
+  chiro2alltriangs        Computes all triangulations of a chirotope.
+  points2alltriangs       Dto. for point configurations.
+  chiro2nalltriangs       Computes the number of all triangulations of a
+                          chirotope.
+  points2nalltriangs      Dto. for point configurations.
+  chiro2allfinetriangs    Computes all fine triangulations (sometimes called
+                          “full”) of a chirotope.
+  points2allfinetriangs   Dto. for point configurations.
+  chiro2nallfinetriangs   Computes the number of all fine triangulations of a
+                          chirotope.
+  points2nallfinetriangs   Dto. for point configurations.
+  chiro2mintriang          Computes a triangulation of a chirotope with a
+                           minimum number of simplices.
+  points2mintriang         Dto. for point configurations.
+  B_S n                    Computes the vertices and symmetry generators of the
+                           permutation polytope of the symmetric group of
+                           degree n, also known as the Birkhoff polytope.
+  B_A n                    Computes the vertices and symmetry generators of the
+                           permutation polytope of the alternating group of
+                           degree n, also known as the even Birkhoff polytope.
+  B_D n                    Computes the vertices and symmetry generators of the
+                           permutation polytope of the dihedral group of degree
+                           n.
+  B_S_center n             Computes B_S n with an additional center point.
+  B_A_center n             Computes B_A n with an additional center point.
+  B_D_center n             Computes B_D n with an additional center point.
+  cube d                   Computes the vertices and symmetry generators of a
+                           d-cube.
+  cyclic n d               Computes the vertices and symmetry generators of the
+                           cyclic d-polytope with n vertices.
+  cross d                  Computes the vertices and symmetry generators of the
+                           d-dimensional crosspolytope.
+  lattice n m              Computes the nm two-dimensional lattice points with
+                           non-negative coordinates at most (n−1,m−1) and their
+                           symmetry generators.
+  hypersimplex d k [l]     Computes the vertices and symmetry generators of the
+                           k-th hypersimplex in dimension d. A third parameter
+                           makes it the S-hypersimplex with coordinate sums
+                           equal to k or l.
+  santos_triang            Computes the point configuration, the symmetry, and
+                           the Santos triangulation (without flips).
+OPTIONS
+  The following command line options are supported. Note that not all options
+  are sensible for all clients.
+
+  OPTIONS CONCERNING INPUT/OUTPUT FROM FILES
+
+  -I [filename]            read input from [filename] instead of stdin.
+
+  OPTIONS CONCERNING OUTPUT OF INFORMATION
+
+  -h or --help             Print a usage message.
+  -d                       Debug.
+  -v                       Verbose.
+  --heights                Output a height vector for every regular
+                           triangulation (implies --regular).
+  --flips                  Output all flips in terms of IDs of adjacent
+                           triangulations. (Can be used to generate the flip
+                           graph.)
+  --asy                    Write asymptote graphics commands into file (in
+                           rank-3 triangulations, points are drawn as well).
+                           The graphics contains a view of the point
+                           configuration (only in rank 3), the enumeration tree
+                           with a classification of enumeration nodes into
+                           solutions, non-canonical nodes, deadends, and early
+                           detected deadends, as well a statistics file showing
+                           a histogram of enumeration node types. The output
+                           file has to be processed by the computer graphics
+                           compiler asy (https://asymptote.sourceforge.io)
+                           using the asy-library Combinatorial_Geometry.asy and
+                           the LATEX-macroes in triangbook_macroes.sty inside
+                           share/asy/.
+
+  OPTIONS FOR CHECKING INPUT
+
+  --checktriang            Check seed triangulation.
+
+  OPTIONS FOR REPORTING PROPERTIES OF DISCOVERED TRIANGULATIONS
+
+  --flipdeficiency         Check triangulations for flip deficiency during
+                           flip-graph exploration.
+  --findregular [k]        Check every k-th triangulation for regularity and
+                           stop if a regular one is found during flip-graph
+                           exploration.
+
+  OPTIONS CONCERNING WHICH TRIANGULATIONS ARE OUTPUT (NO INFLUENCE ON
+  FLIP-GRAPH EXPLORATION)
+
+  --noorbitcount        Only count symmetry classes, not the total number.
+  --cardinality [k]     Count/output only triangulations with exactly k
+                        simplices.
+  --maxcardinality [k]  Count/oputput only triangulations with at most k
+                        simplices.
+  --unimodular          Output unimodular triangulations only; while this does
+                        not reduce the effort of flip graph exploration, since
+                        unimodular triangulations are in general not connected
+                        by themselves, it does reduce the effort of extension
+                        graph exploration linke in points2nalltriangs.
+  --nonregular          Output non-regular triangulations only; note that this
+                        does not reduce the effort of flip-graph exploration,
+                        since non-regular triangulations are in general not
+                        connected by themselves.
+
+  OPTIONS CONCERNING WHICH TRIANGULATIONS ARE EXPLORED
+
+  --regular             Search for regular triangulations only (checked
+                        liftings are w.r.t. the last homogeneous coordinate,
+                        e.g., last coordinates all ones is fine); note that this
+                        may reduce the effort of exploration, since regular
+                        triangulations are connected by themselves.
+  --noinsertion         Never flip-in a point that is unused in the seed
+                        triangulation.
+  --reducepoints        Try to greedily minimize the number of vertices used
+                        while flipping; keep a global upper bound on the
+                        current minimal number of vertices and do not accept
+                        triangulations with more vertices.
+  --keepcard            Never change the cardinality of triangulations by
+                        flipping.
+
+  OPTIONS CONCERNING SYMMETRIES
+
+  --affinesymmetries     Assume that the symmetries are affine, in particular,
+                         that they conserve regularity.
+  --isometricsymmetries  Assume that the symmetries are isometric, in
+                         particular, that they preserve volume.
+  --nosymmetries         Ignore the symmetries.
+
+  OPTIONS CONTROLLING THE INTERNALS OF THE CLIENTS
+
+  --memopt              Save memory by using caching techniques.
+  --usegkz              Use GKZ vectors as a finger print in symmetry handling
+                        (only for points with isometric symmetries).
+  --usenaivesymmetries  Use naive full traversal of all symmetries for symmetry
+                        handling.
+  --useswitchtables     Use Jordan-Joswig-Kastner switch tables for symmetry
+                        handling.
+  --usesymmetrytables   Use tables of classified symmetries for symmetry
+                        handling. Obsolete, since slower than the other options.
+  --symtables [n]       Use [n] symtables for preprocessing symmetries.
+                        Obsolete, since slower than the other options.
+  --preprocesschiro     Preprocess the chirotope (default for
+                        points2[n]alltriangs).
+  --preprocesspoints    Heuristically transform points (only relevant for
+                        (co)circuit enumeration).
+  --simpidxsymmetries   Preprocess a representation of the symmetry group on
+                        simplex indices (only relevant for triangulation
+                        enumeration).
+  --userandomorder      Sort simplices in preprocessed index table randomly
+                        (only for points with isometric symmetries).
+  --usevolumeorder      Sort simplices in preprocessed index table by volume
+                        (only for points with isometric symmetries).
+  --usevolumes          Use volumes to check extendability of partial
+                        triangulations (only for points with isometric
+                        symmetries).
+  --fullextensioncheck  Put more effort in the check of extendability of a
+                        partial triangulation.
+  --noextensioncheck    Skip the check of extendability of a partial
+                        triangulation.
+  --extensioncheckfirst  Check extendability prior to symmetry.
+  --preprocesspoints    Preprocess the coordinate matrix of the points
+                        (slightly useful for (co-)circuit enumeration)
+  --chirocache [n]      Set the chirotope cache to n elements.
+  --localcache [n]      Set the cache for local operations.
+  --qsopt_ex            Use QSopt_ex for regularity checks (not thread-safe).
+  --soplex              Use soplex for regularity checks (requires separate
+                        installation of soplex).
+
+  OPTIONS CONCERNING MULTI-THREADING
+
+  --parallelenumeration  Use multiple threads for enumeration.
+  --workbuffercontrol   Control the interrupt of workers by size of the current
+                        workbuffer.
+  --parallelsymmetries  Use multiple threads only locally for symmetry checks.
+  --threads [n]         Use [n] threads (if possible).
+  --minnodebudget [n]   Let each thread process at least [n] nodes (to avoid
+                        multithreading overhead).
+  --maxnodebudget [n]   Let each thread process at most [n] nodes (to avoid
+                        thread starving).
+  --scalenodebudget [n]  Scale the default node budget by [n] percent (n
+                         integer)
+  --minworkbuffer [n]    (Currently unused.) Try to keep the work buffer above
+                         [n] nodes (to balance overhead and thread starving).
+  --maxworkbuffer [n]    (Currently unused.) Try to keep the work buffer below
+                         [n] node (to balance overhead and thread starving).
+
+  OPTIONS FOR WARM STARTS FROM PREVIOUS CALCULATIONS
+
+  These options currently only work for an interrupted flip graph exploration.
+
+  --dump                 Write intermediate results into a file.
+  --dumpfile [dumpfilename]  Write intermediate results into file dumpfilename
+                             (default: TOPCOM.dump).
+  --dumpfrequency [k]    Dump the results of each kth BFS round
+  --dumprotations [k]    Dump into k different rotating files.
+  --read                 Read intermediate results from a file.
+  --readfile [readfilename]  Read intermediate results from file dumpfilename
+                             (default: TOPCOM.dump.[rotationnumber]).
+
+AUTHOR
+  This manpage was adapted from sections 4 and 5 of the TOPCOM Manual by Jörg
+  Rambau.
+  See https://www.wm.uni-bayreuth.de/de/team/rambau_joerg/TOPCOM-Manual/.

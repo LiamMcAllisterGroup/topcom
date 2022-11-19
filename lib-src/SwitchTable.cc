@@ -1,0 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+// SwitchTable.cc
+// produced: 09/03/2020 jr
+// last change: 09/03/2020 jr
+// (based on "Parallel Enumeration of Triangulations" by
+// Jordan, Joswig, and Kastner, 2018)
+/////////////////////////////////////////////////////////////////////////
+
+#include "SwitchTable.hh"
+
+namespace topcom {
+};
+
+// eof SwitchTable.cc

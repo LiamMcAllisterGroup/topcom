@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: TOPCOM
 Upstream-Contact: Jörg Rambau <joerg.rambau@ni-bayreuth.de>
-Source: http://www.rambau.wm.uni-bayreuth.de/TOPCOM/
+Source: https://www.wm.uni-bayreuth.de/de/team/rambau_joerg/TOPCOM/
 Files-Excluded: external
 Comment: Upstream ships tarballs of the gmp and cdd libraries, but we use
  Debian packages instead. Further functionality for CYTools was also included.
@@ -11,7 +11,7 @@ Copyright: 1999-2002 Jörg Rambau <rambau@zib.de>
 License: GPL-2+
 
 Files: debian/*
-Copyright: 2020 Doug Torrance <dtorrance@piedmont.edu>
+Copyright: 2020-2022 Doug Torrance <dtorrance@debian.org>
 License: GPL-2+
 
 Files: README.md debian/patches/cytools-mod.patch

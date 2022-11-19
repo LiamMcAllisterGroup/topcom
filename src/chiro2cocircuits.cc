@@ -1,24 +1,19 @@
-#include <iostream>
-
+////////////////////////////////////////////////////////////////////////////////
+// 
+// chiro2cocircuits.cc 
+//
+//    produced: 29/01/2020 jr
+// last change: 29/01/2020 jr
+//
+////////////////////////////////////////////////////////////////////////////////
 #include "CommandlineOptions.hh"
-
-#include "Cocircuits.hh"
+#include "ComputeCocircuits.hh"
 
 int main (const int argc, const char** argv) {
+  using namespace topcom;
+
   CommandlineOptions::init(argc, argv);
-  if (CommandlineOptions::verbose()) {
-    std::cerr << std::endl;
-    std::cerr << "---------------------------------------\n";
-    std::cerr << "computing the cocircuits of a chirotope\n";
-    std::cerr << "---------------------------------------\n";
-    std::cerr << std::endl;
-  }
-  Chirotope chiro;
-  if (chiro.read_string(std::cin)) {
-    Cocircuits(chiro).print_string(std::cout);
-    return 0;
-  }
-  else {
-    return 1;
-  }
+  return (ComputeCocircuits::run(INPUT_CHIRO | OUTPUT_COCIRCUITS));
 }
+    
+// eof chiro2cocircuits.cc

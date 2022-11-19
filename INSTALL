@@ -11,10 +11,10 @@ This way, all C/C++-Compilations are carried out with
 the corresponding compiler flag.
 
 
-Remark concerning external packages gmp and cdd
-===============================================
+Remark concerning external packages gmp, cdd, and qsopt_ex
+==========================================================
 
-If gmp or cddlib are missing on your system then configure will
+If gmp, cddlib, or qsopt_ex are missing on your system then configure will
 build the version coming with TOPCOM in the `external' subdirectory
 of the TOPCOM root directory.
 
@@ -25,16 +25,79 @@ the necessary files are installed into
   $(TOPCOM_DIRECTORY)/external/lib
 
 
-Remark concerning the soplex LP solver library
-==============================================
+Remark concerning the pacakged cddlib LP solver library
+=======================================================
+
+The packaaged LP solver in cddlib is not thread-safe out of the box.
+Therefore, the version packaged with TOPCOM has been patched to version
+0.94j-TOPCOM.  This patched version will be compiled with C++ and
+has thread_local global variables.  This is enough to make cddlib
+threadsafe, thus, parallel enumeration can be used.
+
+
+Remark concerning the pacakged qsopt_ex LP solver library
+=========================================================
+
+Configuring with option
+
+  ./configure --enable-qsoptex
+
+compiles a binary with QSOpt_ex support.
+
+The packaaged LP solver QSOpt_ex is very fast but not threadsafe.
+Therefore, if you use it (option --qsoptex), then no parallel enumeration
+will be carried out.  Still, the internal memory managament
+of qsopt_ex may core-dump at the very end of the run.
+I have no idea why.  This all happens after the TOPCOM computations
+have finished.  So, the results should be ok anyway.
+
+
+Remark concerning the soplex LP solver library (versions >= 6.0.0)
+==================================================================
 
 The academic licence of soplex does not allow a common delivery within
 the TOPCOM package.  Therefore, if you want to use soplex you must 
 install it in a place where it can be found by the compiler and
-the linker.
+the linker.  This is slightly tedious but rewarding, since
+soplex is faster than cddlib.
 
-You can see in the shell output of the configure script whether soplex
-was detected. 
+Using soplex requires libsoplex.a in ${TOPCOM_DIRECTORY}/external/lib and
+all the soplex includes in ${TOPCOM_DIRECTORY}/external/include.
+As  6.0.0 of soplex, the boost includes are required in the same place.
+This changed, e.g., the access to the underlying gmp rationals.
+Therefore, versions of soplex prior to 6.0.0 are not supported out
+of the box.
+
+In order to use soplex, I recommend to place symbolic links in
+${TOPCOM_DIRECTORY}/external/lib to the libraries and all the soplex includes
+in ${TOPCOM_DIRECTORY}/external/include.
+(This method supports that non-superusers can install TOPCOM locally
+without the help of a system-administrator.)
+
+Summarized, if you have the includes and the libs of soplex 6.0.0
+or later below ${SOPLEX_INCLUDES_DIR} and ${SOPLEX_LIBS_DIR}, resp.,
+and boost below ${BOOST_INCLUDES_DIR}, then you can start with
+
+  ./configure --enable-soplex
+
+to activate the soplex support in TOPCOM.  Then you can place
+the symbolic links by
+
+  cd ${TOPCOM_DIRECTORY}/external/
+  cd include
+  ln -s ${SOPLEX_INCLUDES_DIR}/soplex* .
+  ln -s ${BOOST_INCLUDES_DIR}/boost .
+  cd ../lib
+  ln -s ${SOPLEX_LIBS_DIR}/libsoplex*.a .
+  cd ../..
+
+to link the includes and libraries to the right place where TOPCOM can
+find them.  Finally, just
+
+  make
+  make install
+
+and you are set.
 
 
 Basic Installation

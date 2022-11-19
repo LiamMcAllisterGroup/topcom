@@ -11,17 +11,21 @@
 #include "FastSimplicialComplex.hh"
 #include "SimplicialComplexTemplate_Definitions.hh"
 
-// explicit instantiation of members:
-// disabled because of MacOSX-gcc problems:
-// template SimplicialComplexTemplate<SparseIntegerSet>;
+namespace topcom {
 
-// constructors for conversion:
+  // explicit instantiation of members:
+  // disabled because of MacOSX-gcc problems:
+  // template SimplicialComplexTemplate<SparseIntegerSet>;
 
-SparseSimplicialComplex::SparseSimplicialComplex(const FastSimplicialComplex& sc) :
-  _SparseSimplicialComplex() {
-  for (FastSimplicialComplex::const_iterator iter = sc.begin(); iter != sc.end(); ++iter) {
-    insert(*iter);
-  }  
-}
+  // constructors for conversion:
+
+  SparseSimplicialComplex::SparseSimplicialComplex(const FastSimplicialComplex& sc) :
+    _SparseSimplicialComplex() {
+    for (FastSimplicialComplex::const_iterator iter = sc.begin(); iter != sc.end(); ++iter) {
+      insert(*iter);
+    }  
+  }
+
+};
 
 // eof SparseSimplicialComplex.cc

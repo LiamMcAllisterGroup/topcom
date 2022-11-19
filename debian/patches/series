@@ -1,5 +1,4 @@
 dont-build-libraries.patch
-fix-typo.patch
 rename-binaries.patch
-dont-install-libs-or-headers.patch
-cytools-mod.patch
+shared-library.patch
+pkg-config.patch

@@ -12,11 +12,15 @@
 #include "RealChiro.hh"
 #include "VirtualChiro.hh"
 
+namespace topcom {
+  
 #ifndef PREPROCESS_CHIRO
-typedef VirtualChiro Chirotope;
+  typedef VirtualChiro Chirotope;
 #else
-typedef RealChiro Chirotope;
+  typedef RealChiro Chirotope;
 #endif
+  
+}; // namespace topcom
 
 #endif
 // eof Chirotope.hh

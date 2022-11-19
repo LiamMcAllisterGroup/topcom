@@ -3,32 +3,28 @@
 include /usr/share/dpkg/pkg-info.mk
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
-MANS_SOURCES = $(wildcard $(CURDIR)/debian/man/*.1.in) \
-	$(CURDIR)/debian/man/topcom.7.in
-MANS = $(patsubst $(CURDIR)/debian/man/%.in, \
-	$(CURDIR)/debian/man/%, $(MANS_SOURCES))
 VERSION = $(shell echo $(DEB_VERSION_UPSTREAM) | sed 's|+ds||')
-
-# for reproducible manual
-export FORCE_SOURCE_DATE=1
 
 %:
 	dh $@
 
-override_dh_clean:
+execute_before_dh_clean:
 	rm -f $(MANS)
-	dh_clean
 
-override_dh_installdocs:
+override_dh_auto_configure:
+	dh_auto_configure -- --enable-qsoptex
+
+execute_before_dh_installdocs:
 	iconv -f ISO-8859-1 -t UTF-8 $(CURDIR)/README -o $(CURDIR)/README
-	htlatex debian/manual.tex "xhtml,html5,charset=utf-8" " -cunihtf -utf8"
-	dh_installdocs
 
-override_dh_installman: $(MANS)
-	dh_installman
+execute_before_dh_installman: debian/topcom.7
 
-$(CURDIR)/debian/man/%.1: $(CURDIR)/debian/man/%.1.in
-	sed -e 's|@VERSION[@]|$(VERSION)|g' $< > $@
+debian/topcom.7: debian/topcom.txt
+	txt2man -t TOPCOM -s 7 -r $(VERSION) $< > $@
 
-$(CURDIR)/debian/man/topcom.7: $(CURDIR)/debian/man/topcom.7.in
-	sed -e 's|@VERSION[@]|$(VERSION)|g' $< > $@
+MAN1DIR = usr/share/man/man1
+TOPCOM7 = usr/share/man/man7/topcom.7
+override_dh_link:
+	$(eval TOPCOM_COMMANDS=$(notdir \
+		$(wildcard debian/topcom/usr/bin/topcom-*)))
+	dh_link $(patsubst %, $(TOPCOM7) $(MAN1DIR)/%.1, $(TOPCOM_COMMANDS))

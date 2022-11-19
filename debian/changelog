@@ -1,8 +1,156 @@
-topcom (0.17.8+ds-2+cytools-1) unstable; urgency=medium
+topcom (1.1.2+ds-1+cytools-1) unstable; urgency=medium
 
   * Added functionality to compute \mathcal{K}_\cup and perform random walks in the graph of triangulations.
 
- -- Andres Rios Tascon <ar2285@cornell.edu>  Mon, 26 Apr 2021 16:34:24 -0500
+ -- Andres Rios Tascon <ar2285@cornell.edu>  Sat, 19 Nov 2022 16:34:24 -0500
+
+topcom (1.1.2+ds-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control
+    - Mark libtopcom-dev as Multi-Arch: same.
+  * debian/patches/fix-typo.patch
+    - Remove patch; applied upstream.
+  * debian/patches/fix-32-bit-build.patch
+    - Remove patch; issue fixed upstream.
+  * debian/patches/*
+    - Refresh remaining patches for new upstream release.
+    - Add Forwarded fields where missing.
+  * debian/topcom.pc
+    - Remove SIZEOF_DEFINES macro; no longer necessary.
+
+ -- Doug Torrance <dtorrance@debian.org>  Wed, 12 Oct 2022 19:20:30 -0400
+
+topcom (1.1.1+ds-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/clean
+    - Stop cleaning generated TeX manual files.
+    - Start cleaning generated manpage files.
+  * debian/clean
+    - Add libqsopt-ex-dev to Build-Depends; new optional dependency for
+      regularity checks.
+    - Add libbz2-dev and zlib1g-dev to Build-Depends; used by QSopt_ex.
+    - Add txt2man to Build-Depends; now used to generate manpage.
+    - Remove texlive-* from Build-Depends since we no longer build the
+      manual.
+  * debian/libtopcom-dev.install
+    - Install new pkg-config file.
+  * debian/man
+    - Remove directory.  To simplify maintenance, we now use a single
+      manpage (with symlinks) instead of individual manpages for each
+      command.
+  * debian/manual.tex
+    - Remove file.  This was the manual for a much older version of TOPCOM.
+  * debian/patches/fix-32-bit-build.patch
+    - New patch; avoid "cannot be overloaded" compiler errors on 32-bit
+      systems.
+  * debian/patches/no-csh.patch
+    - Remove patch; no longer necessary.
+  * debian/patches/pkg-config.patch
+    - New patch; add pkg-config file.
+  * debian/patches/*
+    - Refresh remaining patches for new upstream release.
+  * debian/README.Debian
+    - Update section about manual.  We now give a link to the online version.
+  * debian/rules
+    - Pass new --enable-qsoptex option to configure script.
+    - Update execute_before_dh_installman target; instead of injecting the
+      version numbers into dozens of individual manpages, we now build a
+      single manpage using txt2man.
+    - Add override_dh_link target to create symlinks to new manpage for
+      each of the many TOPCOM commands.
+  * debian/tests/control
+    - Update library-test to use new pkg-config file.
+  * debian/topcom.doc-base
+    - Remove file; no longer needed as we no longer ship the manual.
+  * debian/topcom.docs
+    - Stop installing manual.
+  * debian/topcom.manpages
+    - Stop installing individual *.1 manpages; they are now created as
+      symlinks by dh_link.
+    - Update path to topcom.7.
+  * debian/topcom.pc.in
+    - Add pkg-config file; processed by configure to generate topcom.pc.
+  * debian/topcom.txt
+    - Add new manpage; processed by txt2man to generate topcom.7.
+
+ -- Doug Torrance <dtorrance@debian.org>  Sun, 02 Oct 2022 08:26:07 -0400
+
+topcom (0.17.10+ds-3) unstable; urgency=medium
+
+  * debian/control
+    - Add Multi-Arch field for libtopcom0 (same).
+  * debian/tests/control
+    - Add allow-stderr restriction for library-test; it was failing on
+      32-bit systems due to compiler warnings.
+
+ -- Doug Torrance <dtorrance@debian.org>  Sun, 26 Jun 2022 08:24:01 -0400
+
+topcom (0.17.10+ds-2) unstable; urgency=medium
+
+  * Source-only upload for migration to testing.
+
+ -- Doug Torrance <dtorrance@debian.org>  Sat, 25 Jun 2022 21:58:07 -0400
+
+topcom (0.17.10+ds-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/clean
+    - New file; clean files generated during build of manual.
+  * debian/control
+    - Update my email address; now a Debian Developer.
+    - Bump Standards-Version to 4.6.1.
+    - Add libtopcom0 and libtopcom-dev binary packages for the shared
+      libraries.
+  * debian/copyright
+    - Update my copyright years and email address.
+  * debian/libtopcom*.install
+    - Install headers and libraries in new binary packages.
+  * debian/not-installed
+    - Specify that we don't install libtool .la files.
+  * debian/patches/*
+    - Update my email address in Author fields.
+    - Set Forwarded field for Debian-specific patches to not-needed.
+  * debian/patches/dont-build-libraries.patch
+    - Update path to cddlib headers.
+  * debian/patch/dont-install-libs-or-headers.patch
+    - Remove patch; we now install the libraries and headers.
+  * debian/patches/no-csh.patch
+    - New patch; use AC_MSG_WARN instead of calling echo via csh for soplex
+      warning.  Otherwise, we'd need to add a build dependency on csh just
+      for this message.
+  * debian/patches/shared-library.patch
+    - New patch; use libtool to build shared libraries.
+  * debian/rules
+    - Replace various override_* targets with execute_before_*.
+  * debian/source/options
+    - New file; ignore changes made to README by iconv.
+  * debian/tests/control
+    - Add autopkgtest for shared library.
+
+ -- Doug Torrance <dtorrance@debian.org>  Fri, 24 Jun 2022 07:39:36 -0400
+
+topcom (0.17.8+ds-3) unstable; urgency=medium
+
+  * debian/control
+    - Update Maintainer to Debian Math Team.
+    - Bump Standards-Version to 4.6.0.
+    - Update Homepage URL.
+    - Update Vcs-* fields (science-team -> math-team).
+  * debian/copyright
+    - Update my copyright years.
+    - Update Source URL.
+  * debian/README.Debian
+    - Update URL for manual.
+    - Update note about source of manual; the tarball it was obtained
+      from is no longer available online.
+  * debian/watch
+    - Update with new download URL.  Also adjust regular expression
+      for matching version number and add a uversionmangle option, as
+      upstream now uses _'s instead of .'s.
+
+ -- Doug Torrance <dtorrance@piedmont.edu>  Tue, 09 Nov 2021 12:19:06 -0500
 
 topcom (0.17.8+ds-2) unstable; urgency=medium
 

@@ -7,147 +7,151 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <mutex>
+
 #include "LPinterface.hh"
 
-// constructors:
+namespace topcom {
 
-LPinterface::LPinterface(const Matrix& m, const IntegerSet& support) :
-  _support(support) {
-  if (CommandlineOptions::debug()) {
-    std::cerr << "building LP matrix ..." << std::endl;
-  }
+  bool        LPinterface::_is_initialized = false;
+  std::mutex  LPinterface::_init_mutex;
 
-  dd_set_global_constants();
-  _solver                     = dd_DualSimplex;
+  // constructors:
+
+  LPinterface::LPinterface(const Matrix& m, const LabelSet& support) :
+    _solptr(0),
+    _support(support) {
+    if (!_is_initialized) {
+      std::lock_guard<std::mutex> lock(IO_sync::mutex);
+      std::cerr << "LPinterface::LPinterface(const Matrix& m, const LabelSet& support):"
+		<< " Lp solver cdd was called but not initialized - exiting" << std::endl;
+      exit(1);
+    }
+
+    if (CommandlineOptions::debug()) {
+      std::lock_guard<std::mutex> lock(IO_sync::mutex);
+      std::cerr << "building LP matrix ..." << std::endl;
+    }
+    _solver                     = dd_DualSimplex;
   
-  // note that the coefficient matrix m is transposed for efficiency reasons;
-  _m                          = m.coldim(); // number of rows
-  _n                          = m.rowdim() + 1; // number of cols
-  _matrixptr                  = dd_CreateMatrix(_m, _n);
-  _matrixptr->objective       = dd_LPmax;
-  _matrixptr->numbtype        = dd_Rational;
+    // note that the coefficient matrix m is transposed for efficiency reasons;
+    _m                          = m.coldim(); // number of rows
+    _n                          = m.rowdim() + 1; // number of cols
+    _matrixptr                  = dd_CreateMatrix(_m, _n);
+    _matrixptr->objective       = dd_LPmax;
+    _matrixptr->representation  = dd_Inequality;
+    _matrixptr->numbtype        = dd_Rational;
 
-  for (size_type i = 0; i < m.coldim(); ++i) {
+    for (size_type i = 0; i < m.coldim(); ++i) {
 
-    // build cdd's matrix row by row;
-    // recall that the coefficient matrix m is transposed for efficiency reasons;
-    // the first entry is ZERO in every row because
-    // its meaning in cdd is is "minus the right hand side":
-    dd_set_R(_matrixptr->matrix[i][0], ZERO);
-    for (size_type j = 0; j < m.rowdim(); ++j) {
+      // build cdd's matrix row by row;
+      // recall that the coefficient matrix m is transposed for efficiency reasons;
+      // the first entry is MINUSONE in every row because
+      // its meaning in cdd is is "minus the right hand side":
+      dd_set_R(_matrixptr->matrix[i][0], FieldConstants::MINUSONE);
+      for (size_type j = 0; j < m.rowdim(); ++j) {
+      
+	// because the first column contains the data for the right hand side 
+	// (which is MINUSONE) we need to shift the column index by one;
+	// again, we have to use the coefficient matrix m in a transposed way:
+	dd_set_R(_matrixptr->matrix[i][j+1], m(j, i));
+      }
+    }
+    if (CommandlineOptions::debug()) {
+      std::lock_guard<std::mutex> lock(IO_sync::mutex);
+      dd_WriteMatrix(stderr, _matrixptr);
+    }
 
-      // because the first column contains the data for the right hand side 
-      // (which is ZERO) we need to shift the column index by one;
-      // again, we have to use the coefficient matrix m in a transposed way:
-      dd_set_R(_matrixptr->matrix[i][j+1], m(j, i));
+    // cdd allows to automatically generate an auxilliary LP for finding an interior point:
+    // dd_LPPtr auxlpptr = dd_Matrix2LP(_matrixptr, &_err);
+    // _lpptr = dd_MakeLPforInteriorFinding(auxlpptr);
+    _lpptr = dd_Matrix2Feasibility(_matrixptr, &_err);
+    if (!_lpptr) {
+      std::lock_guard<std::mutex> lock(IO_sync::mutex);
+      std::cerr << "error in generating LP." << std::endl;
+      dd_WriteErrorMessages(stderr, _err);
+      exit(1);
+    }
+    // dd_FreeLPData(auxlpptr);
+    if (CommandlineOptions::debug()) {
+      std::lock_guard<std::mutex> lock(IO_sync::mutex);
+      std::cerr << "... done." << std::endl;
     }
   }
-  if (CommandlineOptions::debug()) {
-    dd_WriteMatrix(stderr, _matrixptr);
-  }
 
-  // cdd allows to automatically generate an auxilliary LP for finding an interior point:
-  dd_LPPtr auxlpptr = dd_Matrix2LP(_matrixptr, &_err);
-  _lpptr = dd_MakeLPforInteriorFinding(auxlpptr);
-  if (!_lpptr) {
-    std::cerr << "error in generating LP." << std::endl;
-    dd_WriteErrorMessages(stderr, _err);
-    exit(1);
-  }
-  dd_FreeLPData(auxlpptr);
-  if (CommandlineOptions::debug()) {
-    std::cerr << "... done." << std::endl;
-  }
-}
+  // functions:
+  bool LPinterface::has_interior_point(Vector* heightsptr) {
 
-// functions:
-bool LPinterface::has_interior_point() {
+    // caller must take care of a pointer to a Vector of appropriate size, pre-filled with ZERO:
+    if (!_is_initialized) {
+      std::cerr << "LPinterface::has_interior_point():"
+		<< " LP solver cdd was called but not initialized - exiting" << std::endl;
+      exit(1);
+    }
+
+    // Check feasibility with cdd LP library:
+    bool result = dd_LPSolve0(_lpptr, _solver, &_err);
+    if (_err != dd_NoError) {
+      std::lock_guard<std::mutex> lock(IO_sync::mutex);
+      std::cerr << "error in solving LP." << std::endl;
+      dd_WriteErrorMessages(stderr, _err);
+      exit(1);
+    }
+
+    if (_lpptr->LPS == dd_Inconsistent) {
+
+      // the LP is infeasible:
+      if (CommandlineOptions::debug()) {
+	std::lock_guard<std::mutex> lock(IO_sync::mutex);
+	std::cerr << "The feasible region is empty." << std::endl;
+      }
+      if (CommandlineOptions::debug()) {
+	std::lock_guard<std::mutex> lock(IO_sync::mutex);
+	std::cerr << "... done." << std::endl;
+      }
+      return false;
+    }
   
-  static long idx(0);
-
-  // Check feasibility with cdd LP library:
-  const bool result = dd_LPSolve(_lpptr, _solver, &_err);
-  if (_err != dd_NoError) {
-    std::cerr << "error in solving LP." << std::endl;
-    dd_WriteErrorMessages(stderr, _err);
-    exit(1);
-  }
-  
-  // Write an interior point:
-  _solptr = dd_CopyLPSolution(_lpptr);
-  if (dd_Positive(_solptr->optvalue)){
+    // otherwise the LP is feasible:
     if (CommandlineOptions::output_heights()) {
-      std::cout << "(";
-      Field maxheight(ONE);
-      for (dd_rowrange j = 0; j < (_solptr->d) - 2; j++) {
+      // output a height vector:
+      _solptr = dd_CopyLPSolution(_lpptr);
+      Field maxheight(FieldConstants::ONE);
+      for (dd_rowrange j = 0; j < (_solptr->d) - 1; j++) {
 	const Field x_j = Field(_solptr->sol[j+1]);
-	if (maxheight - 1 < x_j) {
-	  maxheight = x_j + 1;
+	if (maxheight - FieldConstants::ONE < x_j) {
+	  maxheight = x_j + FieldConstants::ONE;
 	}
       }
-      for (dd_rowrange j = 0; j < (_solptr->d) - 3; j++) {
+      for (dd_rowrange j = 0; j < (_solptr->d) - 1; j++) {
 	const Field x_j = Field(_solptr->sol[j+1]);
 	if (_support.contains(j)) {
-	  //	  std::cout << double(x_j);
-	  std::cout << x_j.get_str();
+	  heightsptr->at(j) = x_j;
+	  if (CommandlineOptions::debug()) {
+	    std::cerr << "-- point " << j << " used, assigning height " << x_j << " --" << std::endl;
+	  }
 	}
 	else {
 	  if (CommandlineOptions::debug()) {
-	    std::cerr << "point " << j << " unused, assigning height " << maxheight + 1 << std::endl;
+	    std::cerr << "-- point " << j << " unused, assigning height " << maxheight << " --" << std::endl;
 	  }
-	  //	  std::cout << double(maxheight) + 1;
-	  std::cout << maxheight.get_str();
+	  heightsptr->at(j) = maxheight;
 	}
-	std::cout << ",";
       }
-      const long j((_solptr->d) - 3);
-      const Field x_j = Field(_solptr->sol[j+1]);
-      if (_support.contains(j)) {
-	//	std::cout << double(x_j);
-	std::cout << x_j.get_str();
-      }
-      else {
-	if (CommandlineOptions::debug()) {
-	  std::cerr << "point " << j << " unused, assigning height " << maxheight + 1 << std::endl;
-	}
-	//	std::cout << double(maxheight) + 1;
-	std::cout << maxheight.get_str();
-      }
-      std::cout << ")" << std::endl;
       if (CommandlineOptions::debug()) {
-	std::cerr << "Used points: " << _support << std::endl;
-	std::cerr << "Optimal slack: ";
+	std::cerr << "used points: " << _support << std::endl;
+	std::cerr << "optimal slack: ";
 	dd_WriteNumber(stderr, _solptr->optvalue);
 	std::cerr << std::endl;
       }
     }
     if (CommandlineOptions::debug()) {
+      std::lock_guard<std::mutex> lock(IO_sync::mutex);
       std::cerr << "... done." << std::endl;
     }
     return true;
   }
-  if (dd_Negative(_solptr->optvalue)) {
-    if (CommandlineOptions::debug()) {
-      std::cerr << "The feasible region is empty." << std::endl;
-    }
-    if (CommandlineOptions::debug()) {
-      std::cerr << "... done." << std::endl;
-    }
-    return false;
-  }
-  if (dd_EqualToZero(_solptr->optvalue)) {
-    if (CommandlineOptions::debug()) {
-      std::cerr << "... done." << std::endl;
-    }
-    if (CommandlineOptions::debug()) {
-      std::cerr << "The feasible region is nonempty but has no interior point." << std::endl;
-    }
-    return false;
-  }
-  if (CommandlineOptions::debug()) {
-    std::cerr << "WARNING: unspecified case. I assume that no interior point exists." << std::endl;
-  }
-  return false;
-}
+
+}; // namespace topcom
 
 // eof LPinterface.cc

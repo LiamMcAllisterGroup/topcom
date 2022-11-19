@@ -4,6 +4,8 @@
 #include "PointConfiguration.hh"
 
 int main(const int argc, const char** argv) {
+  using namespace topcom;
+
   if (argc < 3) {
     std::cerr << "usage: " << argv[0] << " n d" << std::endl;
     return 1;
@@ -22,8 +24,8 @@ int main(const int argc, const char** argv) {
       column[j] = entry;
       entry *= i;
     }
-    column[d] = ONE;
-    cyclic.append(column);
+    column[d] = FieldConstants::ONE;
+    cyclic.push_back(column);
   }
   std::cout << cyclic << std::endl;
   std::cout << "[";
@@ -41,3 +43,5 @@ int main(const int argc, const char** argv) {
   std::cout << "0]]" << std::endl;
   return 0;
 }
+
+// eof cyclic.cc

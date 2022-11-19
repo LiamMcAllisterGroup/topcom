@@ -10,131 +10,183 @@
 #include <ctype.h>
 #include <string.h>
 
+#include <assert.h>
+
 #include "Permutation.hh"
 
-// functions:
-Permutation& Permutation::append(const parameter_type i) {
-  permutation_data::append(i);
-  if (i > _n) {
-    _n = i;
-  }
-  ++_k;
-  return *this;
-}
+namespace topcom {
 
-Permutation& Permutation::append(const Permutation& p) {
-  permutation_data::append(p);
-  if (p._n > _n) {
-    _n = p._n;
-  }
-  _k += p._k;
-  return *this;
-}
+  const char Permutation::start_char = '[';
+  const char Permutation::end_char   = ']';
+  const char Permutation::delim_char = ',';
 
-const int Permutation::sign() const {
-  int result = 1;
-  for (parameter_type i = 0; i < _k; ++i) {
-    for (parameter_type j = 0; j < i; ++j) {
-      if ((*this)[i] < (*this)[j]) {
-	result *= -1;
+  // functions:
+  Permutation& Permutation::push_back(const parameter_type i) {
+    permutation_data::push_back(i);
+    if (i >= _n) {
+      _n = i + 1;
+    }
+    ++_k;
+    return *this;
+  }
+
+  Permutation& Permutation::push_back(const Permutation& p) {
+    for (parameter_type i = 0; i < p.size(); ++i) {
+      push_back(p(i));
+    }
+    return *this;
+  }
+
+  const int Permutation::sign() const {
+    int result = 1;
+    for (parameter_type i = 0; i < _k; ++i) {
+      for (parameter_type j = 0; j < i; ++j) {
+	if ((*this)(i) < (*this)(j)) {
+	  result *= -1;
+	}
       }
     }
+    return result;
   }
-  return result;
-}
 
-const int Permutation::sign(const parameter_type split) const {
-  int result = 1;
-  for (parameter_type i = split; i < _k; ++i) {
-    for (parameter_type j = 0; j < split; ++j) {
-      if ((*this)[i] < (*this)[j]) {
-	result *= -1;
+  const int Permutation::sign(const parameter_type split) const {
+    int result = 1;
+    for (parameter_type i = split; i < _k; ++i) {
+      for (parameter_type j = 0; j < split; ++j) {
+	if ((*this)(i) < (*this)(j)) {
+	  result *= -1;
+	}
       }
     }
+    return result;
   }
-  return result;
-}
 
-const int Permutation::sort() {
-  int result = 1;
-  for (parameter_type i = 0; i < _k; ++i) {
-    for (parameter_type j = 0; j < i; ++j) {
-      if ((*this)[i] < (*this)[j]) {
-	parameter_type tmp = (*this)[i];
-	(*this)[i] = (*this)[j];
-	(*this)[j] = tmp;
-	result *= -1;
+  const int Permutation::sort() {
+    int result = 1;
+    for (parameter_type i = 0; i < _k; ++i) {
+      for (parameter_type j = 0; j < i; ++j) {
+	if ((*this)(i) < (*this)(i)) {
+	  parameter_type tmp = (*this)(i);
+	  (*this)(i) = (*this)(i);
+	  (*this)(i) = tmp;
+	  result *= -1;
+	}
       }
     }
+    return result;
   }
-  return result;
-}
 
-Permutation Permutation::complement() const {
-  Permutation result(_n, _n - _k);
-  size_type count(0);
-  for (parameter_type j = 0; j < (*this)[0]; ++j) {
-    result[count++] = j;
-  }
-  for (parameter_type i = 0; i < _k - 1; ++i) {
-    for (parameter_type j = (*this)[i] + 1; j < (*this)[i + 1]; ++j) {
-      result[count++] = j;
+  Permutation Permutation::complement() const {
+    Permutation result(_n, _n - _k);
+    size_type count(0);
+    for (parameter_type j = 0; j < (*this)(0); ++j) {
+      result(count++) = j;
     }
+    for (parameter_type i = 0; i < _k - 1; ++i) {
+      for (parameter_type j = (*this)(i) + 1; j < (*this)(i + 1); ++j) {
+	result(count++) = j;
+      }
+    }
+    for (parameter_type j = (*this)(_k - 1) + 1; j < _n; ++j) {
+      result(count++) = j;
+    }
+    return result;
   }
-  for (parameter_type j = (*this)[_k - 1] + 1; j < _n; ++j) {
-    result[count++] = j;
-  }
-  return result;
-}
 
-Permutation Permutation::deletion(const parameter_type m) const {
-  Permutation result(*this);
-  for (parameter_type i = m; i < _k - 1; ++i) {
-    result[i] = result[i + 1];
+  Permutation Permutation::deletion(const parameter_type m) const {
+    Permutation result(*this);
+    for (parameter_type i = m; i < _k - 1; ++i) {
+      result(i) = result(i + 1);
+    }
+    result.resize(--result._k);
+    return result;
   }
-  result.resize(--result._k);
-  return result;
-}
 
-Permutation Permutation::reverse() const {
-  Permutation result(_n,_k);
-  for (parameter_type i = 0; i < _k; ++i) {
-    result[i] = (*this)[_k-i-1];
+  Permutation Permutation::reverse() const {
+    Permutation result(_n,_k);
+    for (parameter_type i = 0; i < _k; ++i) {
+      result(i) = (*this)(_k-i-1);
+    }
+    return result;
   }
-  return result;
-}
 
-bool Permutation::lexnext() {
-  for (parameter_type i = 0; i < _k; ++i) {
-    if ((*this)[_k - i - 1] == _n - i - 1) {
-      continue;
+  bool Permutation::lexnext() {
+    for (parameter_type i = 0; i < _k; ++i) {
+      if ((*this)(_k - i - 1) == _n - i - 1) {
+	continue;
+      }
+      else {
+	++(*this)(_k - i - 1);
+	for (parameter_type j = 0; j < i; ++j) {
+	  (*this)(_k - j - 1) = (*this)(_k - i - 1) + (i - j);
+	}
+	return true;
+      }
+    }
+    return false;
+  }
+
+  std::istream& Permutation::read(std::istream& ist) {
+    char c;
+    parameter_type elem;
+
+    permutation_data::resize(0);
+    ist >> std::ws >> c;
+    if (c == start_char) {
+      while (ist >> std::ws >> c) {
+	if (c == end_char) {
+	  break;
+	}
+	if (c == delim_char) {
+	  continue;
+	}
+	ist.putback(c);
+	if (ist >> elem) {
+	  permutation_data::push_back(elem);
+	}
+	else {
+#ifdef READ_DEBUG
+	  std::cerr << "Permutation::read(std::istream& ist):"
+		    << c << " not of appropriate type." << std::endl;
+#endif
+	  ist.clear(std::ios::failbit);
+	  return ist;
+	}
+      }
     }
     else {
-      ++(*this)[_k - i - 1];
-      for (parameter_type j = 0; j < i; ++j) {
-	(*this)[_k - j - 1] = (*this)[_k - i - 1] + (i - j);
+#ifdef READ_DEBUG
+      std::cerr << "Permutation::read(std::istream& ist):"
+		<< "missing `" << start_char << "'." << std::endl;
+#endif
+      ist.clear(std::ios::failbit);
+      return ist;
+    }
+    ist.clear(std::ios::goodbit);
+    return ist;
+  }
+
+  std::ostream& Permutation::write(std::ostream& ost) const {
+    ost << Permutation::start_char;
+    if (!empty()) {
+      parameter_type i = 0;
+      ost << (*this)(i);
+      while(++i < size()) {
+	ost << Permutation::delim_char << (*this)(i);
       }
-      return true;
     }
+    ost << Permutation::end_char;
+    return ost;
   }
-  return false;
-}
 
-std::ostream& operator<<(std::ostream& ost, const Permutation& p) {
-  return (ost << (const permutation_data&)p);
-}
-
-std::istream& operator>>(std::istream& ist, Permutation& p) {
-  ist >> (permutation_data&)p;
-  p._k = p.maxindex();
-  p._n = p._k;
-  for (parameter_type i = 0; i < p.maxindex(); ++i) {
-    if (p[i] + 1 > p._n) {
-      p._n = p[i] + 1;
-    }
+  std::istream& operator>>(std::istream& ist, Permutation& p) {
+    return p.read(ist);
   }
-  return ist;
-}
 
+  std::ostream& operator<<(std::ostream& ost, const Permutation& p) {
+    return p.write(ost);
+  }
+
+}; // namespace topcom
 
 // eof Permutation.cc

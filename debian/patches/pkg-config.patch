@@ -1,0 +1,14 @@
+Description: Add pkg-config file.
+Author: Doug Torrance <dtorrance@debian.org>
+Forwarded: not-needed
+Last-Update: 2022-09-14
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -101,5 +101,5 @@
+ dnl restore the user variable LDLFAGS:
+ dnl AC_SUBST([LDFLAGS], [${LDFLAGS_backup}])
+ 
+-AC_CONFIG_FILES([wrap-gmp-gmpxx/Makefile lib-src/Makefile lib-src-reg/Makefile src/Makefile src-reg/Makefile examples/Makefile share/Makefile Makefile])
++AC_CONFIG_FILES([wrap-gmp-gmpxx/Makefile lib-src/Makefile lib-src-reg/Makefile src/Makefile src-reg/Makefile examples/Makefile share/Makefile Makefile debian/topcom.pc])
+ AC_OUTPUT

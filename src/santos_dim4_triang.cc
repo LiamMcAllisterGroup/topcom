@@ -1,4 +1,5 @@
-// This program contains the construction of
+// This program contains the construction of a derived 4d-triangulation
+// based on
 // * the Santos point configuration,
 // * its symmteries,
 // * the Santos triangulation of it without flips
@@ -15,12 +16,15 @@
 #include "PointConfiguration.hh"
 #include "Symmetry.hh"
 #include "SimplicialComplex.hh"
+#include "HashSet.hh"
+
+namespace topcom {
 
 PointConfiguration create_a() {
   if (CommandlineOptions::verbose()) {
     std::cerr << "constructing a ..." << std::endl;
   }
-  PointConfiguration result(Matrix(4, 3, ZERO));
+  PointConfiguration result(Matrix(4, 3, FieldConstants::ZERO));
   result[0][0] = Field(9);
   result[1][1] = Field(9);
   result[2][2] = Field(9);
@@ -34,7 +38,7 @@ PointConfiguration create_b() {
   if (CommandlineOptions::verbose()) {
     std::cerr << "constructing b ..." << std::endl;
   }
-  PointConfiguration result(Matrix(4, 3, ZERO));
+  PointConfiguration result(Matrix(4, 3, FieldConstants::ZERO));
   result[0][0] = Field(1);
   result[0][1] = Field(4);
   result[0][2] = Field(4);
@@ -54,7 +58,7 @@ PointConfiguration create_o() {
   if (CommandlineOptions::verbose()) {
     std::cerr << "constructing o ..." << std::endl;
   }
-  PointConfiguration result(Matrix(4, 2, ZERO));
+  PointConfiguration result(Matrix(4, 2, FieldConstants::ZERO));
   result[0][0] = Field(3);
   result[0][1] = Field(3);
   result[0][2] = Field(3);
@@ -73,7 +77,7 @@ PointConfiguration create_c1() {
   if (CommandlineOptions::verbose()) {
     std::cerr << "constructing c ..." << std::endl;
   }
-  PointConfiguration result(Matrix(4, 3, ZERO));
+  PointConfiguration result(Matrix(4, 3, FieldConstants::ZERO));
 
   CyclicIndex cyclic_index(3,3); 
 
@@ -102,7 +106,7 @@ PointConfiguration create_c2() {
   if (CommandlineOptions::verbose()) {
     std::cerr << "constructing c2 ..." << std::endl;
   }
-  PointConfiguration result(Matrix(4, 3, ZERO));
+  PointConfiguration result(Matrix(4, 3, FieldConstants::ZERO));
 
   RevCyclicIndex rev_cyclic_index(3,3); 
 
@@ -149,9 +153,9 @@ PointConfiguration create_B() {
     std::cerr << "constructing one-dimensional point configuration B ..." 
 	 << std::endl;
   }
-  Matrix result(1, 2, ZERO);
-  result[0][0] = MINUSONE;
-  result[1][0] = ONE;
+  Matrix result(1, 2, FieldConstants::ZERO);
+  result[0][0] = FieldConstants::MINUSONE;
+  result[1][0] = FieldConstants::ONE;
   if (CommandlineOptions::verbose()) {
     std::cerr << "... done." << std::endl;
   }
@@ -304,7 +308,7 @@ SymmetryGroup create_G1() {
     std::cerr << "constructing symmetry group G1 of A from g1 ..." 
 	 << std::endl;
   }
-  symmetry_data result;
+  symmetry_collectordata result;
   result.insert(create_g1());
   if (CommandlineOptions::verbose()) {
     std::cerr << "... done." << std::endl;
@@ -317,7 +321,7 @@ SymmetryGroup create_G() {
     std::cerr << "constructing symmetry group G of A from g1, g2 ..." 
 	 << std::endl;
   }
-  symmetry_data result;
+  symmetry_collectordata result;
   result.insert(create_g1());
 //   result.insert(create_g2());
   if (CommandlineOptions::verbose()) {
@@ -331,7 +335,7 @@ SymmetryGroup create_H() {
     std::cerr << "constructing symmetry group H of C from h1, h2 ..." 
 	 << std::endl;
   }
-  symmetry_data result;
+  symmetry_collectordata result;
   result.insert(create_h1());
   result.insert(create_h2());
   if (CommandlineOptions::verbose()) {
@@ -567,9 +571,9 @@ HashSet<Permutation> insert_orbit(const Permutation& s, const SymmetryGroup& G,
 #endif
     
     if (CommandlineOptions::debug()) {
-      std::cerr << "inserting " << g(s) << " ..." << std::endl;
+      std::cerr << "inserting " << g.map(s) << " ..." << std::endl;
     }
-    result.insert(g(s));
+    result.insert(g.map(s));
     if (CommandlineOptions::debug()) {
       std::cerr << "... done." << std::endl;
     }
@@ -692,8 +696,11 @@ SimplicialComplex create_staircase_triang(const HashSet<Permutation>& h1, const 
   return result;
 }
 
+};
 
 int main(int argc, const char** argv) {
+  using namespace topcom;
+
   CommandlineOptions::init(argc, argv);
 
   //  create_C().pretty_print(std::cout);
@@ -720,3 +727,5 @@ int main(int argc, const char** argv) {
 
   return 0;
 }
+
+// eof santos_dim4_triang.cc

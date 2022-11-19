@@ -5,6 +5,8 @@
 #include "Facets.hh"
 
 int main (const int argc, const char** argv) {
+  using namespace topcom;
+
   CommandlineOptions::init(argc, argv);
   if (CommandlineOptions::verbose()) {
     std::cerr << std::endl;
@@ -22,3 +24,5 @@ int main (const int argc, const char** argv) {
     return 1;
   }
 }
+
+// eof cocircuits2facets.cc
