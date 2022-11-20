@@ -1,0 +1,26 @@
+diff -Naur a/lib-src/ComputeTriangs.cc b/lib-src/ComputeTriangs.cc
+--- a/lib-src/ComputeTriangs.cc	2022-11-19 09:48:45.068324000 -0500
++++ b/lib-src/ComputeTriangs.cc	2022-11-19 11:20:58.967390373 -0500
+@@ -367,7 +367,21 @@
+ 	    std::cerr << "... done." << std::endl;
+ 	  }
+ 	  if (output_triangs) {
+-	    std::cout << tf << std::endl;
++		// This part was modified to output triangulations instead of flips
++	    MarkedFlips mf = tf.flips();
++		for(MarkedFlips::iterator it = mf.begin(); it != mf.end(); it++){
++          Flip fl = Flip(tn,it->first);
++		  SimplicialComplex s = (SimplicialComplex) TriangNode(0,tn,fl);
++		  std::cout << "[";
++          for(SimplicialComplex::iterator it2 = s.begin(); it2 != s.end(); it2++){
++            std::cout << (it2 == s.begin() ? "" : ",") << "[";
++            for(IntegerSet::iterator it3 = it2->begin(); it3 != it2->end(); it3++){
++              std::cout << (it3 == it2->begin() ? "" : ",") << *it3;
++            }
++            std::cout << "]";
++          }
++          std::cout << "]" << std::endl;
++	    }
+ 	  }
+ 	  else {
+ 	    std::cout << tf.flips().size() << std::endl;

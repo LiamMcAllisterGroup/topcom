@@ -2,3 +2,4 @@ dont-build-libraries.patch
 rename-binaries.patch
 shared-library.patch
 pkg-config.patch
+cytools.patch
